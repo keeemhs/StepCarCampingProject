@@ -31,3 +31,13 @@ exports.reviewPage= async (req,res)=>{
     console.log(urlArray)
     res.render("review",{mainText  : result1.mainText, imgurl :urlArray})
 }
+
+exports.reviewEdit= async (req,res)=>{
+
+    //쿠키던 세션이던 검증 필요
+
+    //쿠키던 세션이던 저장되어있다고 생각하고 여기선 구현
+    res.render("reviewedit")
+
+
+}
