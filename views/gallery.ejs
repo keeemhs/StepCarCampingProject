@@ -27,32 +27,28 @@
     </style>
 </head>
 <body>
-    <header>헤더입니다.</header>
+    <header>헤더입니다. </header>
     <hr>
     
     <main>
         <div>후기</div>
         <hr>
         <div id="sorting">
-            <select id = "sorts">
-                <option value="latest">최신순</option>
-                <option value="views">조회순</option>
-            </select>   
+                <button type="button" onclick="location.href = '/gallery?sort_method=0'">최신순</button>
+                <button value="button" onclick="location.href = '/gallery?sort_method=1'">조회순</button>
         </div>
- 
         <div class="grid-container">
-
-                <% for (let i =0; i<10;i++){ %>
+                <% for (let i =0; i< data.length ;i++){ %>
                 <!-- /gallery/review?galleryId=${galleryid} -->
-                <a href="/gallery/review?galleryId=1">
+                <a href="/gallery/review?galleryId=<%= data[i].galleryid %>">
                     <div class="card" style="width: 18rem;">
                             <!-- galleries.imgurl -->                                     
-                        <img src="../static/bulguk.jpeg" class="card-img-top" alt="...">
+                        <img src='<%= data[i].thunmnail %>' class="card-img-top" alt="...">
                         <div class="card-body">
                                             <!-- galleries.title -->
-                        <h5 class="card-title">불국사</h5>
+                        <h5 class="card-title"><%= data[i].title %></h5>
                                         <!-- galleries.text -->
-                        <p class="card-text">Card Text</p>
+                        <p class="card-text"><%= data[i].region %></p>
                         </div>
                     </div>
                 </a>
@@ -60,7 +56,7 @@
         </div>
         <hr>
         <div>
-            <button onclick="location.href='/gallery/edit'">새로작성</button>
+            <button onclick="location.href='/gallery/reviewEdit'">새로작성</button>
         </div>
     </main>
     <hr>

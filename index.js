@@ -13,12 +13,14 @@ app.use(express.static('./views/css')); // css폴더 경로 셋팅
 // 쿠키
 const cookieParser = require("cookie-parser")
 
+//gallery 리뷰, 리뷰의 댓글 등등
+const galleryRouter = require("./routes/gallery")
+app.use("/gallery",galleryRouter)
 
-
-
+//스팟 관련 라우터
 const spotRouter = require('./routes/spot')
 app.use('/spot', spotRouter)
-
+//메인화면, 메인화면에서 어디로 가는가를 정해둔곳. 나중에 mainPage 구현하면 여기에.
 const router =require("./routes/main")
 app.use(router)
 

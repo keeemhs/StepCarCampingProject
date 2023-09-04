@@ -24,7 +24,6 @@ db.gallery_comment=require("./gallery_comment")(sequelize)
 db.Location.hasMany(db.Spot)
 db.Spot.belongsTo(db.Location)
 
-
 //갤러리 관계
 db.gallery.hasMany(db.gallery_comment,{foreignKey:"galleryid", onDelete:"CASCADE"})
 db.gallery_comment.belongsTo(db.gallery,{foreignKey:"galleryid", onDelete:"CASCADE"})
