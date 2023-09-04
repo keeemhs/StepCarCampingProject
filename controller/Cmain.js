@@ -43,3 +43,6 @@ exports.registPage = (req, res) => {
 exports.regist = (req, res) => {
     res.render('regist');
 };
+exports.recomCarPage = (req, res) => {
+    res.render('recomCar');
+};

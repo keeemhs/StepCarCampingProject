@@ -15,8 +15,10 @@ router.post('/rent/regist', pageController.regist);
 router.get('/spot', pageController.spotPage);
 //갤러리 페이지로
 router.get("/gallery",pageController.galleryPage)
+// 차 추천 페이지
+router.get("/recomCar",pageController.recomCarPage)
 
-//
+
 
 /////////////////////////////////////////
 
