@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+        <title>Main Page</title>
+        <style>
+            .regist {
+                text-align: center;
+            }
+            .main {
+                height: 300px;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- header -->
+        <p>메인페이지 입니다</p>
+        <button onclick="location.href = '/rent'">장비대여</button>
+        <button onclick="location.href = '/spot'">지도스팟</button>
+        <button onclick="location.href = '/gallery'">갤러리</button>
+
+        <!-- main -->
+
+        <!-- main -->
+        <section class="main">
+            <!-- logo -->
+            <img src="" alt="" />
+            <div class="regist">
+                <h2>제품 등록하기</h2>
+                <form name="form-regist">
+                    <input type="text" id="gearTitle" placeholder="제품명" /><br />
+                    <input type="text" id="gearExplain" placeholder="제품설명" /><br />
+                    <div class="date">
+                        <input type="date" id="startDate" />
+                        ~
+                        <input type="date" id="endDate" />
+                    </div>
+                    <input type="radio" name="rentPossible" />대여가능 <input type="radio" name="rentPossible" />대여불가능 <br />
+                    <button type="button" onclick="regist()">등록하기</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <%-include('footer.ejs')%>
+    </body>
+
+    <script>
+        function regist() {
+            const form = document.forms['form-register'];
+            axios({
+                method: 'POST',
+                url: '/rent/regist',
+                data: {
+                    gearTitle: form.gearTitle.value,
+                    gearExplain: form.gearExplain.value,
+                    startDate: form.startDate.value,
+                    endDate: form.endDate.value,
+                    rentPossible: form.rentPossible.value,
+                },
+            }).then((res) => {
+                console.log('res', res);
+                if (res.data.result) {
+                    alert('제품이 등록되었습니다!');
+                    window.location.href = '/rent';
+                }
+            });
+        }
+    </script>
+</html>

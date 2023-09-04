@@ -1,20 +1,27 @@
+exports.indexPage = (req, res) => {
+    res.render('index');
+};
 
-exports.indexPage= (req,res)=>{
-    res.render("index")
-}
+exports.rentPage = (req, res) => {
+    res.render('rent');
+};
 
-exports.rentPage= (req,res)=>{
-    res.render("rent")
-}
+exports.registPage = (req, res) => {
+    res.render('regist');
+};
 
-exports.spotPage= (req,res)=>{
-    res.render("spot")
-}
+exports.regist = async (req, res) => {
+    const { gearTitle, gearExplain, startDate, endDate, rentPossible } = req.body;
+};
 
-exports.galleryPage= (req,res)=>{
-    res.render("gallery")
-}
+exports.spotPage = (req, res) => {
+    res.render('spot');
+};
 
-exports.reviewPage= (req,res)=>{
-    res.render("review")
-}
+exports.galleryPage = (req, res) => {
+    res.render('gallery');
+};
+
+exports.reviewPage = (req, res) => {
+    res.render('review');
+};
