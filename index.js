@@ -30,8 +30,6 @@ app.use(router);
 const spotRouter = require('./routes/spot');
 app.use('/spot', spotRouter);
 
-const router = require('./routes/main');
-app.use(router);
 
 // index.ejs
 // app.get('/', (req, res) => {
