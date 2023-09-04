@@ -111,20 +111,6 @@
 
     <!-- 스팟리스트 -->
     <div class="spot-container">
-        <!-- <div class="spot">
-            <div style="margin-top: 10px;">스팟이름</div>
-            <div>
-                <img src="../images/sea.jpg" class="spot-image">
-            </div>
-            <div style="margin-bottom: 10px;">주소</div>
-            <div style="height: 40px;">간략소개</div>
-            <div>
-                <button>채팅</button>
-            </div>
-        </div> -->
-        <!-- for(let i = 0; i < ) </div> -->
-
-
 
 
         <script>
@@ -145,16 +131,17 @@
                 button.addEventListener('click', async () => {
                     const res = await axios({
                         method: 'POST',
-                        url: '/location',
+                        url: '/spot/location',
                         data: {
                             location: button.value
                         }
                     })
 
-
+                    console.log(res)
                     mapOptions.center = new naver.maps.LatLng(res.data.location.lon, res.data.location.lat)
                     mapOptions.zoom = 7
                     map = new naver.maps.Map('map', mapOptions);
+
 
                     //해당 지역의 차박 스팟 마커찍기
                     var marker = []
@@ -165,21 +152,23 @@
                         })
                     }
 
-                    //해당 지역의 차박 스팟 리스트 출력
+                    //스팟리스트 출력
+                    spotContainer.textContent = ''
                     for (let i = 0; i < res.data.spot.length; i++) {
                         spotContainer.innerHTML += `
-                        <div class="spot">
-                            <div class="spot-name">${res.data.spot[i].spotName}</div>
+                            <div class="spot">
+                                <div class="spot-name">${res.data.spot[i].spotName}</div>
+                                    <div>
+                                    <img src="${res.data.spot[i].image}" class="spot-image">
+                                    </div>
+                                <div class="spot-address">${res.data.spot[i].address}</div>
+                                <div class="spot-information">${res.data.spot[i].information}</div>
                                 <div>
-                                <img src="${res.data.spot[i].image}" class="spot-image">
+                                    <button class="chat-button">채팅</button>
                                 </div>
-                            <div class="spot-address">${res.data.spot[i].address}</div>
-                            <div class="spot-information">${res.data.spot[i].information}</div>
-                            <div>
-                                <button class="chat-button">채팅</button>
                             </div>
-                        </div>
-                        `
+                            `
+
                     }
 
 
@@ -190,6 +179,7 @@
                     // })
                 })
             })
+
 
 
 
