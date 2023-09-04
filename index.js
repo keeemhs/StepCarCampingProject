@@ -24,11 +24,18 @@ app.use('/static', express.static(path.join(__dirname, 'carCampingProject', 'vie
 
 // 쿠키
 const cookieParser = require('cookie-parser');
-const router = require('./routes/main');
-app.use(router);
 
-const spotRouter = require('./routes/spot');
-app.use('/spot', spotRouter);
+
+//gallery 리뷰, 리뷰의 댓글 등등
+const galleryRouter = require("./routes/gallery")
+app.use("/gallery",galleryRouter)
+
+//스팟 관련 라우터
+const spotRouter = require('./routes/spot')
+app.use('/spot', spotRouter)
+
+const router = require("./routes/main")
+app.use(router)
 
 
 // index.ejs

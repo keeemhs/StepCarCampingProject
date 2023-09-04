@@ -25,3 +25,6 @@ exports.galleryPage = (req, res) => {
 exports.reviewPage = (req, res) => {
     res.render('review');
 };
+exports.recomCarPage = (req, res) => {
+    res.render('recomCar');
+};
