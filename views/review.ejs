@@ -22,7 +22,8 @@
     </style>
 </head>
 <body>
-    <div>리뷰페이지</div>
+    <%-include('header.ejs')%>
+
     <hr>
     <!-- user.name -->
     <div>???님의 캠핑스팟 </div>
@@ -46,7 +47,7 @@
     <!-- 댓글-->
     <hr>
     <div>댓글</div>
-
+    <%-include('footer.ejs')%>
 
     <script>
         // imgurl를 stringfy해준뒤에, 다시 parse해서 jsonobject를 만든다.

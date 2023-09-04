@@ -25,3 +25,4 @@ exports.galleryPage = (req, res) => {
 exports.reviewPage = (req, res) => {
     res.render('review');
 };
+

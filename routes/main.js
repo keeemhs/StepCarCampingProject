@@ -9,7 +9,7 @@ router.get('/', pageController.indexPage);
 //대여 장비 목록 보기 페이지로
 router.get('/rent', pageController.rentPage);
 //대여 장비 등록 페이지로
-router.get('/rent/regist', pageController.registPage);
+router.get('/rent/regist', pageController.rentPage);
 router.post('/rent/regist', pageController.regist);
 //spot 페이지로
 router.get('/spot', pageController.spotPage);

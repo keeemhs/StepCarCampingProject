@@ -36,4 +36,10 @@ exports.galleryPage= async (req,res)=>{
     }
 
 }
+exports.registPage = (req, res) => {
+    res.render('regist');
+};
 
+exports.regist = (req, res) => {
+    res.render('regist');
+};
