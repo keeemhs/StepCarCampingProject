@@ -14,6 +14,11 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
+// rent.ejs
+app.get('/rent', (req, res) => {
+    res.render('rent');
+});
+
 // 404 error
 app.use('*', (req, res) => {
     res.render('404');
