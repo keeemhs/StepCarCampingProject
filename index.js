@@ -9,6 +9,8 @@ app.use(express.json());
 app.use("/static",express.static(__dirname+"/static"))
 // 쿠키
 const cookieParser = require("cookie-parser")
+
+
 const router =require("./routes/main")
 app.use(router)
 
