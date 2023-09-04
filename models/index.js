@@ -11,16 +11,19 @@ const sequelize = new Sequelize(config.database, config.username, config.passwor
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
+
+//지도
 db.Spot = require('./Spot')(sequelize)
 db.Location = require('./Location')(sequelize)
+
+//갤러리와 리뷰
+db.gallery=require("./gallery")(sequelize)
+db.gallery_img=require("./gallery_img")(sequelize)
+db.gallery_comment=require("./gallery_comment")(sequelize)
 
 db.Location.hasMany(db.Spot)
 db.Spot.belongsTo(db.Location)
 
-
-db.gallery=require("./gallery")(sequelize)
-db.gallery_img=require("./gallery_img")(sequelize)
-db.gallery_comment=require("./gallery_comment")(sequelize)
 
 //갤러리 관계
 db.gallery.hasMany(db.gallery_comment,{foreignKey:"galleryid", onDelete:"CASCADE"})

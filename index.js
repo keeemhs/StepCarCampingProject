@@ -11,9 +11,13 @@ app.use("/static",express.static(__dirname+"/static"))
 const cookieParser = require("cookie-parser")
 
 
+
+
+const spotRouter = require('./routes/spot')
+app.use('/spot', spotRouter)
+
 const router =require("./routes/main")
 app.use(router)
-
 
 // index.ejs
 // app.get('/', (req, res) => {
