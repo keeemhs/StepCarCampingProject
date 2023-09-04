@@ -4,80 +4,280 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-        <link rel="stylesheet" href="rent.css" />
+        <style>
+            .main {
+                margin-left: 10px;
+                margin-right: 10px;
+                overflow-x: hidden; /* 가로 스크롤 숨김 */
+            }
+            .no-dot {
+                list-style-type: none;
+                padding: 0;
+                display: flex;
+                flex-wrap: wrap; /* 아이템이 넘칠 경우 다음 줄로 이동하도록 수정 */
+                justify-content: space-between; /* 아이템 간 간격 조정 */
+            }
+            .description {
+                text-align: center;
+            }
+            .item {
+                flex: 0 0 calc(25% - 20px); /* 4개 아이템을 한 줄에 표시하기 위해 너비를 조절합니다. */
+                box-sizing: border-box;
+                margin: 10px;
+                max-width: calc(25% - 20px); /* 아이템의 최대 너비 설정 */
+            }
+            @media screen and (max-width: 1023px) {
+                .display {
+                    flex-wrap: wrap;
+                }
+                .item {
+                    flex: 0 0 calc(50% - 20px); /* 화면이 작을 때는 2개씩 보이도록 설정합니다. */
+                }
+            }
+
+            /* 더 작은 화면 크기에서는 한 개씩 아이템을 표시합니다. */
+            @media screen and (max-width: 767px) {
+                .item {
+                    flex: 0 0 calc(100% - 20px); /* 화면이 아주 작을 때는 한 개씩 보이도록 설정합니다. */
+                }
+            }
+        </style>
         <title>Document</title>
     </head>
     <body>
         <!-- header -->
 
         <!-- main -->
-        <ul class="prdList grid3 no-dot">
-            <li id="anchorBoxId_306" class="xans-record-">
-                <div class="thumbnail">
-                    <div class="prdImg">
-                        <a href="/product/캠프타운-어드벤쳐6-5인-권장/306/category/39/display/1/" name="anchorBoxName_306">
-                            <img src="//www.starcamp.co.kr/web/product/medium/201903/f0df318e0c2c3ba28a79fd88cba770cf.jpg" id="eListPrdImage306_1" alt="캠프타운 어드벤쳐6 (5인 권장)" />
-                        </a>
+        <section class="main1">
+            <ul class="no-dot display">
+                <li id="item" class="item">
+                    <div class="">
+                        <div class="description">
+                            <a href="/product/캠프타운-어드벤쳐6-5인-권장/306/category/39/display/1/" name="anchorBoxName_306">
+                                <img src="//www.starcamp.co.kr/web/product/medium/201903/f0df318e0c2c3ba28a79fd88cba770cf.jpg" id="eListPrdImage306_1" alt="캠프타운 어드벤쳐6 (5인 권장)" />
+                            </a>
+                        </div>
                     </div>
-                </div>
-                <div class="description">
-                    <strong class="name">
-                        <a href="/product/캠프타운-어드벤쳐6-5인-권장/306/category/39/display/1/" class="">
-                            <span class="title displaynone"> <span style="font-size: 16px; color: #333333; font-weight: bold">상품명</span> :</span> <span style="font-size: 16px; color: #333333; font-weight: bold">캠프타운 어드벤쳐6 (5인 권장)</span>
-                        </a>
-                    </strong>
-                    <ul class="xans-element- xans-product xans-product-listitem spec no-dot">
-                        <li class="xans-record-">
-                            <strong class="title"><span style="font-size: 14px; color: #333333; font-weight: bold">2박3일 대여요금</span> :</strong> <span style="font-size: 14px; color: #333333; font-weight: bold">35,000원</span><span id="span_product_tax_type_text" style=""> </span>
-                        </li>
-                    </ul>
-                </div>
-            </li>
+                    <div class="description">
+                        <strong class="">
+                            <a href="/product/캠프타운-어드벤쳐6-5인-권장/306/category/39/display/1/" class="">
+                                <span class=""> <span style="font-size: 16px; color: #333333; font-weight: bold">상품명</span> :</span> <span style="font-size: 16px; color: #333333; font-weight: bold">캠프타운 어드벤쳐6 (5인 권장)</span>
+                            </a>
+                        </strong>
+                        <ul class="no-dot">
+                            <li class="">
+                                <strong class=""><span style="font-size: 14px; color: #333333; font-weight: bold">2박3일 대여요금</span> :</strong> <span style="font-size: 14px; color: #333333; font-weight: bold">35,000원</span><span id="span_product_tax_type_text" style=""> </span>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
 
-            <li id="anchorBoxId_306" class="xans-record-">
-                <div class="thumbnail">
-                    <div class="prdImg">
-                        <a href="/product/캠프타운-어드벤쳐6-5인-권장/306/category/39/display/1/" name="anchorBoxName_306">
-                            <img src="//www.starcamp.co.kr/web/product/medium/201903/f0df318e0c2c3ba28a79fd88cba770cf.jpg" id="eListPrdImage306_1" alt="캠프타운 어드벤쳐6 (5인 권장)" />
-                        </a>
+                <li id="item" class="item">
+                    <div class="">
+                        <div class="description">
+                            <a href="/product/캠프타운-어드벤쳐6-5인-권장/306/category/39/display/1/" name="anchorBoxName_306">
+                                <img src="//www.starcamp.co.kr/web/product/medium/201903/f0df318e0c2c3ba28a79fd88cba770cf.jpg" id="eListPrdImage306_1" alt="캠프타운 어드벤쳐6 (5인 권장)" />
+                            </a>
+                        </div>
                     </div>
-                </div>
-                <div class="description">
-                    <strong class="name">
-                        <a href="/product/캠프타운-어드벤쳐6-5인-권장/306/category/39/display/1/" class="">
-                            <span class="title displaynone"> <span style="font-size: 16px; color: #333333; font-weight: bold">상품명</span> :</span> <span style="font-size: 16px; color: #333333; font-weight: bold">캠프타운 어드벤쳐6 (5인 권장)</span>
-                        </a>
-                    </strong>
-                    <ul class="xans-element- xans-product xans-product-listitem spec no-dot">
-                        <li class="xans-record-">
-                            <strong class="title"><span style="font-size: 14px; color: #333333; font-weight: bold">2박3일 대여요금</span> :</strong> <span style="font-size: 14px; color: #333333; font-weight: bold">35,000원</span><span id="span_product_tax_type_text" style=""> </span>
-                        </li>
-                    </ul>
-                </div>
-            </li>
+                    <div class="description">
+                        <strong class="">
+                            <a href="/product/캠프타운-어드벤쳐6-5인-권장/306/category/39/display/1/" class="">
+                                <span class=""> <span style="font-size: 16px; color: #333333; font-weight: bold">상품명</span> :</span> <span style="font-size: 16px; color: #333333; font-weight: bold">캠프타운 어드벤쳐6 (5인 권장)</span>
+                            </a>
+                        </strong>
+                        <ul class="no-dot">
+                            <li class="">
+                                <strong class=""><span style="font-size: 14px; color: #333333; font-weight: bold">2박3일 대여요금</span> :</strong> <span style="font-size: 14px; color: #333333; font-weight: bold">35,000원</span><span id="span_product_tax_type_text" style=""> </span>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
 
-            <li id="anchorBoxId_306" class="xans-record-">
-                <div class="thumbnail">
-                    <div class="prdImg">
-                        <a href="/product/캠프타운-어드벤쳐6-5인-권장/306/category/39/display/1/" name="anchorBoxName_306">
-                            <img src="//www.starcamp.co.kr/web/product/medium/201903/f0df318e0c2c3ba28a79fd88cba770cf.jpg" id="eListPrdImage306_1" alt="캠프타운 어드벤쳐6 (5인 권장)" />
-                        </a>
+                <li id="item" class="item">
+                    <div class="">
+                        <div class="description">
+                            <a href="/product/캠프타운-어드벤쳐6-5인-권장/306/category/39/display/1/" name="anchorBoxName_306">
+                                <img src="//www.starcamp.co.kr/web/product/medium/201903/f0df318e0c2c3ba28a79fd88cba770cf.jpg" id="eListPrdImage306_1" alt="캠프타운 어드벤쳐6 (5인 권장)" />
+                            </a>
+                        </div>
                     </div>
-                </div>
-                <div class="description">
-                    <strong class="name">
-                        <a href="/product/캠프타운-어드벤쳐6-5인-권장/306/category/39/display/1/" class="">
-                            <span class="title displaynone"> <span style="font-size: 16px; color: #333333; font-weight: bold">상품명</span> :</span> <span style="font-size: 16px; color: #333333; font-weight: bold">캠프타운 어드벤쳐6 (5인 권장)</span>
-                        </a>
-                    </strong>
-                    <ul class="xans-element- xans-product xans-product-listitem spec no-dot">
-                        <li class="xans-record-">
-                            <strong class="title"><span style="font-size: 14px; color: #333333; font-weight: bold">2박3일 대여요금</span> :</strong> <span style="font-size: 14px; color: #333333; font-weight: bold">35,000원</span><span id="span_product_tax_type_text" style=""> </span>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-        </ul>
+                    <div class="description">
+                        <strong class="">
+                            <a href="/product/캠프타운-어드벤쳐6-5인-권장/306/category/39/display/1/" class="">
+                                <span class=""> <span style="font-size: 16px; color: #333333; font-weight: bold">상품명</span> :</span> <span style="font-size: 16px; color: #333333; font-weight: bold">캠프타운 어드벤쳐6 (5인 권장)</span>
+                            </a>
+                        </strong>
+                        <ul class="no-dot">
+                            <li class="">
+                                <strong class=""><span style="font-size: 14px; color: #333333; font-weight: bold">2박3일 대여요금</span> :</strong> <span style="font-size: 14px; color: #333333; font-weight: bold">35,000원</span><span id="span_product_tax_type_text" style=""> </span>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li id="item" class="item">
+                    <div class="">
+                        <div class="description">
+                            <a href="/product/캠프타운-어드벤쳐6-5인-권장/306/category/39/display/1/" name="anchorBoxName_306">
+                                <img src="//www.starcamp.co.kr/web/product/medium/201903/f0df318e0c2c3ba28a79fd88cba770cf.jpg" id="eListPrdImage306_1" alt="캠프타운 어드벤쳐6 (5인 권장)" />
+                            </a>
+                        </div>
+                    </div>
+                    <div class="description">
+                        <strong class="">
+                            <a href="/product/캠프타운-어드벤쳐6-5인-권장/306/category/39/display/1/" class="">
+                                <span class=""> <span style="font-size: 16px; color: #333333; font-weight: bold">상품명</span> :</span> <span style="font-size: 16px; color: #333333; font-weight: bold">캠프타운 어드벤쳐6 (5인 권장)</span>
+                            </a>
+                        </strong>
+                        <ul class="no-dot">
+                            <li class="">
+                                <strong class=""><span style="font-size: 14px; color: #333333; font-weight: bold">2박3일 대여요금</span> :</strong> <span style="font-size: 14px; color: #333333; font-weight: bold">35,000원</span><span id="span_product_tax_type_text" style=""> </span>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li id="item" class="item">
+                    <div class="">
+                        <div class="description">
+                            <a href="/product/캠프타운-어드벤쳐6-5인-권장/306/category/39/display/1/" name="anchorBoxName_306">
+                                <img src="//www.starcamp.co.kr/web/product/medium/201903/f0df318e0c2c3ba28a79fd88cba770cf.jpg" id="eListPrdImage306_1" alt="캠프타운 어드벤쳐6 (5인 권장)" />
+                            </a>
+                        </div>
+                    </div>
+                    <div class="description">
+                        <strong class="">
+                            <a href="/product/캠프타운-어드벤쳐6-5인-권장/306/category/39/display/1/" class="">
+                                <span class=""> <span style="font-size: 16px; color: #333333; font-weight: bold">상품명</span> :</span> <span style="font-size: 16px; color: #333333; font-weight: bold">캠프타운 어드벤쳐6 (5인 권장)</span>
+                            </a>
+                        </strong>
+                        <ul class="no-dot">
+                            <li class="">
+                                <strong class=""><span style="font-size: 14px; color: #333333; font-weight: bold">2박3일 대여요금</span> :</strong> <span style="font-size: 14px; color: #333333; font-weight: bold">35,000원</span><span id="span_product_tax_type_text" style=""> </span>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <hr />
+
+        <section class="main1">
+            <ul class="no-dot display">
+                <li id="item" class="item">
+                    <div class="">
+                        <div class="description">
+                            <a href="/product/캠프타운-어드벤쳐6-5인-권장/306/category/39/display/1/" name="anchorBoxName_306">
+                                <img src="//www.starcamp.co.kr/web/product/medium/201903/f0df318e0c2c3ba28a79fd88cba770cf.jpg" id="eListPrdImage306_1" alt="캠프타운 어드벤쳐6 (5인 권장)" />
+                            </a>
+                        </div>
+                    </div>
+                    <div class="description">
+                        <strong class="">
+                            <a href="/product/캠프타운-어드벤쳐6-5인-권장/306/category/39/display/1/" class="">
+                                <span class=""> <span style="font-size: 16px; color: #333333; font-weight: bold">상품명</span> :</span> <span style="font-size: 16px; color: #333333; font-weight: bold">캠프타운 어드벤쳐6 (5인 권장)</span>
+                            </a>
+                        </strong>
+                        <ul class="no-dot">
+                            <li class="">
+                                <strong class=""><span style="font-size: 14px; color: #333333; font-weight: bold">2박3일 대여요금</span> :</strong> <span style="font-size: 14px; color: #333333; font-weight: bold">35,000원</span><span id="span_product_tax_type_text" style=""> </span>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li id="item" class="item">
+                    <div class="">
+                        <div class="description">
+                            <a href="/product/캠프타운-어드벤쳐6-5인-권장/306/category/39/display/1/" name="anchorBoxName_306">
+                                <img src="//www.starcamp.co.kr/web/product/medium/201903/f0df318e0c2c3ba28a79fd88cba770cf.jpg" id="eListPrdImage306_1" alt="캠프타운 어드벤쳐6 (5인 권장)" />
+                            </a>
+                        </div>
+                    </div>
+                    <div class="description">
+                        <strong class="">
+                            <a href="/product/캠프타운-어드벤쳐6-5인-권장/306/category/39/display/1/" class="">
+                                <span class=""> <span style="font-size: 16px; color: #333333; font-weight: bold">상품명</span> :</span> <span style="font-size: 16px; color: #333333; font-weight: bold">캠프타운 어드벤쳐6 (5인 권장)</span>
+                            </a>
+                        </strong>
+                        <ul class="no-dot">
+                            <li class="">
+                                <strong class=""><span style="font-size: 14px; color: #333333; font-weight: bold">2박3일 대여요금</span> :</strong> <span style="font-size: 14px; color: #333333; font-weight: bold">35,000원</span><span id="span_product_tax_type_text" style=""> </span>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li id="item" class="item">
+                    <div class="">
+                        <div class="description">
+                            <a href="/product/캠프타운-어드벤쳐6-5인-권장/306/category/39/display/1/" name="anchorBoxName_306">
+                                <img src="//www.starcamp.co.kr/web/product/medium/201903/f0df318e0c2c3ba28a79fd88cba770cf.jpg" id="eListPrdImage306_1" alt="캠프타운 어드벤쳐6 (5인 권장)" />
+                            </a>
+                        </div>
+                    </div>
+                    <div class="description">
+                        <strong class="">
+                            <a href="/product/캠프타운-어드벤쳐6-5인-권장/306/category/39/display/1/" class="">
+                                <span class=""> <span style="font-size: 16px; color: #333333; font-weight: bold">상품명</span> :</span> <span style="font-size: 16px; color: #333333; font-weight: bold">캠프타운 어드벤쳐6 (5인 권장)</span>
+                            </a>
+                        </strong>
+                        <ul class="no-dot">
+                            <li class="">
+                                <strong class=""><span style="font-size: 14px; color: #333333; font-weight: bold">2박3일 대여요금</span> :</strong> <span style="font-size: 14px; color: #333333; font-weight: bold">35,000원</span><span id="span_product_tax_type_text" style=""> </span>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li id="item" class="item">
+                    <div class="">
+                        <div class="description">
+                            <a href="/product/캠프타운-어드벤쳐6-5인-권장/306/category/39/display/1/" name="anchorBoxName_306">
+                                <img src="//www.starcamp.co.kr/web/product/medium/201903/f0df318e0c2c3ba28a79fd88cba770cf.jpg" id="eListPrdImage306_1" alt="캠프타운 어드벤쳐6 (5인 권장)" />
+                            </a>
+                        </div>
+                    </div>
+                    <div class="description">
+                        <strong class="">
+                            <a href="/product/캠프타운-어드벤쳐6-5인-권장/306/category/39/display/1/" class="">
+                                <span class=""> <span style="font-size: 16px; color: #333333; font-weight: bold">상품명</span> :</span> <span style="font-size: 16px; color: #333333; font-weight: bold">캠프타운 어드벤쳐6 (5인 권장)</span>
+                            </a>
+                        </strong>
+                        <ul class="no-dot">
+                            <li class="">
+                                <strong class=""><span style="font-size: 14px; color: #333333; font-weight: bold">2박3일 대여요금</span> :</strong> <span style="font-size: 14px; color: #333333; font-weight: bold">35,000원</span><span id="span_product_tax_type_text" style=""> </span>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li id="item" class="item">
+                    <div class="">
+                        <div class="description">
+                            <a href="/product/캠프타운-어드벤쳐6-5인-권장/306/category/39/display/1/" name="anchorBoxName_306">
+                                <img src="//www.starcamp.co.kr/web/product/medium/201903/f0df318e0c2c3ba28a79fd88cba770cf.jpg" id="eListPrdImage306_1" alt="캠프타운 어드벤쳐6 (5인 권장)" />
+                            </a>
+                        </div>
+                    </div>
+                    <div class="description">
+                        <strong class="">
+                            <a href="/product/캠프타운-어드벤쳐6-5인-권장/306/category/39/display/1/" class="">
+                                <span class=""> <span style="font-size: 16px; color: #333333; font-weight: bold">상품명</span> :</span> <span style="font-size: 16px; color: #333333; font-weight: bold">캠프타운 어드벤쳐6 (5인 권장)</span>
+                            </a>
+                        </strong>
+                        <ul class="no-dot">
+                            <li class="">
+                                <strong class=""><span style="font-size: 14px; color: #333333; font-weight: bold">2박3일 대여요금</span> :</strong> <span style="font-size: 14px; color: #333333; font-weight: bold">35,000원</span><span id="span_product_tax_type_text" style=""> </span>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
         <!-- Footer -->
         <%-include('footer.ejs')%>
     </body>
