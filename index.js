@@ -12,9 +12,15 @@ app.set('views', './views');
 app.use(express.static('./views/css')); // css폴더 경로 셋팅
 // 쿠키
 const cookieParser = require("cookie-parser")
+
+
+
+
+const spotRouter = require('./routes/spot')
+app.use('/spot', spotRouter)
+
 const router =require("./routes/main")
 app.use(router)
-
 
 // index.ejs
 // app.get('/', (req, res) => {
@@ -32,9 +38,9 @@ app.use('*', (req, res) => {
     res.render('404');
 });
 
-//force:false(default) 테이블이 존재하는 패스, 없으면 생성
 db.sequelize.sync({ force: false }).then(() => {
     app.listen(PORT, () => {
         console.log(`http://localhost:${PORT}`);
     });
-});
+})
+
