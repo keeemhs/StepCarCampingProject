@@ -45,7 +45,7 @@
 
         .spot {
             width: 200px;
-            height: 250px;
+            height: 270px;
             border: 2px;
             border-style: solid;
         }
@@ -65,6 +65,26 @@
             width: 180px;
             height: 100px;
             margin: 10px 0px;
+        }
+
+        .spot-name {
+            font-size: 13px;
+            margin-top: 10px;
+        }
+
+        .spot-information {
+            height: 60px;
+            font-size: 12px;
+            margin: 5px 10px 10px;
+        }
+
+        .spot-address {
+            font-size: 12px;
+            margin: 0px 10px 5px;
+        }
+
+        .chat-button {
+            font-size: 12px;
         }
     </style>
 </head>
@@ -91,7 +111,7 @@
 
     <!-- 스팟리스트 -->
     <div class="spot-container">
-        <div class="spot">
+        <!-- <div class="spot">
             <div style="margin-top: 10px;">스팟이름</div>
             <div>
                 <img src="../images/sea.jpg" class="spot-image">
@@ -101,73 +121,80 @@
             <div>
                 <button>채팅</button>
             </div>
-        </div>
-
-    </div>
-
+        </div> -->
+        <!-- for(let i = 0; i < ) </div> -->
 
 
 
-    <script>
-        //지도 초기 기준점 위치 설정
-        const mapOptions = {
-            center: new naver.maps.LatLng(36.626316, 127.936296),
-            zoom: 6
-        }
 
-        var map = new naver.maps.Map('map', mapOptions);
+        <script>
+            //지도 초기 기준점 위치 설정
+            const mapOptions = {
+                center: new naver.maps.LatLng(36.626316, 127.936296),
+                zoom: 6
+            }
 
-        var spot = document.querySelector('.spot')
+            var map = new naver.maps.Map('map', mapOptions);
+
+            var spotContainer = document.querySelector('.spot-container')
 
 
-        // 해당 지역버튼 클릭 시 지도 기준점 위치 이동
-        var locationButton = document.querySelectorAll('.location-select > button')
-        locationButton.forEach(button => {
-            button.addEventListener('click', async () => {
-                const res = await axios({
-                    method: 'POST',
-                    url: '/location',
-                    data: {
-                        location: button.value
-                    }
-                })
-
-                console.log(res.data.spot)
-                mapOptions.center = new naver.maps.LatLng(res.data.location.lon, res.data.location.lat)
-                mapOptions.zoom = 7
-                map = new naver.maps.Map('map', mapOptions);
-
-                //해당 지역의 차박 스팟 마커찍기
-                var marker = []
-                for (let i = 0; i < res.data.spot.length; i++) {
-                    marker[i] = new naver.maps.Marker({
-                        map: map,
-                        position: new naver.maps.LatLng(res.data.spot[i].lon, res.data.spot[i].lat)
+            // 해당 지역버튼 클릭 시 지도 기준점 위치 이동
+            var locationButton = document.querySelectorAll('.location-select > button')
+            locationButton.forEach(button => {
+                button.addEventListener('click', async () => {
+                    const res = await axios({
+                        method: 'POST',
+                        url: '/location',
+                        data: {
+                            location: button.value
+                        }
                     })
 
-                    //마커 클릭 이벤트
-                    naver.maps.Event.addListener(marker[i], 'click', () => {
+
+                    mapOptions.center = new naver.maps.LatLng(res.data.location.lon, res.data.location.lat)
+                    mapOptions.zoom = 7
+                    map = new naver.maps.Map('map', mapOptions);
+
+                    //해당 지역의 차박 스팟 마커찍기
+                    var marker = []
+                    for (let i = 0; i < res.data.spot.length; i++) {
+                        marker[i] = new naver.maps.Marker({
+                            map: map,
+                            position: new naver.maps.LatLng(res.data.spot[i].lon, res.data.spot[i].lat)
+                        })
+                    }
+
+                    //해당 지역의 차박 스팟 리스트 출력
+                    for (let i = 0; i < res.data.spot.length; i++) {
                         spotContainer.innerHTML += `
                         <div class="spot">
-                            <div style="margin-top: 10px;">${res.data.spot[i].spotName}</div>
-                            <div>
+                            <div class="spot-name">${res.data.spot[i].spotName}</div>
+                                <div>
                                 <img src="${res.data.spot[i].image}" class="spot-image">
-                            </div>
-                            <div style="height: 60px;">${res.data.spot[i].information}</div>
+                                </div>
+                            <div class="spot-address">${res.data.spot[i].address}</div>
+                            <div class="spot-information">${res.data.spot[i].information}</div>
                             <div>
-                                <button>채팅</button>
+                                <button class="chat-button">채팅</button>
                             </div>
                         </div>
                         `
-                    })
-                }
+                    }
+
+
+
+                    //마커 클릭 이벤트
+                    // naver.maps.Event.addListener(marker[i], 'click', () => {
+
+                    // })
+                })
             })
-        })
 
 
 
 
-    </script>
+        </script>
 </body>
 
 </html>
