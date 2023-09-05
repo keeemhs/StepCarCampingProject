@@ -3,6 +3,7 @@ const app = express();
 const PORT = 8000;
 const db = require('./models');
 const path = require('path'); // path 모듈 추가
+const cookieParser =require('cookie-parser')
 
 app.use(
     express.urlencoded({
@@ -10,9 +11,11 @@ app.use(
     })
 );
 app.use(express.json());
+app.use(cookieParser());
 
 app.use('/static', express.static(__dirname + '/static'));
 app.set('view engine', 'ejs');
+
 app.set('views', './views');
 
 app.use(express.static(__dirname + '/views/css')); // css폴더 경로 셋팅
@@ -22,17 +25,19 @@ app.use(express.static(__dirname + '/views/img')); // img폴더 경로 셋팅
 // app.use('/css', express.static(__dirname + '../views')); // css폴더 경로 셋팅
 app.use('/static', express.static(path.join(__dirname, 'carCampingProject', 'views')));
 
-// 쿠키
-const cookieParser = require('cookie-parser');
 
 
 //gallery 리뷰, 리뷰의 댓글 등등
 const galleryRouter = require("./routes/gallery")
-app.use("/gallery",galleryRouter)
+app.use("/gallery", galleryRouter)
+
 
 //스팟 관련 라우터
 const spotRouter = require('./routes/spot')
 app.use('/spot', spotRouter)
+
+const user = require('./routes/user')
+app.use('/user', user)
 
 const router = require("./routes/main")
 app.use(router)
