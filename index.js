@@ -28,9 +28,6 @@ app.use('/static', express.static(path.join(__dirname, 'carCampingProject', 'vie
 const cookieParser = require('cookie-parser');
 
 
-const user = require('./routes/user')
-app.use('/user', user)
-
 
 //gallery 리뷰, 리뷰의 댓글 등등
 const galleryRouter = require("./routes/gallery")
