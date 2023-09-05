@@ -2,6 +2,7 @@
 const { gallery, gallery_img,gallery_comment } = require('../models')
 const aws = require("aws-sdk")
 const multers3= require("multer-s3")
+const multer = require('multer')
 
 aws.config.update({
     accessKeyId:"AKIA4GRTGI6TYJVPLNVB",
