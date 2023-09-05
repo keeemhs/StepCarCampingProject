@@ -4,34 +4,82 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="https://kit.fontawesome.com/8786e78429.js" crossorigin="anonymous"></script>
     <style>
         #pictures{
             display: flex;
+            justify-content: center;
+            align-items: center;
         }
-        .pictureChange{
-           
+
+        .img--box {
+            width: 300px;
+            margin-left: 10px;
+            margin-right: 10px;
         }
+
+
     </style>
 </head>
 <body>
-    <div>리뷰페이지</div>
+    <%-include('header.ejs')%>
+
     <hr>
     <!-- user.name -->
-    <div>???님의 캠핑스팟</div>
+    <div>???님의 캠핑스팟 </div>
     <!-- 사진넘기기-->
     
     <div id = 'pictures'>
-        <button class="pictureChange">왼쪽으로(세모로 바꿀것임)</button>
-        <img style="width: 300px;" src="../static/bulguk.jpeg">
-        <button class="pictureChange">오른쪽으로(세모로 바꿀것임)</button>
+        <i class="fa-solid fa-arrow-left" onclick="left()"></i>
+        <img id="img-box" class="img--box" src="<%= imgurl.urls[0] %>"> 
+        <i class="fa-solid fa-arrow-right" onclick="right()"></i>
     </div>
 
     <!-- 본문 -->
     <div>
         본문
+        <div>
+            <%= mainText %>
+        </div>
     </div>
+    <hr>
+    <button onclick="location.href='/gallery/del'">삭제</button>
     <!-- 댓글-->
+    <hr>
+    <div>댓글</div>
+    <%-include('footer.ejs')%>
 
+    <script>
+        // imgurl를 stringfy해준뒤에, 다시 parse해서 jsonobject를 만든다.
+        // 나중에는 그냥 서버단에서 하는게 나을것같다.
+        var imgurl = JSON.parse('<%- JSON.stringify(imgurl) %>').urls; 
+        console.log(typeof imgurl)
+        console.log(imgurl)
+        var currentImg = 0
+
+        var imgLength =imgurl.length
+        console.log(imgLength)
+        function left(){
+            console.log("left",currentImg)
+            if(currentImg==0){
+                currentImg=imgLength-1
+            }else{
+                currentImg--;
+            }
+            console.log(imgurl[currentImg])
+            document.querySelector("#img-box").src=imgurl[currentImg]
+        }
+        function right(){
+            console.log("right",currentImg)
+            if(currentImg==imgLength-1){
+                currentImg  =0
+            }else{
+                currentImg++;
+            }
+            console.log(imgurl,currentImg)
+            document.querySelector("#img-box").src=imgurl[currentImg]
+        }
+    </script>
 
 </body>
 </html>

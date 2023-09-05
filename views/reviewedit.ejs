@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>리뷰 에딧</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <%-include('header.ejs')%>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <hr>
+    <form name="reviewEdit">
+        <input name="title" type="text" placeholder="제목"><br>
+        <input name="mainText" type="text" placeholder="본문"><br>
+        <input type="radio" name="region"  value="1"/>지역1
+        <input type="radio" name="region"  value="2"/>지역2
+        <input type="radio" name="region"  value="3"/>지역3
+        <input type="radio" name="region"  value="4"/>지역4
+         <br />
+        <input name="spotInfo" type="text" placeholder="스팟정보"><br>
+        <button>제출</button>
+    </form>
+    <hr>
+    <%-include('footer.ejs')%>
+
+    <script>
+        const form= document.forms['reviewEdit']
+        const title = form.title.value
+        const mainText = form.mainText.value
+        const region =form.region.value
+        const spotInfo = form.spotInfo.value
+        console.log(title)
+        console.log(mainText)
+        console.log(region)
+        console.log(spotInfo)
+
+        // const result= await axios({
+        //     method : "POST",
+        //     url: "gallery/reviewEdit",
+        //     data : {
+        //         title,
+        //         mainText,
+        //         region,
+        //         spotInfo
+        //     }
+        // })
+    </script>
+</body>
+</html>

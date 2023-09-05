@@ -29,7 +29,6 @@ db.gallery_img = require("./gallery_img")(sequelize)
 db.gallery_comment = require("./gallery_comment")(sequelize)
 
 
-
 //갤러리 관계
 db.gallery.hasMany(db.gallery_comment, { foreignKey: "galleryid", onDelete: "CASCADE" })
 db.gallery_comment.belongsTo(db.gallery, { foreignKey: "galleryid", onDelete: "CASCADE" })
