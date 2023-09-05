@@ -130,6 +130,8 @@
             if (!passwordPattern.test(pw)) {
                 $('#pw').addClass('input-style')
                 alert('비밀번호는 숫자+영문 조합으로 최소 8자리 이상 입력해주세요')
+            } else {
+                $('#pw').removeClass('input-style')
             }
         })
 
@@ -140,6 +142,8 @@
             if (pw1 !== pw2) {
                 $('#pwc').addClass('input-style')
                 alert('비밀번호가 일치하지 않습니다')
+            } else {
+                $('#pwc').removeClass('input-style')
             }
         })
 
