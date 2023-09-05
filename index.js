@@ -6,7 +6,7 @@ app.set('view engine', 'ejs');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use("/static",express.static(__dirname+"/static"))
+app.use("/static", express.static(__dirname + "/static"))
 app.set('views', './views');
 
 app.use(express.static('./views/css')); // css폴더 경로 셋팅
@@ -14,12 +14,13 @@ app.use(express.static('./views/css')); // css폴더 경로 셋팅
 const cookieParser = require("cookie-parser")
 
 
-
+const user = require('./routes/user')
+app.use('/user', user)
 
 const spotRouter = require('./routes/spot')
 app.use('/spot', spotRouter)
 
-const router =require("./routes/main")
+const router = require("./routes/main")
 app.use(router)
 
 // index.ejs
