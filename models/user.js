@@ -1,37 +1,47 @@
 const { DataTypes } = require('sequelize');
 
-const Model = (sequelize) => {
-    return sequelize.define('user', {
+const User = (sequelize) => {
+    const model = sequelize.define('user', {
         id: {
             type: DataTypes.INTEGER,
             allowNull: false, //NOT NULL
             primaryKey: true,
             autoIncrement: true,
         },
-        userid: {
-            type: DataTypes.STRING(20),
+        useremail: {
+            type: DataTypes.STRING(255),
             allowNull: false,
-            defaultValue: 'asdf', //기본값
         },
         pw: {
             type: DataTypes.STRING(255),
             allowNull: false,
         },
-        name: {
-            type: DataTypes.STRING(10),
+        birth: {
+            type: DataTypes.STRING(255),
             allowNull: false,
         },
-    }
-    ,
-    {
-        //이름 복수 x
-        freezeTableName : false,
-        //타임스탬프를 찍지 않음.
-        timestamps : false,
-
-    }
-    
+        username: {
+            type: DataTypes.STRING(255),
+            allowNull: false,
+        },
+        nickname: {
+            type: DataTypes.STRING(255),
+            allowNull: false,
+        },
+        levelc: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        ownc: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        }
+    },
+        {
+            timestamps: false,
+        }
     );
+    return model
 };
 
-module.exports = Model;
+module.exports = User

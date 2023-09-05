@@ -1,0 +1,21 @@
+.form-container {
+    display: flex;
+    justify-content: center;
+    height: 350px;
+    align-items: center;
+}
+
+.form-container input {
+    margin: 10px;
+}
+
+.form-container div {
+    margin: 0px 10px;
+}
+
+
+.signup-button {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
