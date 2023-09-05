@@ -6,7 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원가입</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <link rel="stylesheet" href="signup.ejs">
+
+    <style>
+        .input-style {
+            border-color: red;
+        }
+    </style>
 </head>
 
 <body>
@@ -16,9 +23,9 @@
             <input type="text" name="email" placeholder="이메일을 입력해주세요">
             <button type="button" onclick="duplication()" id="duButton">중복</button>
             <br>
-            <input type="password" name="pw" placeholder="비밀번호를 입력해주세요">
+            <input type="password" name="pw" id="pw" placeholder="비밀번호를 입력해주세요">
             <br>
-            <input type="password" name="pwc" placeholder="비밀번호를 한번 더 입력해주세요">
+            <input type="password" name="pwc" id="pwc" placeholder="비밀번호를 한번 더 입력해주세요">
             <br>
             <div>
                 <select name="birth_year" id="birth_year">
@@ -78,23 +85,25 @@
         </form>
     </div>
 
-
-
-
     <script>
         const form = document.forms['signup']
         const email = document.querySelector('#email')
         const password = document.querySelector('#pw')
-
+        const passwordConfirm = document.querySelector('#pwc')
         const duButton = document.querySelector('#duButton')
 
+
         //이메일 정규식
-        let emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+        var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
         //비밀번호 정규식(영문,숫자 조합 8자리 이상)
-        let passwordPattern = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,25}$/
+        var passwordPattern = RegExp(/^(?=.*[a-zA-Z])(?=.*[0-9]).{8,25}$/)
 
         //이메일 중복검사
         async function duplication() {
+            if (!emailPattern.test(form.email.value)) {
+                return alert('이메일 형식이 올바르지 않습니다')
+            }
+
             try {
                 const res = await axios({
                     method: 'POST',
@@ -115,21 +124,33 @@
         }
 
 
+        //비밀번호 유효성 검사
+        $('#pw').change(function () {
+            var pw = $('#pw').val()
+            if (!passwordPattern.test(pw)) {
+                $('#pw').addClass('input-style')
+                alert('비밀번호는 숫자+영문 조합으로 최소 8자리 이상 입력해주세요')
+            } else {
+                $('#pw').removeClass('input-style')
+            }
+        })
+
+        //비밀번호 일치 검사
+        $('#pwc').change(function () {
+            var pw1 = $('#pw').val()
+            var pw2 = $('#pwc').val()
+            if (pw1 !== pw2) {
+                $('#pwc').addClass('input-style')
+                alert('비밀번호가 일치하지 않습니다')
+            } else {
+                $('#pwc').removeClass('input-style')
+            }
+        })
+
 
         //회원가입 동작
         async function signUp() {
             const birthday = `${form.birth_year.value}-${form.birth_month.value}-${form.birth_day.value}`
-            if (!emailPattern.test(form.email.value)) {
-                return alert('이메일 형식이 올바르지 않습니다')
-            }
-
-            if (!passwordPattern.test(form.pw.value)) {
-                return alert('비밀번호는 숫자+영문 조합으로 최소 8자리 이상 입력해주세요')
-            }
-
-            if (form.pw.value !== form.pwc.value) {
-                return alert('입력한 비밀번호가 서로 일치하지 않습니다')
-            }
 
             if (form.name.value == '' || form.nickname.value == '') {
                 return alert('이름 또는 닉네임을 입력하지 않았습니다')
