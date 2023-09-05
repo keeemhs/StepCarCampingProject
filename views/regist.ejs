@@ -17,17 +17,15 @@
     </head>
     <body>
         <!-- header -->
-        <p>메인페이지 입니다</p>
-        <button onclick="location.href = '/rent'">장비대여</button>
-        <button onclick="location.href = '/spot'">지도스팟</button>
-        <button onclick="location.href = '/gallery'">갤러리</button>
+        <%-include('header.ejs')%>
 
         <!-- main -->
 
         <!-- main -->
-        <section class="main">
+        <section class="main" style="margin-top: 100px">
             <!-- logo -->
             <img src="" alt="" />
+
             <div class="regist">
                 <h2>제품 등록하기</h2>
                 <form name="form-regist">
@@ -38,7 +36,11 @@
                         ~
                         <input type="date" id="endDate" />
                     </div>
-                    <input type="radio" name="rentPossible" />대여가능 <input type="radio" name="rentPossible" />대여불가능 <br />
+                    <input type="radio" name="rentPossible" value="1" />
+                    <label for="possible">대여가능</label>
+                    <input type="radio" name="rentPossible" value="0" />
+                    <label for="impossible">대여불가능</label>
+                    <br />
                     <button type="button" onclick="regist()">등록하기</button>
                 </form>
             </div>
@@ -49,25 +51,27 @@
     </body>
 
     <script>
-        function regist() {
-            const form = document.forms['form-register'];
-            axios({
-                method: 'POST',
-                url: '/rent/regist',
-                data: {
-                    gearTitle: form.gearTitle.value,
-                    gearExplain: form.gearExplain.value,
-                    startDate: form.startDate.value,
-                    endDate: form.endDate.value,
-                    rentPossible: form.rentPossible.value,
-                },
-            }).then((res) => {
-                console.log('res', res);
+        async function regist() {
+            const form = document.forms['form-regist'];
+            try {
+                const res = await axios({
+                    method: 'POST',
+                    url: '/rent/regist',
+                    data: {
+                        gearTitle: form.gearTitle.value,
+                        gearExplain: form.gearExplain.value,
+                        startDate: form.startDate.value,
+                        endDate: form.endDate.value,
+                        rentPossible: form.rentPossible.value,
+                    },
+                });
                 if (res.data.result) {
                     alert('제품이 등록되었습니다!');
                     window.location.href = '/rent';
                 }
-            });
+            } catch (error) {
+                console.log(error);
+            }
         }
     </script>
 </html>
