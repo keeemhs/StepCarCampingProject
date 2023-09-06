@@ -20,7 +20,6 @@ exports.spotPage = (req, res) => {
     res.render('spot');
 };
 
-
 exports.galleryPage= async (req,res)=>{
     if(req.query.sort_method==undefined || req.query.sort_method==0 ){
         const result = await gallery.findAll(
@@ -43,8 +42,8 @@ exports.galleryPage= async (req,res)=>{
             console.log(result)
             res.render("gallery",{data : result})
     }
-
 }
+
 
 exports.reviewPage = (req, res) => {
     res.render('review');
