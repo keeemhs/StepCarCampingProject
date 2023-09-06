@@ -53,6 +53,10 @@ app.get('/recomCar', (req, res) => {
     res.render('recomCar');
 });
 
+//gearrent
+const gear = require('./routes/gear');
+app.use('/gear', gear);
+
 // rent.ejs
 // app.get('/rent', (req, res) => {
 //     res.render('rent');

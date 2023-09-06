@@ -12,10 +12,6 @@ exports.registPage = (req, res) => {
     res.render('regist');
 };
 
-exports.regist = async (req, res) => {
-    const { gearTitle, gearExplain, startDate, endDate, rentPossible } = req.body;
-};
-
 exports.spotPage = (req, res) => {
     res.render('spot');
 };
