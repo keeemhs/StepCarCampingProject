@@ -2,7 +2,7 @@ const express = require("express")
 const galleryController =require("../controller/Cgallery")
 const router = express.Router()
 
-//갤러리 리뷰 페이지로
+// 리뷰 페이지로
 router.get("/review",galleryController.reviewPage)
 
 
@@ -10,6 +10,8 @@ router.get("/review",galleryController.reviewPage)
 router.get("/reviewEdit",galleryController.reviewEdit)
 
 
+//review 만들떄 싱글 axios
+router.post("/singleAxios",galleryController.singleAxios)
 //갤러리 axiosTest
-router.post("/multiAxios",galleryController.multipleAxios)
+router.post("/multipleAxios",galleryController.multipleAxios)
 module.exports = router;
