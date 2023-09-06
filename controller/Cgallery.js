@@ -1,8 +1,10 @@
 
 const { gallery, gallery_img,gallery_comment } = require('../models')
+//multer upload용
 const aws = require("aws-sdk")
 const multers3= require("multer-s3")
 const multer = require('multer')
+const path=require('path')
 
 aws.config.update({
     accessKeyId:"AKIA4GRTGI6TYJVPLNVB",
@@ -21,22 +23,23 @@ const upload = multer({
         bucket: "hwr-bucket",
         acl : "public-read",
         metadata : function(req,file,cb){
-            cb(null,{fieldName: file.fieldName})
+            cb(null,{fieldName: file.fieldname})
         },
         key(req, file, cb) {
-
             //DB에도 저장해야함(경로) 
               // https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/1693843848259_kali.jpg
             //즉, https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/{파일명} 으로 경로 저장하는 코드 필요
-            cb(null, `${Date.now()}_${path.basename(file.originalname)}`) // original 폴더안에다 파일을 저장
+            //여기서 폴더를 하나 만들었고, 폴더에 마음대로...저장해보시면됩니다.
+            cb(null, `gallery/${Date.now()}_${path.basename(file.originalname)}`) // original 폴더안에다 파일을 저장
          },
     }),
     limits : {
         fileSize: 5 * 1024 * 1024, //5mb
     }
 })
+//멀터 업로드 세팅 여기까지
 
-
+//멀터 이용
 exports.multipleAxios=  (req,res)=>{
     const files = upload.array('array_files')
 
@@ -48,13 +51,12 @@ exports.multipleAxios=  (req,res)=>{
           return ;
           } else if (err) {
           // An unknown error occurred when uploading.
-          const err = new Error('Server Error')
           console.log(err)
           return;
         }
     console.log(result)
         return res.json({
-            "filePath" :filePathArray
+            "file" :result
           });
     })
 }
