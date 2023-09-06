@@ -10,7 +10,10 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 //제품등록
-db.Gear = require('./regist')(sequelize);
+db.Gear = require('./gear')(sequelize);
+db.gear_img = require('./gear_img')(sequelize);
+db.Gear.hasMany(db.gear_img, { foreignKey: 'gearid', onDelete: 'CASCADE' });
+db.gear_img.belongsTo(db.Gear, { foreignKey: 'gearid', onDelete: 'CASCADE' });
 
 //지도
 db.Spot = require('./Spot')(sequelize);

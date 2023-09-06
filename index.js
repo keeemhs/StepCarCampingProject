@@ -35,14 +35,14 @@ app.use('/spot', spotRouter);
 //     res.render('index');
 // });
 
-app.post('/rent/regist', (req, res) => {
-    res.render('regist');
-});
-
 // recomCar.ejs
 app.get('/recomCar', (req, res) => {
     res.render('recomCar');
 });
+
+//gearrent
+const gear = require('./routes/gear');
+app.use('/gear', gear);
 
 // rent.ejs
 // app.get('/rent', (req, res) => {

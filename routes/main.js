@@ -1,5 +1,6 @@
 const express = require('express');
 const pageController = require('../controller/pageController');
+const CGear = require('../controller/CGear');
 const router = express.Router();
 
 // 어떤 페이지로 갈까를 모아둔곳 !!!!
@@ -10,7 +11,7 @@ router.get('/', pageController.indexPage);
 router.get('/rent', pageController.rentPage);
 //대여 장비 등록 페이지로
 router.get('/rent/regist', pageController.registPage);
-router.post('/rent/regist', pageController.post_regist);
+router.post('/rent/regist', CGear.regist);
 //spot 페이지로
 router.get('/spot', pageController.spotPage);
 //갤러리 페이지로

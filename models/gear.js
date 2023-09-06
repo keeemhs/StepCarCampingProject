@@ -1,8 +1,8 @@
 const { DataTypes } = require('sequelize');
 
-const GearModel = (sequelize) => {
-    return sequelize.define('regist', {
-        id: {
+const Gear = (sequelize) => {
+    const model = sequelize.define('gear', {
+        gearid: {
             type: DataTypes.INTEGER,
             allowNull: false, //NOT NULL
             primaryKey: true,
@@ -16,19 +16,8 @@ const GearModel = (sequelize) => {
             type: DataTypes.STRING(255),
             allowNull: false, //NOT NULL
         },
-        startDate: {
-            type: DataTypes.DATE,
-            allowNull: false, //NOT NULL
-        },
-        endDate: {
-            type: DataTypes.DATE,
-            allowNull: true, //NULL
-        },
-        rentPossible: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-        },
     });
+    return model;
 };
 
-module.exports = GearModel;
+module.exports = Gear;
