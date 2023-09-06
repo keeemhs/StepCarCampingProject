@@ -23,8 +23,9 @@ const Location = (sequelize) => {
                 allowNull: false
             }
         }, {
-        freezeTableName : true,
+        freezeTableName: true,
         timestamps: false
+
     }
     );
     return location
