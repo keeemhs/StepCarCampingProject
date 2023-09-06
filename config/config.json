@@ -1,23 +1,23 @@
 {
-  "development": {
-    "username": "gichun",
-    "password": "0518",
-    "database": "kdt9",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
-  },
-  "test": {
-    "username": "transpaction",
-    "password": "SPstar0518!",
-    "database": "codingonproject",
-    "host": "kdt9-hwr-test.cseqzxmek1jf.ap-southeast-2.rds.amazonaws.com",
-    "dialect": "mysql"
-  },
-  "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
-  }
+    "development": {
+        "username": "gichun",
+        "password": "0518",
+        "database": "kdt9",
+        "host": "127.0.0.1",
+        "dialect": "mysql"
+    },
+    "test": {
+        "username": "transpaction",
+        "password": "SPstar0518!",
+        "database": "codingonproject",
+        "host": "kdt9-hwr-test.cseqzxmek1jf.ap-southeast-2.rds.amazonaws.com",
+        "dialect": "mysql"
+    },
+    "production": {
+        "username": "root",
+        "password": null,
+        "database": "database_production",
+        "host": "127.0.0.1",
+        "dialect": "mysql"
+    }
 }

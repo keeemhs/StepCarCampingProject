@@ -1,3 +1,5 @@
+const { gallery } = require('../models')
+
 exports.indexPage = (req, res) => {
     res.render('index');
 };
@@ -40,8 +42,9 @@ exports.galleryPage= async (req,res)=>{
             console.log(result)
             res.render("gallery",{data : result})
     }
-
 }
+
+
 exports.reviewPage = (req, res) => {
     res.render('review');
 };
