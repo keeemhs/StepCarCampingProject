@@ -8,5 +8,3 @@ router.post('/regist', controller.regist);
 router.post('/multiAxios', controller.multipleAxios);
 
 module.exports = router;
-
-//s
