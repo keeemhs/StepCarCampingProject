@@ -68,33 +68,6 @@ const uploadSingle = multer({
         fileSize: 5 * 1024 * 1024, //5mb
     }
 })
-//멀터 업로드 
-//멀티 업로드(사진들 업로드)
-const uploadMulti = multer({
-    storage : multers3({
-        s3: s3,
-        bucket: "hwr-bucket",
-        acl : "public-read",
-        metadata : function(req,file,cb){
-            cb(null,{fieldName: file.fieldname})
-        },
-        key(req, file, cb) {
-            //DB에도 저장해야함(경로) 
-            //여기서 폴더를 하나 만들었고, 폴더에 마음대로...저장해보시면됩니다.
-            const dateNow =Date.now()
-            console.log("key,result2")
-            gallery_img.create({
-                galleryid :galleryid,
-                imgurl : `https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/gallery/${dateNow}_${path.basename(file.originalname)}`
-            })
-            cb(null, `gallery/${dateNow}_${path.basename(file.originalname)}`) // original 폴더안에다 파일을 저장
-         },
-    }),
-    limits : {
-        fileSize: 5 * 1024 * 1024, //5mb
-    }
-})
-
 
 
 
@@ -121,6 +94,7 @@ exports.singleAxios= async (req,res)=>{
           return;
         }
     console.log(result)
+    first=0
         return res.json({
             "galleryid" :galleryid
           });
