@@ -1,5 +1,67 @@
 
 const { gallery, gallery_img,gallery_comment } = require('../models')
+//multer upload용
+const aws = require("aws-sdk")
+const multers3= require("multer-s3")
+const multer = require('multer')
+const path=require('path')
+
+aws.config.update({
+    accessKeyId:"AKIA4GRTGI6TYJVPLNVB",
+    secretAccessKey : "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",
+    region : "ap-northeast-2"
+})
+
+
+const s3 = new aws.S3();
+const limits = {
+    fileSize: 5 * 1024 * 1024, //5mb
+};
+const upload = multer({
+    storage : multers3({
+        s3: s3,
+        bucket: "hwr-bucket",
+        acl : "public-read",
+        metadata : function(req,file,cb){
+            cb(null,{fieldName: file.fieldname})
+        },
+        key(req, file, cb) {
+            //DB에도 저장해야함(경로) 
+              // https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/1693843848259_kali.jpg
+            //즉, https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/{파일명} 으로 경로 저장하는 코드 필요
+            //여기서 폴더를 하나 만들었고, 폴더에 마음대로...저장해보시면됩니다.
+            cb(null, `gallery/${Date.now()}_${path.basename(file.originalname)}`) // original 폴더안에다 파일을 저장
+         },
+    }),
+    limits : {
+        fileSize: 5 * 1024 * 1024, //5mb
+    }
+})
+//멀터 업로드 세팅 여기까지
+
+//멀터 이용
+exports.multipleAxios=  (req,res)=>{
+    const files = upload.array('array_files')
+
+    const result =files(req, res, function (err) {
+        if (err instanceof multer.MulterError) {
+          // A Multer error occurred when uploading.
+          const err = new Error('Multer error');
+          console.log(err)
+          return ;
+          } else if (err) {
+          // An unknown error occurred when uploading.
+          console.log(err)
+          return;
+        }
+    console.log(result)
+        return res.json({
+            "file" :result
+          });
+    })
+}
+
+
 
 exports.reviewPage= async (req,res)=>{
     //조회수 로직

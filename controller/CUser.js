@@ -74,6 +74,7 @@ exports.signin = async (req, res) => {
     const compare = comparePassword(pw, result.pw)
 
     if (compare) {
+        res.cookie('isLogin', result.nickname, cookieConfig)
         res.json({ result: true })
     } else {
         res.json({ result: false })
