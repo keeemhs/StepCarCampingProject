@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>로그인</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
 </head>
 
 <body>
@@ -15,9 +14,18 @@
         <input type="text" name="useremail" placeholder="이메일을 입력해주세요"><br>
         <input type="password" name="pw" placeholder="비밀번호를 입력해주세요"><br>
         <button type="button" onclick="signIn()">로그인</button>
+        <br>
+
     </form>
 
+    <button onclick="authKaKao()">카카오톡 로그인</button>
     <script>
+        //카카오톡 로그인
+        function authKaKao() {
+            document.location.href = "/user/signin/kakao";
+        }
+
+        //사용자 로그인
         const form = document.forms['signin']
 
         async function signIn() {
@@ -35,6 +43,9 @@
                 alert('로그인에 실패했습니다')
             }
         }
+
+
+
     </script>
 </body>
 
