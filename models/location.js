@@ -1,5 +1,5 @@
 const DataTypes = require('sequelize');
-//local changes
+
 const Location = (sequelize) => {
     const location = sequelize.define(
         'location',
