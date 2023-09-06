@@ -1,20 +1,16 @@
 const { gallery } = require('../models')
 
-exports.indexPage = (req, res) => {
-    res.render('index');
-};
+exports.indexPage= (req,res)=>{
+    res.render("index")
+}
 
-exports.rentPage = (req, res) => {
-    res.render('rent');
-};
+exports.rentPage= (req,res)=>{
+    res.render("rent")
+}
 
-exports.registPage = (req, res) => {
-    res.render('regist');
-};
-
-exports.spotPage = (req, res) => {
-    res.render('spot');
-};
+exports.spotPage= (req,res)=>{
+    res.render("spot")
+}
 
 exports.galleryPage= async (req,res)=>{
     if(req.query.sort_method==undefined || req.query.sort_method==0 ){
@@ -38,20 +34,15 @@ exports.galleryPage= async (req,res)=>{
             console.log(result)
             res.render("gallery",{data : result})
     }
+
 }
+exports.registPage = (req, res) => {
+    res.render('regist');
+};
 
-
-exports.reviewPage = (req, res) => {
-    res.render('review');
+exports.regist = (req, res) => {
+    res.render('regist');
 };
 exports.recomCarPage = (req, res) => {
     res.render('recomCar');
 };
-
-exports.signupPage = (req, res) => {
-    res.render("signup")
-}
-
-exports.signinPage = (req, res) => {
-    res.render('signin')
-}

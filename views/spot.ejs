@@ -10,70 +10,14 @@
     <script type="text/javascript"
         src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ijdya8hea0"></script>
 
-    <style>
-        .location-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .location-select {
-            width: 400px;
-            display: flex;
-            justify-content: space-evenly;
-        }
-
-        .location-select button {
-            border: none;
-            background-color: transparent;
-        }
-
-        .location-select button:hover {
-            cursor: pointer;
-        }
-
-        .map {
-            width: 700px;
-            height: 350px;
-            margin-top: 15px;
-        }
-
-        .map-container {
-            display: flex;
-            justify-content: center;
-        }
-
-        .spot {
-            width: 200px;
-            height: 250px;
-            border: 2px;
-            border-style: solid;
-        }
-
-        .spot-container {
-            display: flex;
-            justify-content: space-evenly;
-            margin-top: 20px;
-        }
-
-        .spot div {
-            display: flex;
-            justify-content: center;
-        }
-
-        .spot-image {
-            width: 180px;
-            height: 100px;
-            margin: 10px 0px;
-        }
-    </style>
+    <link rel="stylesheet" href="spot.css">
 </head>
 
 <body>
     <!-- 지역선택 -->
     <div class="location-container">
         <div class="location-select">
-            <button type="button" value="경기">경기</button>
+            <button type="button" value="경기">경기/서울</button>
             <button type="button" value="강원">강원</button>
             <button type="button" value="충청">충청</button>
             <button type="button" value="경상">경상</button>
@@ -91,83 +35,70 @@
 
     <!-- 스팟리스트 -->
     <div class="spot-container">
-        <div class="spot">
-            <div style="margin-top: 10px;">스팟이름</div>
-            <div>
-                <img src="../images/sea.jpg" class="spot-image">
-            </div>
-            <div style="margin-bottom: 10px;">주소</div>
-            <div style="height: 40px;">간략소개</div>
-            <div>
-                <button>채팅</button>
-            </div>
-        </div>
 
-    </div>
+        <script>
+            //지도 초기 기준점 위치 설정
+            const mapOptions = {
+                center: new naver.maps.LatLng(36.626316, 127.936296),
+                zoom: 6
+            }
+
+            var map = new naver.maps.Map('map', mapOptions);
+
+            var spotContainer = document.querySelector('.spot-container')
 
 
-
-
-    <script>
-        //지도 초기 기준점 위치 설정
-        const mapOptions = {
-            center: new naver.maps.LatLng(36.626316, 127.936296),
-            zoom: 6
-        }
-
-        var map = new naver.maps.Map('map', mapOptions);
-
-        var spot = document.querySelector('.spot')
-
-
-        // 해당 지역버튼 클릭 시 지도 기준점 위치 이동
-        var locationButton = document.querySelectorAll('.location-select > button')
-        locationButton.forEach(button => {
-            button.addEventListener('click', async () => {
-                const res = await axios({
-                    method: 'POST',
-                    url: '/location',
-                    data: {
-                        location: button.value
-                    }
-                })
-
-                console.log(res.data.spot)
-                mapOptions.center = new naver.maps.LatLng(res.data.location.lon, res.data.location.lat)
-                mapOptions.zoom = 7
-                map = new naver.maps.Map('map', mapOptions);
-
-                //해당 지역의 차박 스팟 마커찍기
-                var marker = []
-                for (let i = 0; i < res.data.spot.length; i++) {
-                    marker[i] = new naver.maps.Marker({
-                        map: map,
-                        position: new naver.maps.LatLng(res.data.spot[i].lon, res.data.spot[i].lat)
+            // 해당 지역버튼 클릭 시 지도 기준점 위치 이동
+            var locationButton = document.querySelectorAll('.location-select > button')
+            locationButton.forEach(button => {
+                button.addEventListener('click', async () => {
+                    const res = await axios({
+                        method: 'POST',
+                        url: '/spot/location',
+                        data: {
+                            location: button.value
+                        }
                     })
 
-                    //마커 클릭 이벤트
-                    naver.maps.Event.addListener(marker[i], 'click', () => {
+                    console.log(res)
+                    mapOptions.center = new naver.maps.LatLng(res.data.location.lon, res.data.location.lat)
+                    mapOptions.zoom = 7
+                    map = new naver.maps.Map('map', mapOptions);
+
+
+                    //해당 지역의 차박 스팟 마커찍기 + 스팟리스트 출력
+                    var marker = []
+                    spotContainer.textContent = ''
+                    for (let i = 0; i < res.data.spot.length; i++) {
+                        marker[i] = new naver.maps.Marker({
+                            map: map,
+                            position: new naver.maps.LatLng(res.data.spot[i].lon, res.data.spot[i].lat)
+                        })
                         spotContainer.innerHTML += `
                         <div class="spot">
-                            <div style="margin-top: 10px;">${res.data.spot[i].spotName}</div>
-                            <div>
+                            <div class="spot-name">${res.data.spot[i].spotName}</div>
+                                <div>
                                 <img src="${res.data.spot[i].image}" class="spot-image">
-                            </div>
-                            <div style="height: 60px;">${res.data.spot[i].information}</div>
+                                </div>
+                            <div class="spot-address">${res.data.spot[i].address}</div>
+                            <div class="spot-information">${res.data.spot[i].information}</div>
                             <div>
-                                <button>채팅</button>
+                                <button class="chat-button">채팅</button>
                             </div>
                         </div>
                         `
-                    })
-                }
+
+                        //마커 클릭 이벤트
+                        // naver.maps.Event.addListener(marker[i], 'click', () => {
+
+                        // })
+
+                    }
+
+                })
             })
-        })
 
-
-
-
-    </script>
+        </script>
 </body>
 
 </html>

@@ -9,6 +9,9 @@ const sequelize = new Sequelize(config.database, config.username, config.passwor
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
+
+db.User = require('./user')(sequelize)
+
 //제품등록
 db.Gear = require('./gear')(sequelize);
 db.gear_img = require('./gear_img')(sequelize);

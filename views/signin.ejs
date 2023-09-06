@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+</head>
+
+<body>
+    <h1>로그인</h1>
+    <form name="signin">
+        <input type="text" name="useremail" placeholder="이메일을 입력해주세요"><br>
+        <input type="password" name="pw" placeholder="비밀번호를 입력해주세요"><br>
+        <button type="button" onclick="signIn()">로그인</button>
+    </form>
+
+    <script>
+        const form = document.forms['signin']
+
+        async function signIn() {
+            const res = await axios({
+                method: 'POST',
+                url: '/user/signin',
+                data: {
+                    useremail: form.useremail.value,
+                    pw: form.pw.value
+                }
+            })
+            if (res.data.result) {
+                alert('로그인에 성공했습니다')
+                location.href="/"
+            } else {
+                alert('로그인에 실패했습니다')
+            }
+        }
+    </script>
+</body>
+
+
+</html>
