@@ -3,7 +3,7 @@ const app = express();
 const PORT = 8000;
 const db = require('./models');
 const path = require('path'); // path 모듈 추가
-const cookieParser =require('cookie-parser')
+const cookieParser = require('cookie-parser');
 
 app.use(
     express.urlencoded({
@@ -25,38 +25,28 @@ app.use(express.static(__dirname + '/views/img')); // img폴더 경로 셋팅
 // app.use('/css', express.static(__dirname + '../views')); // css폴더 경로 셋팅
 app.use('/static', express.static(path.join(__dirname, 'carCampingProject', 'views')));
 
-
-
 //gallery 리뷰, 리뷰의 댓글 등등
-const galleryRouter = require("./routes/gallery")
-app.use("/gallery", galleryRouter)
+const galleryRouter = require('./routes/gallery');
+app.use('/gallery', galleryRouter);
 
+//gear
+const gearRouter = require('./routes/gear');
+app.use('/gear', gearRouter);
 
 //스팟 관련 라우터
-const spotRouter = require('./routes/spot')
-app.use('/spot', spotRouter)
+const spotRouter = require('./routes/spot');
+app.use('/spot', spotRouter);
 
-const user = require('./routes/user')
-app.use('/user', user)
+const user = require('./routes/user');
+app.use('/user', user);
 
-const router = require("./routes/main")
-app.use(router)
-
-
-// index.ejs
-// app.get('/', (req, res) => {
-//     res.render('index');
-// });
+const router = require('./routes/main');
+app.use(router);
 
 // recomCar.ejs
 app.get('/recomCar', (req, res) => {
     res.render('recomCar');
 });
-
-// rent.ejs
-// app.get('/rent', (req, res) => {
-//     res.render('rent');
-// });
 
 // 404 error
 app.use('*', (req, res) => {

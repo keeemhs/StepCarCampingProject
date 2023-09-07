@@ -2,24 +2,25 @@ const { DataTypes } = require('sequelize');
 
 const Model = (sequelize) => {
     return sequelize.define(
-        'gallery_img',
+        'gear',
         {
-            imgurl: {
-                type: DataTypes.STRING(255),
-                allowNull: false, //NOT NULL
-                primaryKey: true,
-            },
-            galleryid: {
+            gearid: {
                 type: DataTypes.INTEGER,
                 allowNull: false, //NOT NULL
                 primaryKey: true,
-                foreignKey: true,
+                autoIncrement: true,
+            },
+            gearTitle: {
+                type: DataTypes.STRING(45),
+                allowNull: false, //NOT NULL
+            },
+            gearExplain: {
+                type: DataTypes.STRING(255),
+                allowNull: false, //NOT NULL
             },
         },
         {
             freezeTableName: true,
-            //타임스탬프를 찍지 않음.
-            timestamps: false,
         }
     );
 };
