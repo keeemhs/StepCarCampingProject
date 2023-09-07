@@ -21,8 +21,7 @@
     </head>
     <body>
         <%-include('header.ejs')%>
-
-        <!-- 사진넘기기-->
+        <div style="margin-top: 100px; text-align: center"><%= data.gearTitle %></div>
 
         <div id="pictures">
             <i class="fa-solid fa-arrow-left" onclick="left()"></i>
@@ -31,10 +30,7 @@
         </div>
 
         <!-- 본문 -->
-        <div>
-            본문
-            <div><%= gearTitle %></div>
-        </div>
+        <div>본문</div>
         <%-include('footer.ejs')%>
 
         <script>

@@ -1,85 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://kit.fontawesome.com/8786e78429.js" crossorigin="anonymous"></script>
-    <style>
-        #pictures{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <script src="https://kit.fontawesome.com/8786e78429.js" crossorigin="anonymous"></script>
+        <style>
+            #pictures {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
 
-        .img--box {
-            width: 300px;
-            margin-left: 10px;
-            margin-right: 10px;
-        }
+            .img--box {
+                width: 300px;
+                margin-left: 10px;
+                margin-right: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <%-include('header.ejs')%>
 
+        <hr />
+        <!-- user.name -->
+        <div>???님의 캠핑스팟</div>
+        <!-- 사진넘기기-->
 
-    </style>
-</head>
-<body>
-    <%-include('header.ejs')%>
-
-    <hr>
-    <!-- user.name -->
-    <div>???님의 캠핑스팟 </div>
-    <!-- 사진넘기기-->
-    
-    <div id = 'pictures'>
-        <i class="fa-solid fa-arrow-left" onclick="left()"></i>
-        <img id="img-box" class="img--box" src="<%= imgurl.urls[0] %>"> 
-        <i class="fa-solid fa-arrow-right" onclick="right()"></i>
-    </div>
-
-    <!-- 본문 -->
-    <div>
-        본문
-        <div>
-            <%= mainText %>
+        <div id="pictures">
+            <i class="fa-solid fa-arrow-left" onclick="left()"></i>
+            <img id="img-box" class="img--box" src="<%= imgurl.urls[0] %>" />
+            <i class="fa-solid fa-arrow-right" onclick="right()"></i>
         </div>
-    </div>
-    <hr>
-    <button onclick="location.href='/gallery/del'">삭제</button>
-    <!-- 댓글-->
-    <hr>
-    <div>댓글</div>
-    <%-include('footer.ejs')%>
 
-    <script>
-        // imgurl를 stringfy해준뒤에, 다시 parse해서 jsonobject를 만든다.
-        // 나중에는 그냥 서버단에서 하는게 나을것같다.
-        var imgurl = JSON.parse('<%- JSON.stringify(imgurl) %>').urls; 
-        console.log(typeof imgurl)
-        console.log(imgurl)
-        var currentImg = 0
+        <!-- 본문 -->
+        <div>
+            본문
+            <div><%= mainText %></div>
+        </div>
+        <hr />
+        <button onclick="location.href='/gallery/del'">삭제</button>
+        <!-- 댓글-->
+        <hr />
+        <div>댓글</div>
+        <%-include('footer.ejs')%>
 
-        var imgLength =imgurl.length
-        console.log(imgLength)
-        function left(){
-            console.log("left",currentImg)
-            if(currentImg==0){
-                currentImg=imgLength-1
-            }else{
-                currentImg--;
+        <script>
+            // imgurl를 stringfy해준뒤에, 다시 parse해서 jsonobject를 만든다.
+            // 나중에는 그냥 서버단에서 하는게 나을것같다.
+            var imgurl = JSON.parse('<%- JSON.stringify(imgurl) %>').urls;
+            console.log(typeof imgurl);
+            console.log(imgurl);
+            var currentImg = 0;
+
+            var imgLength = imgurl.length;
+            console.log(imgLength);
+            function left() {
+                console.log('left', currentImg);
+                if (currentImg == 0) {
+                    currentImg = imgLength - 1;
+                } else {
+                    currentImg--;
+                }
+                console.log(imgurl[currentImg]);
+                document.querySelector('#img-box').src = imgurl[currentImg];
             }
-            console.log(imgurl[currentImg])
-            document.querySelector("#img-box").src=imgurl[currentImg]
-        }
-        function right(){
-            console.log("right",currentImg)
-            if(currentImg==imgLength-1){
-                currentImg  =0
-            }else{
-                currentImg++;
+            function right() {
+                console.log('right', currentImg);
+                if (currentImg == imgLength - 1) {
+                    currentImg = 0;
+                } else {
+                    currentImg++;
+                }
+                console.log(imgurl, currentImg);
+                document.querySelector('#img-box').src = imgurl[currentImg];
             }
-            console.log(imgurl,currentImg)
-            document.querySelector("#img-box").src=imgurl[currentImg]
-        }
-    </script>
-
-</body>
+        </script>
+    </body>
 </html>
