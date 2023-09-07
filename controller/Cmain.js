@@ -5,8 +5,13 @@ exports.indexPage = (req, res) => {
     res.render('index');
 };
 
-exports.gearPage = (req, res) => {
-    res.render('gear');
+exports.gearPage = async (req, res) => {
+    const result = await gear.findAll({
+        attribute: ['gearid', 'gearTitle', 'thunmnail'],
+        order: [['gearid', 'desc']],
+    });
+    console.log(result);
+    res.render('gear', { data: result });
 };
 
 exports.spotPage = (req, res) => {

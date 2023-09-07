@@ -18,6 +18,9 @@ const Model = (sequelize) => {
                 type: DataTypes.STRING(255),
                 allowNull: false, //NOT NULL
             },
+            thunmnail: {
+                type: DataTypes.STRING('255'),
+            },
         },
         {
             freezeTableName: true,
