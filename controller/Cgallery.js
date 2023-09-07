@@ -10,7 +10,6 @@ aws.config.update({
     secretAccessKey: 'F/Mgab2gWabkNfXrEGY3kgrMHhcBzCwWGln3QYJ4',
     region: 'ap-northeast-2',
 });
-
 const s3 = new aws.S3();
 const limits = {
     fileSize: 5 * 1024 * 1024, //5mb
@@ -117,6 +116,8 @@ exports.singleAxios = async (req, res) => {
             return;
         }
         console.log(result);
+
+        first = 0;
         return res.json({
             galleryid: galleryid,
         });
@@ -161,8 +162,17 @@ exports.reviewPage = async (req, res) => {
             galleryid: req.query.galleryId,
         },
     });
+    if (result1 == null) {
+        console.log('none');
+        res.render('404');
+        return;
+    }
+    const userInfo = await User.findOne({
+        where: {
+            id: result1.userid,
+        },
+    });
     //query - 사진 이미지 경로 가져오기
-
     const imgurl = await gallery_img.findAll({
         where: {
             galleryid: req.query.galleryId,
@@ -176,6 +186,7 @@ exports.reviewPage = async (req, res) => {
     }
     console.log(urlArray);
     res.render('review', { mainText: result1.mainText, imgurl: urlArray });
+    res.render('review', { userInfo: userInfo, mainText: result1.mainText, galleryId: result1.galleryid, imgurl: urlArray });
 };
 
 exports.reviewEdit = async (req, res) => {
@@ -186,4 +197,31 @@ exports.reviewEdit = async (req, res) => {
     }
     //쿠키던 세션이던 저장되어있다고 생각하고 여기선 구현
     res.render('reviewedit');
+};
+exports.reviewDel = async (req, res) => {
+    console.log('del', req.body);
+    const loginuser = await User.findOne({
+        where: {
+            nickname: req.cookies.isLogin,
+        },
+    });
+    const owner = await gallery.findOne({
+        where: {
+            galleryid: req.body.gid,
+        },
+    });
+
+    if (loginuser.id == owner.userid) {
+        gallery.destroy({
+            where: {
+                galleryid: req.body.gid,
+            },
+        });
+        console.log('삭제');
+        res.send({ error: 'no error' });
+        return;
+    } else {
+        console.log('삭제실패, 아이디가 다름');
+        res.send({ error: '삭제 권한이 없습니다.' });
+    }
 };
