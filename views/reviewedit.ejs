@@ -31,6 +31,19 @@
         <%-include('footer.ejs')%>
 
         <script>
+            const urlSearch = new URLSearchParams(location.search);
+            const mode = urlSearch.get('mode');
+
+            if (mode == 1) {
+                const form = document.forms['reviewEdit'];
+                const galleryInfos = JSON.parse(localStorage.getItem('galleryItems'));
+                console.log(galleryInfos);
+                form.title.value = galleryInfos.title;
+                form.mainText.value = galleryInfos.mainText;
+                form.region.value = galleryInfos.region;
+                form.spotInfo.value = galleryInfos.spotInform;
+            }
+
             async function fileupload(event) {
                 event.preventDefault();
                 const form = document.forms['reviewEdit'];
@@ -61,6 +74,7 @@
                     },
                 });
                 console.log(result1.data.galleryid);
+                location.href = '/gallery';
 
                 // const result2= await axios({
                 //     method : "POST",
