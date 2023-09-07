@@ -20,7 +20,7 @@
     <h1>회원가입</h1>
     <div class="form-container">
         <form name="signup" id="signup">
-            <input type="text" name="email" placeholder="이메일을 입력해주세요">
+            <input type="text" name="email" id="email" placeholder="이메일을 입력해주세요">
             <button type="button" onclick="duplication()" id="duButton">중복</button>
             <br>
             <input type="password" name="pw" id="pw" placeholder="비밀번호를 입력해주세요">
@@ -92,6 +92,14 @@
         const passwordConfirm = document.querySelector('#pwc')
         const duButton = document.querySelector('#duButton')
 
+
+        const url = new URLSearchParams(location.search)
+        const mode = url.get('mode')
+
+        if (mode == 1) {
+            form.email.value = localStorage.getItem("email")
+            form.nickname.value = localStorage.getItem("nickname")
+        }
 
         //이메일 정규식
         var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/

@@ -4,8 +4,8 @@ const axios = require('axios')
 
 const REDIRECT_URI = "http://localhost:8000/user/oauth/kakao"; //본인의 리다이렉트 url입력 후 라우트에서도 설정하세요
 const REST_API_KEY = "d09187c9ea730ee149f8d9292abffcf9"; //본인 rest api키 입력하시면 됩니다.
-
-//cookie옵션개체
+const logout_REDIRECT_URI = "http://localhost:8000/user/logout/redirect"
+// //cookie옵션개체
 const cookieConfig = {
     //httpOnly 웹서버를 통해서만 쿠키에 접근 가능 (document.cookie 불가)
     //maxAge :쿠키의 수명 (ms단위)
@@ -20,7 +20,7 @@ const cookieConfig = {
     signed: false,
 }
 
-//카카오 로그인
+//카카오 인가코드 받기
 exports.signin_kakao = (req, res) => {
     const url = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}`;
     res.redirect(url);
@@ -28,24 +28,62 @@ exports.signin_kakao = (req, res) => {
 
 //카카오 토큰발급
 exports.auth_kakao = async (req, res) => {
-    console.log(req.query.code);
-    const result = await axios({
-        method: "POST",
-        url: "https://kauth.kakao.com/oauth/token",
-        headers: {
-            "content-type": "application/x-www-form-urlencoded",
-        },
-        data: {
-            grant_type: "authorization_code",
-            client_id: REST_API_KEY,
-            redirect_uri: REDIRECT_URI,
-            code: req.query.code,
-        },
-    });
+    if (req.cookies.kakaoToken) {
+        res.render('signinMiddle', { result: false })
+    } else {
+        const result = await axios({
+            method: "POST",
+            url: "https://kauth.kakao.com/oauth/token",
+            headers: {
+                "content-type": "application/x-www-form-urlencoded",
+            },
+            data: {
+                grant_type: "authorization_code",
+                client_id: REST_API_KEY,
+                redirect_uri: REDIRECT_URI,
+                code: req.query.code,
+            },
+        });
+        const token = result.data.access_token
+        console.log(token)
+        res.cookie('kakaoToken', token)
+        res.render('signinMiddle', { result: true, token: token })
+    }
 
-    console.log(result.data);
 };
 
+exports.getToken = async (req, res) => {
+
+}
+
+//카카오 로그인 ~ 메인페이지 이동 전 -> 카카오 토큰 저장해서 사용자 정보 가져오기
+exports.postToken = async (req, res) => {
+    console.log(req.body.token)
+    const kakaoUser = await axios({
+        method: "GET",
+        url: `https://kapi.kakao.com/v2/user/me`,
+        data: '',
+        headers: {
+            Authorization: `Bearer ${req.body.token}`,
+            "Content-type": 'application/x-www-form-urlencoded;charset=utf-8'
+        },
+    });
+    // console.log(kakaoUser.data)
+    // res.render('index')
+    const kakaoEmail = kakaoUser.data.kakao_account.email
+    const nickname = kakaoUser.data.properties.nickname
+    const result = await User.findOne({
+        where: { useremail: kakaoEmail }
+    })
+
+    //로그인 성공
+    if (result !== null) {
+        res.json({ result: true })
+    } else {
+        //사용자 추가정보 입력요구(회원가입 페이지)
+        res.json({ useremail: kakaoEmail, nickname: nickname, result: false })
+    }
+}
 
 
 
@@ -83,7 +121,7 @@ exports.signin = async (req, res) => {
     })
 
     if (!result) {
-        res.json({ result: false, message: '사용자가 존재하지 않습니다' });
+        return res.json({ result: false, message: '사용자가 존재하지 않습니다' });
     }
     const compare = comparePassword(pw, result.pw)
 
@@ -95,6 +133,43 @@ exports.signin = async (req, res) => {
     }
 }
 
+//로그아웃 get
+exports.logout = (req, res) => {
+    res.render('logout')
+}
+
+exports.logoutMiddle = (req, res) => {
+    res.render('logoutMiddle')
+}
+
+
+//카카오 로그아웃
+exports.logoutMiddlePost = (req, res) => {
+    const url = `https://kauth.kakao.com/oauth/logout?client_id=${REST_API_KEY}&logout_redirect_uri=${logout_REDIRECT_URI}`
+
+    axios({
+        method: 'GET',
+        url: url
+    })
+    res.clearCookie('kakaoToken')
+    res.json({ result: true })
+    res.redirect(url);
+}
+
+//로그아웃 post
+exports.logoutPost = async (req, res) => {
+
+}
+
+//회원탈퇴 get
+exports.deleteUser = (req, res) => {
+    res.render('deleteUser')
+}
+
+//마이페이지 get
+exports.mypage = (req, res) => {
+    res.render('mypage')
+}
 
 
 /////function
