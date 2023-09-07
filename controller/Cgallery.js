@@ -51,12 +51,14 @@ const uploadSingle = multer({
                 first += 1;
                 cb(null, fn); // original 폴더안에다 파일을 저장
             } else {
-                var dateNow = Date.now();
-                gallery_img.create({
-                    galleryid: galleryid,
-                    imgurl: `https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/gallery/${dateNow}_${path.basename(file.originalname)}`,
-                });
-                cb(null, `gallery/${dateNow}_${path.basename(file.originalname)}`); // original 폴더안에다 파일을 저장
+                setTimeout(() => {
+                    var dateNow = Date.now();
+                    gallery_img.create({
+                        galleryid: galleryid,
+                        imgurl: `https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/gallery/${dateNow}_${path.basename(file.originalname)}`,
+                    });
+                    cb(null, `gallery/${dateNow}_${path.basename(file.originalname)}`); // original 폴더안에다 파일을 저장
+                }, 50);
             }
         },
     }),
