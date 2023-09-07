@@ -64,6 +64,32 @@ const uploadSingle = multer({
         fileSize: 5 * 1024 * 1024, //5mb
     },
 });
+//멀터 업로드
+//멀티 업로드(사진들 업로드)
+const uploadMulti = multer({
+    storage: multers3({
+        s3: s3,
+        bucket: 'hwr-bucket',
+        acl: 'public-read',
+        metadata: function (req, file, cb) {
+            cb(null, { fieldName: file.fieldname });
+        },
+        key(req, file, cb) {
+            //DB에도 저장해야함(경로)
+            //여기서 폴더를 하나 만들었고, 폴더에 마음대로...저장해보시면됩니다.
+            const dateNow = Date.now();
+            console.log('key,result2');
+            gallery_img.create({
+                galleryid: galleryid,
+                imgurl: `https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/gallery/${dateNow}_${path.basename(file.originalname)}`,
+            });
+            cb(null, `gallery/${dateNow}_${path.basename(file.originalname)}`); // original 폴더안에다 파일을 저장
+        },
+    }),
+    limits: {
+        fileSize: 5 * 1024 * 1024, //5mb
+    },
+});
 
 //멀터 이용 싱글 테이블 만들기
 exports.singleAxios = async (req, res) => {
@@ -90,6 +116,7 @@ exports.singleAxios = async (req, res) => {
             return;
         }
         console.log(result);
+
         first = 0;
         return res.json({
             galleryid: galleryid,
@@ -157,6 +184,8 @@ exports.reviewPage = async (req, res) => {
     for (let i = 0; i < imgurl.length; i++) {
         urlArray.urls.push(imgurl[i].imgurl);
     }
+    console.log(urlArray);
+    res.render('review', { mainText: result1.mainText, imgurl: urlArray });
     res.render('review', { userInfo: userInfo, mainText: result1.mainText, galleryId: result1.galleryid, imgurl: urlArray });
 };
 
@@ -169,7 +198,6 @@ exports.reviewEdit = async (req, res) => {
     //쿠키던 세션이던 저장되어있다고 생각하고 여기선 구현
     res.render('reviewedit');
 };
-
 exports.reviewDel = async (req, res) => {
     console.log('del', req.body);
     const loginuser = await User.findOne({
