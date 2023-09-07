@@ -18,7 +18,6 @@ const limits = {
 var userid = 0;
 var galleryid = 0;
 var first = 0;
-
 const uploadSingle = multer({
     storage: multers3({
         s3: s3,
@@ -30,7 +29,8 @@ const uploadSingle = multer({
         async key(req, file, cb) {
             //DB에도 저장해야함(경로)
             //여기서 폴더를 하나 만들었고, 폴더에 마음대로...저장해보시면됩니다.
-            if (first == 0) {
+            console.log(req.body);
+            if (first == 0 && typeof req.body.title == 'string') {
                 var dateNow = Date.now();
                 const fn = `gallery/${Date.now()}_${path.basename(file.originalname)}`;
                 const galleryEdit = await gallery.create({
@@ -51,12 +51,14 @@ const uploadSingle = multer({
                 first += 1;
                 cb(null, fn); // original 폴더안에다 파일을 저장
             } else {
-                var dateNow = Date.now();
-                gallery_img.create({
-                    galleryid: galleryid,
-                    imgurl: `https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/gallery/${dateNow}_${path.basename(file.originalname)}`,
-                });
-                cb(null, `gallery/${dateNow}_${path.basename(file.originalname)}`); // original 폴더안에다 파일을 저장
+                setTimeout(() => {
+                    var dateNow = Date.now();
+                    gallery_img.create({
+                        galleryid: galleryid,
+                        imgurl: `https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/gallery/${dateNow}_${path.basename(file.originalname)}`,
+                    });
+                    cb(null, `gallery/${dateNow}_${path.basename(file.originalname)}`); // original 폴더안에다 파일을 저장
+                }, 100);
             }
         },
     }),
@@ -77,7 +79,6 @@ exports.singleAxios = async (req, res) => {
     if (!userid) {
         res.send({ result: false, errMessage: '로그인이 종료되었거나, 잘못된 접근입니다.' });
     }
-    console.log(req.body);
     const result = files(req, res, function (err) {
         if (err instanceof multer.MulterError) {
             // A Multer error occurred when uploading.
@@ -184,6 +185,32 @@ exports.reviewDel = async (req, res) => {
     });
 
     if (loginuser.id == owner.userid) {
+        const imgurls = gallery_img.findAll({
+            where: {
+                galleryid: req.body.gid,
+            },
+        });
+        for (let i = 0; i < imgurls.length; i++) {
+            const tmpFileName = imgurls[i].split('/');
+            const params = {
+                Bucket: 'hwr-bucket',
+                Key: `/gallery/${tmpFileName[tmpFileName.length - 1]}`,
+            };
+
+            try {
+                await s3.headObject(params).promise();
+                console.log('File Found in S3');
+                try {
+                    await s3.deleteObject(params).promise();
+                    console.log('file deleted Successfully');
+                } catch (err) {
+                    console.log('ERROR in file Deleting : ' + JSON.stringify(err));
+                }
+            } catch (err) {
+                console.log('File not Found ERROR : ' + err.code);
+            }
+        }
+
         gallery.destroy({
             where: {
                 galleryid: req.body.gid,

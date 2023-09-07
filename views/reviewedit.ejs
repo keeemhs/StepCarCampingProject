@@ -43,16 +43,14 @@
                 console.log(files);
                 //이미지들 url 만들기
                 const formData2 = new FormData();
-                for (let i = 0; i < files.length; i++) {
-                    formData2.append(`title`, title);
-                    formData2.append(`mainText`, mainText);
-                    formData2.append(`region`, region);
-                    formData2.append(`spotInform`, spotInfo);
-                    formData2.append(`array_file`, files[i]);
-                }
-                // for(let i =0 ; i<files.length; i++){
 
-                // }
+                for (let i = 0; i < files.length; i++) {
+                    formData2.append('title', title);
+                    formData2.append('mainText', mainText);
+                    formData2.append('region', region);
+                    formData2.append('spotInform', spotInfo);
+                    formData2.append('array_file', files[i]);
+                }
                 //reivew table 만들기
                 const result1 = await axios({
                     url: '/gallery/singleAxios',

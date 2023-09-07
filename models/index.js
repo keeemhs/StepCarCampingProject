@@ -9,8 +9,7 @@ const sequelize = new Sequelize(config.database, config.username, config.passwor
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-
-db.User = require('./user')(sequelize)
+db.User = require('./user')(sequelize);
 
 //제품등록
 db.Gear = require('./gear')(sequelize);
@@ -29,6 +28,10 @@ db.gallery_comment = require('./gallery_comment')(sequelize);
 
 db.Location.hasMany(db.Spot);
 db.Spot.belongsTo(db.Location);
+
+//유저와 갤러리 1대 다
+db.User.hasMany(db.gallery, { foreignKey: 'userid', onDelete: 'CASCADE' });
+db.gallery.belongsTo(db.User, { foreignKey: 'userid', onDelete: 'CASCADE' });
 
 //갤러리 관계
 db.gallery.hasMany(db.gallery_comment, { foreignKey: 'galleryid', onDelete: 'CASCADE' });
