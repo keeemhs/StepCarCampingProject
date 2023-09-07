@@ -42,38 +42,32 @@
         <!-- 본문 -->
         <div>
             본문
-            <div><%= mainText %></div>
+            <div><%= data.mainText %></div>
         </div>
         <hr />
-        <button onclick="delReview('<%= galleryId %>')">삭제</button>
-        <button onclick="changeReview('<%= galleryId %>')">수정</button>
+        <button onclick="delReview('<%= data.galleryId %>')">삭제</button>
+        <button onclick="changeReview('<%= data.galleryId %>')">수정</button>
         <!-- 댓글-->
         <hr />
         <div class="commentView">
             <div>
                 <!-- 여기에 대댓글을 추가할 수 있는 method가 필요하다. -->
-                <div>댓글1</div>
+                <% for(let i=0; i< comments.length; i++){ %>
+                <div><%= comments[i].main.commentText %></div>
                 <ul>
                     <!-- 여길 ejs에서 불러온 데이터만큼 반복한다. -->
-                    <li>대댓글1</li>
-                    <li>대댓글2</li>
-                    <li>대댓글3</li>
+                    <% for(let j=0; j < comments[i].sub.length; j++){ %>
+                    <li><%= comments[i].sub[j].commentText %></li>
+                    <% } %>
                 </ul>
-            </div>
-            <div>
-                <div>댓글2</div>
-                <ul>
-                    <li>대댓글1</li>
-                    <li>대댓글2</li>
-                    <li>대댓글3</li>
-                </ul>
+                <% } %>
             </div>
         </div>
         <div class="inputComment">
             <form name="maincomment">
                 <span>댓글</span>
                 <input name="mainCommentInput" type="text" placeholder="댓글" />
-                <button type="button" onclick="addMainComment()">댓글입력</button>
+                <button type="button" onclick="addMainComment('<%= data.galleryId %>')">댓글입력</button>
             </form>
         </div>
         <%-include('footer.ejs')%>
@@ -138,12 +132,15 @@
             }
 
             async function addMainComment() {
+                const urlSearch = new URLSearchParams(location.search);
+                const mode = urlSearch.get('galleryId');
                 const maincomment = document.forms['maincomment'].mainCommentInput.value;
                 console.log(maincomment);
                 const result = await axios({
                     url: '/gallery/review/addMainComment',
                     data: {
                         maincomment,
+                        gid: mode,
                     },
                     method: 'POST',
                 });

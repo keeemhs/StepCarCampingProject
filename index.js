@@ -28,13 +28,10 @@ app.use('/static', express.static(path.join(__dirname, 'carCampingProject', 'vie
 //gallery 리뷰, 리뷰의 댓글 등등
 const galleryRouter = require('./routes/gallery');
 app.use('/gallery', galleryRouter);
-<<<<<<< HEAD
-=======
 
 //gear
 const gearRouter = require('./routes/gear');
 app.use('/gear', gearRouter);
->>>>>>> 9292ced02c11fc0f1fb7c3352b7914774e5999b0
 
 //스팟 관련 라우터
 const spotRouter = require('./routes/spot');

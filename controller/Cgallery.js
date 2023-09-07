@@ -66,32 +66,6 @@ const uploadSingle = multer({
         fileSize: 5 * 1024 * 1024, //5mb
     },
 });
-//멀터 업로드
-//멀티 업로드(사진들 업로드)
-const uploadMulti = multer({
-    storage: multers3({
-        s3: s3,
-        bucket: 'hwr-bucket',
-        acl: 'public-read',
-        metadata: function (req, file, cb) {
-            cb(null, { fieldName: file.fieldname });
-        },
-        key(req, file, cb) {
-            //DB에도 저장해야함(경로)
-            //여기서 폴더를 하나 만들었고, 폴더에 마음대로...저장해보시면됩니다.
-            const dateNow = Date.now();
-            console.log('key,result2');
-            gallery_img.create({
-                galleryid: galleryid,
-                imgurl: `https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/gallery/${dateNow}_${path.basename(file.originalname)}`,
-            });
-            cb(null, `gallery/${dateNow}_${path.basename(file.originalname)}`); // original 폴더안에다 파일을 저장
-        },
-    }),
-    limits: {
-        fileSize: 5 * 1024 * 1024, //5mb
-    },
-});
 
 //멀터 이용 싱글 테이블 만들기
 exports.singleAxios = async (req, res) => {
@@ -137,11 +111,13 @@ exports.reviewPage = async (req, res) => {
         }
     );
     //본문
+
     const result1 = await gallery.findOne({
         where: {
             galleryid: req.query.galleryId,
         },
         include: gallery_comment,
+        order: [[gallery_comment, 'commentGroup', 'asc']],
     });
     if (result1 == null) {
         console.log('none');
@@ -167,9 +143,26 @@ exports.reviewPage = async (req, res) => {
         urlArray.urls.push(imgurl[i].imgurl);
     }
 
-    console.log(result1.gallery_comments);
-    // res.render('review', { mainText: result1.mainText, imgurl: urlArray });
-    res.render('review', { userInfo: userInfo, mainText: result1.mainText, galleryId: result1.galleryid, imgurl: urlArray });
+    const comments = [];
+    let k = 0;
+    while (k < result1.gallery_comments.length) {
+        const deepcomment = result1.gallery_comments[k].deepComment;
+        if (deepcomment >= 0) {
+            var tmpObject = { main: '', sub: [] };
+            for (let i = k; i <= k + deepcomment; i++) {
+                if (i == k) {
+                    tmpObject.main = result1.gallery_comments[i];
+                } else {
+                    tmpObject.sub.push(result1.gallery_comments[i]);
+                }
+            }
+            console.log(tmpObject.sub.length);
+            comments.push(tmpObject);
+            k = k + deepcomment + 1;
+        }
+    }
+
+    res.render('review', { userInfo: userInfo, data: result1, comments: comments, imgurl: urlArray });
 };
 
 exports.reviewEdit = async (req, res) => {
@@ -269,8 +262,25 @@ exports.addMainComment = async (req, res) => {
         res.send({ errcode: -2, error: '로그인이 되어있지 않습니다.' });
         return;
     }
+    const loginuser = await User.findOne({
+        where: {
+            nickname: req.cookies.isLogin,
+        },
+    });
+    let maxGroup;
+    try {
+        maxGroup = await gallery_comment.max('deepComment', { galleryid: req.body.gid });
+    } catch {
+        maxGroup = 0;
+    }
 
-    console.log('본문', req.body.maincomment);
-    gallery_comment.create({});
-    res.json({ 11: '11' });
+    await gallery_comment.create({
+        nickName: req.cookies.isLogin,
+        commentText: req.body.maincomment,
+        commentGroup: maxGroup,
+        deepComment: 0,
+        galleryid: req.body.gid,
+        userid: loginuser.id,
+    });
+    res.json({ errcode: 0 });
 };
