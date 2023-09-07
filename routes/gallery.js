@@ -19,4 +19,7 @@ router.post('/review/editCheck', galleryController.reviewChangeCheck);
 
 //메인댓글 달기.
 router.post('/review/addMainComment', galleryController.addMainComment);
+
+//대댓글 달기.
+router.post('/review/addSubComment', galleryController.addSubComment);
 module.exports = router;

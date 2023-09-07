@@ -5,6 +5,10 @@ const multers3 = require('multer-s3');
 const multer = require('multer');
 const path = require('path');
 
+//sequelize Operators
+
+const { Op } = require('sequelize');
+
 aws.config.update({
     accessKeyId: 'AKIA4GRTGI6TYJVPLNVB',
     secretAccessKey: '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',
@@ -282,5 +286,41 @@ exports.addMainComment = async (req, res) => {
         galleryid: req.body.gid,
         userid: loginuser.id,
     });
+    res.json({ errcode: 0 });
+};
+
+exports.addSubComment = async (req, res) => {
+    //로그인이 안되어있음.
+    if (!req.cookies.isLogin) {
+        res.send({ errcode: -2, error: '로그인이 되어있지 않습니다.' });
+        return;
+    }
+    const loginuser = await User.findOne({
+        where: {
+            nickname: req.cookies.isLogin,
+        },
+    });
+
+    await gallery_comment.create({
+        nickName: req.cookies.isLogin,
+        commentText: req.body.subcomment,
+        commentGroup: req.body.commentGroup,
+        deepComment: -1,
+        galleryid: req.body.gid,
+        userid: loginuser.id,
+    });
+
+    //조회수 로직
+    await gallery_comment.increment(
+        { deepComment: 1 },
+        {
+            where: {
+                commentGroup: req.body.commentGroup,
+                deepComment: {
+                    [Op.ne]: -1,
+                },
+            },
+        }
+    );
     res.json({ errcode: 0 });
 };
