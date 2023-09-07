@@ -46,7 +46,7 @@
         </div>
         <hr />
         <button onclick="delReview('<%= galleryId %>')">삭제</button>
-        <button onclick="location.href='/gallery/edit'">수정</button>
+        <button onclick="changeReview('<%= galleryId %>')">수정</button>
         <!-- 댓글-->
         <hr />
         <div>댓글</div>
@@ -92,7 +92,23 @@
                 console.log(result);
                 if (result.data.error == 'no error') {
                     alert('삭제완료');
-                    location.href='/'';
+                    location.href = '/';
+                }
+            }
+
+            async function changeReview(gid) {
+                const result = await axios({
+                    url: '/gallery/review/editCheck',
+                    method: 'post',
+                    data: { gid },
+                });
+                console.log(result.data.reviewInfo);
+                if (result.data.errcode == 0) {
+                    console.log(result.data.reviewInfo);
+                    localStorage.setItem('galleryItems', JSON.stringify(result.data.reviewInfo));
+                    location.href = '/gallery/reviewEdit?mode=1';
+                } else {
+                    alert(result.data.error);
                 }
             }
         </script>

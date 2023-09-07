@@ -58,7 +58,7 @@ const uploadSingle = multer({
                         imgurl: `https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/gallery/${dateNow}_${path.basename(file.originalname)}`,
                     });
                     cb(null, `gallery/${dateNow}_${path.basename(file.originalname)}`); // original 폴더안에다 파일을 저장
-                }, 50);
+                }, 1000);
             }
         },
     }),
@@ -127,28 +127,6 @@ exports.singleAxios = async (req, res) => {
     });
 };
 
-//멀터 이용
-exports.multipleAxios = async (req, res) => {
-    console.log('multiAxios');
-    const files = uploadMulti.array('array_files');
-    const result = files(req, res, function (err) {
-        if (err instanceof multer.MulterError) {
-            // A Multer error occurred when uploading.
-            const err = new Error('Multer error');
-            console.log(err);
-            return;
-        } else if (err) {
-            // An unknown error occurred when uploading.
-            console.log(err);
-            return;
-        }
-        console.log(result);
-        return res.json({
-            file: result,
-        });
-    });
-};
-
 exports.reviewPage = async (req, res) => {
     //조회수 로직
     await gallery.increment(
@@ -170,6 +148,7 @@ exports.reviewPage = async (req, res) => {
         res.render('404');
         return;
     }
+    //갤러리의 owner
     const userInfo = await User.findOne({
         where: {
             id: result1.userid,
@@ -187,8 +166,8 @@ exports.reviewPage = async (req, res) => {
     for (let i = 0; i < imgurl.length; i++) {
         urlArray.urls.push(imgurl[i].imgurl);
     }
-    console.log(urlArray);
-    res.render('review', { mainText: result1.mainText, imgurl: urlArray });
+    // console.log(urlArray);
+    // res.render('review', { mainText: result1.mainText, imgurl: urlArray });
     res.render('review', { userInfo: userInfo, mainText: result1.mainText, galleryId: result1.galleryid, imgurl: urlArray });
 };
 
@@ -226,5 +205,33 @@ exports.reviewDel = async (req, res) => {
     } else {
         console.log('삭제실패, 아이디가 다름');
         res.send({ error: '삭제 권한이 없습니다.' });
+    }
+};
+
+exports.reviewChangeCheck = async (req, res) => {
+    console.log('change', req.body);
+    const loginuser = await User.findOne({
+        where: {
+            nickname: req.cookies.isLogin,
+        },
+    });
+    const owner = await gallery.findOne({
+        where: {
+            galleryid: req.body.gid,
+        },
+    });
+
+    if (loginuser.id == owner.userid) {
+        const reviewInfo = await gallery.findOne({
+            where: {
+                galleryid: req.body.gid,
+            },
+        });
+        console.log('수정가능');
+        res.send({ errcode: 0, error: 'no error', reviewInfo: reviewInfo });
+        return;
+    } else {
+        console.log('삭제실패, 아이디가 다름');
+        res.send({ errcode: -1, error: '삭제 권한이 없습니다.' });
     }
 };

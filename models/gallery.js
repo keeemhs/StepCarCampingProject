@@ -13,7 +13,7 @@ const Model = (sequelize) => {
             userid: {
                 type: DataTypes.INTEGER,
                 allowNull: false, //NOT NULL
-                // foreignKey: true,   user table 없어서 주석처리
+                foreignKey: true, //  user table 없어서 주석처리
                 // autoIncrement: true,
             },
             title: {

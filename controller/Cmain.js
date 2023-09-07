@@ -9,6 +9,10 @@ exports.gearPage = (req, res) => {
     res.render('gear');
 };
 
+exports.gearreviewPage = (req, res) => {
+    res.render('gearreview');
+};
+
 exports.spotPage = (req, res) => {
     res.render('spot');
 };
@@ -31,6 +35,18 @@ exports.galleryPage = async (req, res) => {
     }
 };
 
+exports.reviewPage = (req, res) => {
+    res.render('review');
+};
+
 exports.recomCarPage = (req, res) => {
     res.render('recomCar');
+};
+
+exports.signupPage = (req, res) => {
+    res.render('signup');
+};
+
+exports.signinPage = (req, res) => {
+    res.render('signin');
 };

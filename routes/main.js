@@ -1,5 +1,5 @@
 const express = require('express');
-const pageController = require('../controller/pageController');
+const pageController = require('../controller/Cmain');
 const router = express.Router();
 
 // 어떤 페이지로 갈까를 모아둔곳 !!!!
