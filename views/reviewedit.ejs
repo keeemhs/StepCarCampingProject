@@ -33,6 +33,7 @@
         <script>
             const urlSearch = new URLSearchParams(location.search);
             const mode = urlSearch.get('mode');
+
             if (mode == 1) {
                 const form = document.forms['reviewEdit'];
                 const galleryInfos = JSON.parse(localStorage.getItem('galleryItems'));

@@ -47,14 +47,14 @@ exports.signin = async (req, res) => {
         where: { useremail },
     });
 
-    if (!result || result == null) {
+    if (!result) {
         res.json({ result: false, message: '사용자가 존재하지 않습니다' });
+        return;
     }
-    console.log(result);
     const compare = comparePassword(pw, result.pw);
 
     if (compare) {
-        res.cookie('isLogin', result.nickname, cookieConfig);
+        res.cookie('isLogin', result.nickname);
         res.json({ result: true });
     } else {
         res.json({ result: false });

@@ -142,6 +142,7 @@ exports.reviewPage = async (req, res) => {
         where: {
             galleryid: req.query.galleryId,
         },
+        include: gallery_comment,
     });
     if (result1 == null) {
         console.log('none');
@@ -160,13 +161,14 @@ exports.reviewPage = async (req, res) => {
             galleryid: req.query.galleryId,
         },
     });
-    // 댓글 구현은 아직.
+    // imgUrl 저장
     const urlArray = { urls: [] };
     console.log(imgurl[0]);
     for (let i = 0; i < imgurl.length; i++) {
         urlArray.urls.push(imgurl[i].imgurl);
     }
-    // console.log(urlArray);
+
+    console.log(result1.gallery_comments);
     // res.render('review', { mainText: result1.mainText, imgurl: urlArray });
     res.render('review', { userInfo: userInfo, mainText: result1.mainText, galleryId: result1.galleryid, imgurl: urlArray });
 };
@@ -234,4 +236,16 @@ exports.reviewChangeCheck = async (req, res) => {
         console.log('삭제실패, 아이디가 다름');
         res.send({ errcode: -1, error: '삭제 권한이 없습니다.' });
     }
+};
+
+exports.addMainComment = async (req, res) => {
+    //로그인이 안되어있음.
+    if (!req.cookies.isLogin) {
+        res.send({ errcode: -2, error: '로그인이 되어있지 않습니다.' });
+        return;
+    }
+
+    console.log('본문', req.body.maincomment);
+    gallery_comment.create({});
+    res.json({ 11: '11' });
 };
