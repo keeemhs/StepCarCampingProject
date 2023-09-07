@@ -1,10 +1,9 @@
-const { Gear } = require('../models');
+const { gear, gear_img, User } = require('../models');
 //multer upload용
 const aws = require('aws-sdk');
 const multers3 = require('multer-s3');
 const multer = require('multer');
 const path = require('path');
-const { getDefaultResultOrder } = require('dns');
 
 aws.config.update({
     accessKeyId: 'AKIA4GRTGI6TYJVPLNVB',
@@ -17,9 +16,10 @@ const limits = {
     fileSize: 5 * 1024 * 1024, //5mb
 };
 var userid = 0;
-var galleryid = 0;
+var gearid = 0;
 var first = 0;
-const upload = multer({
+
+const uploadSingle = multer({
     storage: multers3({
         s3: s3,
         bucket: 'hwr-bucket',
@@ -31,7 +31,7 @@ const upload = multer({
             if (first == 0) {
                 var dateNow = Date.now();
                 const fn = `gear/${Date.now()}_${path.basename(file.originalname)}`;
-                const gearEdit = await Gear.create({
+                const gearEdit = await gear.create({
                     gearid: gearid,
                     gearTitle: req.body.gearTitle,
                     gearExplain: req.body.gearExplain,
@@ -63,6 +63,38 @@ const upload = multer({
 //멀터 셋팅 끝!
 
 //멀터 이용
+
+//멀터 이용 싱글 테이블 만들기
+exports.singleAxios = async (req, res) => {
+    const files = uploadSingle.array('array_file');
+    const user = await User.findOne({
+        where: {
+            nickname: req.cookies.isLogin,
+        },
+    });
+    userid = user.id;
+    if (!userid) {
+        res.send({ result: false, errMessage: '로그인이 종료되었거나, 잘못된 접근입니다.' });
+    }
+    console.log(req.body);
+    const result = files(req, res, function (err) {
+        if (err instanceof multer.MulterError) {
+            // A Multer error occurred when uploading.
+            const err = new Error('Multer error');
+            console.log(err);
+            return;
+        } else if (err) {
+            // An unknown error occurred when uploading.
+            console.log(err);
+            return;
+        }
+        console.log(result);
+        return res.json({
+            gearid: gearid,
+        });
+    });
+};
+
 exports.multipleAxios = (req, res) => {
     const files = upload.array('gearImage');
 
@@ -86,30 +118,36 @@ exports.multipleAxios = (req, res) => {
 
 ////////////////////////////////////////////////////////////
 
-exports.post_regist = async (req, res) => {
-    const { gearTitle, gearExplain } = req.body;
-
-    Gear.create({ gearTitle, gearExplain }).then(() => {
-        res.json({ result: true });
+exports.gearreviewPage = async (req, res) => {
+    //본문
+    const result1 = await gear.findOne({
+        where: {
+            gearid: req.query.gearId,
+        },
     });
+    //query - 사진 이미지 경로 가져오기
+
+    const imgurl = await gear_img.findAll({
+        where: {
+            gearid: req.query.gearId,
+        },
+    });
+
+    const urlArray = { urls: [] };
+    console.log(imgurl[0]);
+    for (let i = 0; i < imgurl.length; i++) {
+        urlArray.urls.push(imgurl[i].imgurl);
+    }
+    console.log(urlArray);
+    res.render('gearreview', { mainText: result1.mainText, imgurl: urlArray });
 };
 
-exports.regist = upload.single('gearImage', async (req, res) => {
-    try {
-        const { gearTitle, gearExplain } = req.body;
-        const imagePath = req.file.location; // AWS S3에서 이미지 URL을 가져옴
-
-        const result = await Gear.create({
-            gearTitle,
-            gearExplain,
-            gearImage: imagePath, // 데이터베이스에 이미지 URL 저장
-        });
-
-        if (result) {
-            res.json({ result: true });
-        }
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ result: false, error: 'Image upload failed' });
+exports.gearreviewEdit = async (req, res) => {
+    //쿠키던 세션이던 검증 필요
+    if (!req.cookies.isLogin) {
+        res.send(`<script type="text/javascript">alert("로그인이 되어있지 않습니다."); window.location = document.referrer; </script>`);
+        return;
     }
-});
+    //쿠키던 세션이던 저장되어있다고 생각하고 여기선 구현
+    res.render('gearreviewedit');
+};

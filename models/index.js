@@ -9,14 +9,14 @@ const sequelize = new Sequelize(config.database, config.username, config.passwor
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-
-db.User = require('./user')(sequelize)
+db.User = require('./user')(sequelize);
 
 //제품등록
-db.Gear = require('./gear')(sequelize);
+db.gear = require('./gear')(sequelize);
 db.gear_img = require('./gear_img')(sequelize);
-db.Gear.hasMany(db.gear_img, { foreignKey: 'gearid', onDelete: 'CASCADE' });
-db.gear_img.belongsTo(db.Gear, { foreignKey: 'gearid', onDelete: 'CASCADE' });
+
+db.gear.hasMany(db.gear_img, { foreignKey: 'gearid', onDelete: 'CASCADE' });
+db.gear_img.belongsTo(db.gear, { foreignKey: 'gearid', onDelete: 'CASCADE' });
 
 //지도
 db.Spot = require('./Spot')(sequelize);
