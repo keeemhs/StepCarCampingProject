@@ -68,6 +68,7 @@ const uploadSingle = multer({
 //멀터 이용 싱글 테이블 만들기
 exports.singleAxios = async (req, res) => {
     const files = uploadSingle.array('array_file');
+    console.log(req.body);
     const user = await User.findOne({
         where: {
             nickname: req.cookies.isLogin,
