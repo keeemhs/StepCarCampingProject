@@ -4,6 +4,9 @@ const controller = require('../controller/CUser');
 
 ////////////////////////////////////GET////////////////////////////////////
 
+
+//카카오톡 로그인
+router.get('/signin', controller.signin)
 //카카오톡 로그인 인증코드 받을 주소
 router.get('/signin/kakao', controller.signin_kakao);
 //카카오톡 리다이렉트 주소
