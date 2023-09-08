@@ -24,8 +24,9 @@
             <img src="" alt="" />
             <h2>제품 등록하기</h2>
             <form onsubmit="fileupload(event)" name="gearEdit">
-                <input name="gearTitle" type="text" placeholder="제품명" /><br />
-                <input name="gearExplain" type="text" placeholder="제품설명" /><br />
+                제목 : <input name="gearTitle" type="text" placeholder="제품명" /><br />
+                설명 : <input name="gearExplain" type="text" placeholder="제품설명" /><br />
+                작성자 : <input type="text" name="writer" value="<%= nickname %>" readonly />
                 <br />
                 <input type="file" name="dynamic_files" multiple />
                 <br />
@@ -43,6 +44,7 @@
             const form = document.forms['gearEdit'];
             const gearTitle = form.gearTitle.value;
             const gearExplain = form.gearExplain.value;
+            const writer = form.writer.value;
 
             const files = form.dynamic_files.files;
             console.log(files);
@@ -52,6 +54,7 @@
             for (let i = 0; i < files.length; i++) {
                 formData2.append(`gearTitle`, gearTitle);
                 formData2.append(`gearExplain`, gearExplain);
+                formData2.append(`writer`, writer);
                 formData2.append(`array_file`, files[i]);
             }
 
