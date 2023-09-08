@@ -74,17 +74,17 @@ const uploadSingle = multer({
 //멀터 이용 싱글 테이블 만들기
 exports.singleAxios = async (req, res) => {
     const files = uploadSingle.array('array_file');
-    console.log(req.cookies.isLogin);
+    console.log(decodeURI(req.cookies.isLogin));
     const user = await User.findOne({
         where: {
-            nickname: req.cookies.isLogin,
+            nickname: decodeURI(req.cookies.isLogin),
         },
     });
-    console.log(user);
     if (!user) {
         res.send({ result: false, errMessage: '로그인이 종료되었거나, 잘못된 접근입니다.' });
         return;
     }
+    userid = user.id;
     const result = files(req, res, function (err) {
         if (err instanceof multer.MulterError) {
             // A Multer error occurred when uploading.
@@ -192,7 +192,7 @@ exports.reviewDel = async (req, res) => {
     }
     const loginuser = await User.findOne({
         where: {
-            nickname: req.cookies.isLogin,
+            nickname: decodeURI(req.cookies.isLogin),
         },
     });
     const owner = await gallery.findOne({
@@ -250,7 +250,7 @@ exports.reviewChangeCheck = async (req, res) => {
     console.log('change', req.body);
     const loginuser = await User.findOne({
         where: {
-            nickname: req.cookies.isLogin,
+            nickname: decodeURI(req.cookies.isLogin),
         },
     });
     const owner = await gallery.findOne({
@@ -282,7 +282,7 @@ exports.addMainComment = async (req, res) => {
     }
     const loginuser = await User.findOne({
         where: {
-            nickname: req.cookies.isLogin,
+            nickname: decodeURI(req.cookies.isLogin),
         },
     });
     let maxGroup;
@@ -295,7 +295,7 @@ exports.addMainComment = async (req, res) => {
         maxGroup = 0;
     }
     await gallery_comment.create({
-        nickName: req.cookies.isLogin,
+        nickName: decodeURI(req.cookies.isLogin),
         commentText: req.body.maincomment,
         commentGroup: maxGroup,
         deepComment: 0,
@@ -313,12 +313,12 @@ exports.addSubComment = async (req, res) => {
     }
     const loginuser = await User.findOne({
         where: {
-            nickname: req.cookies.isLogin,
+            nickname: decodeURI(req.cookies.isLogin),
         },
     });
 
     await gallery_comment.create({
-        nickName: req.cookies.isLogin,
+        nickName: decodeURI(req.cookies.isLogin),
         commentText: req.body.subcomment,
         commentGroup: req.body.commentGroup,
         deepComment: -1,
