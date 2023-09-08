@@ -201,7 +201,10 @@ exports.reviewDel = async (req, res) => {
             galleryid: req.body.gid,
         },
     });
-
+    if (!req.cookies.isLogin) {
+        res.send({ errcode: -3, error: '로그인상태가 아닙니다' });
+        return;
+    }
     if (loginuser.id == owner.userid) {
         const imgurls = gallery_img.findAll({
             where: {

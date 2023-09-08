@@ -11,7 +11,7 @@ const cookieConfig = {
     //secure : 웹브라우저와 웹서버가 https 일경우면 가능
     //signed : 쿠키의 암호화결정 (req.signedCookies 객체에 들어있다고 함)
     httpOnly: true,
-    maxAge: 6000 * 1000, //10분
+    maxAge: 6000 * 1000, //1000분
     signed: false,
 };
 //이메일 중복검사
