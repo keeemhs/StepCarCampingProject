@@ -62,7 +62,7 @@ const uploadSingle = multer({
                         imgurl: `https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/gallery/${dateNow}_${path.basename(file.originalname)}`,
                     });
                     cb(null, `gallery/${dateNow}_${path.basename(file.originalname)}`); // original 폴더안에다 파일을 저장
-                }, 1000);
+                }, 50);
             }
         },
     }),

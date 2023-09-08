@@ -6,7 +6,84 @@
         <title>리뷰 에딧</title>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ijdya8hea0"></script>
-        <link rel="stylesheet" href="./css/spot.css" />
+
+        <style>
+            .location-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .location-select {
+                width: 400px;
+                display: flex;
+                justify-content: space-evenly;
+            }
+
+            .location-select button {
+                border: none;
+                background-color: transparent;
+            }
+
+            .location-select button:hover {
+                cursor: pointer;
+            }
+
+            .map {
+                width: 700px;
+                height: 350px;
+                margin-top: 15px;
+            }
+
+            .map-container {
+                display: flex;
+                justify-content: center;
+            }
+
+            .spot {
+                width: 200px;
+                height: 270px;
+                border: 2px;
+                border-style: solid;
+            }
+
+            .spot-container {
+                display: flex;
+                justify-content: space-evenly;
+                margin-top: 20px;
+            }
+
+            .spot div {
+                display: flex;
+                justify-content: center;
+            }
+
+            .spot-image {
+                width: 180px;
+                height: 100px;
+                margin: 10px 0px;
+            }
+
+            .spot-name {
+                font-size: 13px;
+                margin-top: 10px;
+            }
+
+            .spot-information {
+                height: 60px;
+                font-size: 12px;
+                margin: 5px 10px 10px;
+            }
+
+            .spot-address {
+                font-size: 12px;
+                margin: 0px 10px 5px;
+            }
+
+            .chat-button {
+                font-size: 12px;
+            }
+        </style>
     </head>
     <body>
         <%-include('header.ejs')%>
@@ -26,13 +103,13 @@
 
             <input type="file" name="dynamic_files" multiple /><br />
 
-            <!-- 지도 -->
-            <div class="map-container">
-                <div class="map" id="map"></div>
-            </div>
-
             <button>제출</button>
         </form>
+
+        <!-- 지도 -->
+        <div class="map-container">
+            <div class="map" id="map"></div>
+        </div>
         <hr />
         <%-include('footer.ejs')%>
 
