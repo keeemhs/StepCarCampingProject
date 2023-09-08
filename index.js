@@ -4,7 +4,10 @@ const PORT = 8000;
 const db = require('./models');
 const path = require('path'); // path 모듈 추가
 const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+require('dotenv').config();
 
+app.use(bodyParser.json());
 app.use(
     express.urlencoded({
         extended: true,
@@ -42,6 +45,10 @@ app.use('/user', user);
 
 const router = require('./routes/main');
 app.use(router);
+
+//이메일 전송 임시 라우터
+const email = require('./routes/email');
+app.use('/email', email);
 
 // recomCar.ejs
 app.get('/recomCar', (req, res) => {
