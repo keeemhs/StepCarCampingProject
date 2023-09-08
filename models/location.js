@@ -1,4 +1,4 @@
-const DataTypes = require('sequelize');
+const DataTypes = require('sequelize')
 
 const Location = (sequelize) => {
     const location = sequelize.define(
@@ -8,26 +8,25 @@ const Location = (sequelize) => {
                 type: DataTypes.INTEGER,
                 allowNull: false,
                 primaryKey: true,
-                autoIncrement: true,
+                autoIncrement: true
             },
             locationName: {
                 type: DataTypes.STRING(255),
-                allowNull: false,
+                allowNull: false
             },
             lon: {
                 type: DataTypes.STRING(255),
-                allowNull: false,
+                allowNull: false
             },
             lat: {
                 type: DataTypes.STRING(255),
-                allowNull: false,
-            },
-        },
-        {
-            timestamps: false,
-        }
+                allowNull: false
+            }
+        }, {
+        timestamps: false
+    }
     );
-    return location;
-};
+    return location
+}
 
-module.exports = Location;
+module.exports = Location
