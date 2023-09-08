@@ -75,6 +75,7 @@ exports.postToken = async (req, res) => {
     //로그인 성공
     if (result !== null) {
         res.cookie('isLoginKakao', nickname);
+        res.cookie('isLogin', nickname, cookieConfig);
         res.json({ result: true });
     } else {
         //사용자 추가정보 입력요구(회원가입 페이지)
