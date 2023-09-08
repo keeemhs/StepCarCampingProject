@@ -30,4 +30,3 @@ const Location = (sequelize) => {
 }
 
 module.exports = Location
-
