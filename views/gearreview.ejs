@@ -21,7 +21,7 @@
     </head>
     <body>
         <%-include('header.ejs')%>
-        <div style="margin-top: 100px; text-align: center"><%= data.gearTitle %></div>
+        <h2 style="margin-top: 100px; text-align: center">제품명 : <%= gearTitle %></h2>
 
         <div id="pictures">
             <i class="fa-solid fa-arrow-left" onclick="left()"></i>
@@ -30,7 +30,11 @@
         </div>
 
         <!-- 본문 -->
-        <div>본문</div>
+        <h4 style="text-align: center; margin-bottom: 10px">제품설명 : <%= gearExplain %></h4>
+
+        <h6 style="text-align: center; margin-bottom: 100px">작성자 : <%= writer %></h6>
+
+        <!-- footer -->
         <%-include('footer.ejs')%>
 
         <script>

@@ -34,10 +34,11 @@ const uploadSingle = multer({
                 const gearEdit = await gear.create({
                     gearTitle: req.body.gearTitle,
                     gearExplain: req.body.gearExplain,
+                    writer: req.body.writer,
                     thunmnail: fn,
                 });
                 gearid = gearEdit.gearid;
-                console.log('gearid', gearid);
+                console.log('gearid1111', gearid);
 
                 await gear_img.create({
                     gearid: gearid,
@@ -48,7 +49,7 @@ const uploadSingle = multer({
             } else {
                 setTimeout(async () => {
                     var dateNow = Date.now();
-                    await gear.create({
+                    gear_img.create({
                         gearid: gearid,
                         imgurl: `https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/gear/${dateNow}_${path.basename(file.originalname)}`,
                     });
@@ -147,7 +148,7 @@ exports.multipleAxios = async (req, res) => {
 ////////////////////////////////////////////////////////////
 
 exports.gearreviewPage = async (req, res) => {
-    console.log(req.query.gearId.gearid);
+    console.log(req.query.gearId);
     //본문
     const result1 = await gear.findOne({
         where: {
@@ -167,7 +168,7 @@ exports.gearreviewPage = async (req, res) => {
         urlArray.urls.push(imgurl[i].imgurl);
     }
     console.log(urlArray);
-    res.render('gearreview', { gearTitle: result1.gearTitle, gearExplain: result1.gearExplain, imgurl: urlArray });
+    res.render('gearreview', { gearTitle: result1.gearTitle, gearExplain: result1.gearExplain, writer: result1.writer, imgurl: urlArray });
 };
 
 exports.gearreviewEdit = async (req, res) => {
@@ -176,6 +177,7 @@ exports.gearreviewEdit = async (req, res) => {
         res.send(`<script type="text/javascript">alert("로그인이 되어있지 않습니다."); window.location = document.referrer; </script>`);
         return;
     }
+    const nickname = req.cookies.isLogin;
     //쿠키던 세션이던 저장되어있다고 생각하고 여기선 구현
-    res.render('gearreviewedit');
+    res.render('gearreviewedit', { nickname: nickname });
 };
