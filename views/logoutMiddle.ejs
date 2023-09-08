@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+</head>
+
+<body>
+    <script>
+        (async function () {
+            const res = await axios({
+                method: 'POST',
+                url: '/user/logout/middle',
+                data: {
+                    token: localStorage.getItem('kakaoToken')
+                }
+            })
+            if (res.data.result == true) {
+                localStorage.clear()
+                alert('로그아웃이 되었습니다')
+                location.href = '/'
+            }
+            else {
+                alert('로그아웃을 실패했습니다')
+                location.href = '/user/logout'
+            }
+
+        })()
+    </script>
+</body>
+
+</html>

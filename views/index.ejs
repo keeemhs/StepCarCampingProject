@@ -3,24 +3,29 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-        />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+        <title>Main Page</title>
+    </head>
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
         <title>Main Page</title>
     </head>
 
     <body>
         <!-- header -->
         <p>메인페이지 입니다</p>
-        <button onclick="location.href = '/gear'">장비대여</button>
+        <button onclick="location.href = 'gear'">장비대여</button>
         <button onclick="location.href = '/spot'">지도스팟</button>
         <button onclick="location.href = '/gallery'">갤러리</button>
         <button onclick="location.href = '/signup'">회원가입</button>
         <button onclick="location.href = '/signin'">로그인</button>
-        <button onclick="location.href = '/email'">이메일</button>
+        <button onclick="location.href = '/user/logout'">로그아웃</button>
+        <button onclick="location.href = '/user/deleteUser'">회원탈퇴</button>
         <!-- main -->
-        <div style="height: 1000px; background-color: rgb(66, 66, 87)"></div>
+        <div style="height: 1000px; background-color: blue"></div>
         <!-- Footer -->
         <%-include('footer.ejs')%>
     </body>

@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>로그인</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
 </head>
 
 <body>
@@ -15,12 +14,31 @@
         <input type="text" name="useremail" placeholder="이메일을 입력해주세요"><br>
         <input type="password" name="pw" placeholder="비밀번호를 입력해주세요"><br>
         <button type="button" onclick="signIn()">로그인</button>
+        <br>
+
     </form>
 
+    <button onclick="authKaKao()">카카오톡 로그인</button>
     <script>
+        const kakaotoken = localStorage.getItem('kakaoToken')
+
+        //카카오톡 로그인
+        function authKaKao() {
+            if (kakaotoken !== null) {
+                alert('이미 로그인된 사용자입니다')
+                location.href = '/'
+            }
+            document.location.href = "/user/signin/kakao";
+        }
+
+        //사용자 로그인
         const form = document.forms['signin']
 
         async function signIn() {
+            if (token !== null || kakaotoken !== null) {
+                alert('이미 로그인된 사용자입니다')
+                location.href = '/'
+            }
             const res = await axios({
                 method: 'POST',
                 url: '/user/signin',
@@ -31,11 +49,14 @@
             })
             if (res.data.result) {
                 alert('로그인에 성공했습니다')
-                location.href="/"
+                location.href = '/'
             } else {
                 alert('로그인에 실패했습니다')
             }
         }
+
+
+
     </script>
 </body>
 

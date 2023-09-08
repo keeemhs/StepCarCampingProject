@@ -20,7 +20,7 @@
     <h1>회원가입</h1>
     <div class="form-container">
         <form name="signup" id="signup">
-            <input type="text" name="email" placeholder="이메일을 입력해주세요">
+            <input type="text" name="email" id="email" placeholder="이메일을 입력해주세요">
             <button type="button" onclick="duplication()" id="duButton">중복</button>
             <br>
             <input type="password" name="pw" id="pw" placeholder="비밀번호를 입력해주세요">
@@ -57,6 +57,7 @@
             <input type="text" id="name" placeholder="이름을 입력해주세요">
             <br>
             <input type="text" id="nickname" placeholder="닉네임을 입력해주세요">
+            <button type="button" onclick="duplicationNickname()" id="duButton">중복</button>
             <br>
             <div>
                 차박레벨
@@ -91,7 +92,19 @@
         const password = document.querySelector('#pw')
         const passwordConfirm = document.querySelector('#pwc')
         const duButton = document.querySelector('#duButton')
+        var emailDuplicationResult = 0
+        var NickDuplicationResult = 0
 
+
+        const url = new URLSearchParams(location.search)
+        const mode = url.get('mode')
+
+        if (mode == 1) {
+            form.email.value = localStorage.getItem("email")
+            form.nickname.value = localStorage.getItem("nickname")
+            localStorage.removeItem("email")
+            localStorage.removeItem("nickname")
+        }
 
         //이메일 정규식
         var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
@@ -114,7 +127,7 @@
                 })
                 if (res.data.result) {
                     alert('사용가능한 이메일입니다')
-                    duplicationResult = 1
+                    emailDuplicationResult = 1
                 } else {
                     alert('이미 사용중인 이메일입니다')
                 }
@@ -122,6 +135,7 @@
                 console.log(error)
             }
         }
+
 
 
         //비밀번호 유효성 검사
@@ -147,6 +161,26 @@
             }
         })
 
+        //닉네임 중복 검사
+        async function duplicationNickname() {
+            try {
+                const res = await axios({
+                    method: 'POST',
+                    url: '/user/duplicationNickname',
+                    data: {
+                        nickname: form.nickname.value
+                    }
+                })
+                if (res.data.result) {
+                    alert('사용가능한 닉네임입니다')
+                    NickDuplicationResult = 1
+                } else {
+                    alert('이미 사용중인 닉네임입니다')
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        }
 
         //회원가입 동작
         async function signUp() {
@@ -162,6 +196,14 @@
 
             if (form.own.value == '') {
                 return alert('차량보유를 선택해주세요')
+            }
+
+            if (emailDuplicationResult === 0) {
+                return alert('이메일 중복검사를 해야합니다')
+            }
+
+            if (NickDuplicationResult === 0) {
+                return alert('닉네임 중복검사를 해야합니다')
             }
 
             try {

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+</head>
+
+<body>
+    <button type="button" onclick="deleteUser()">회원탈퇴</button>
+
+    <script>
+        const nickname = '<%= cookie %>'
+        async function deleteUser() {
+            if (localStorage.getItem('kakaoToken') === null) {
+                const res = await axios({
+                    method: 'DELETE',
+                    url: '/user/deleteUser',
+                    data: {
+                        nickname: nickname
+                    }
+                })
+                if (res.data.result === true) {
+                    localStorage.clear()
+                    alert('회원탈퇴가 완료되었습니다')
+                    location.href = '/'
+                }
+            } else {
+                const res = await axios({
+                    method: 'DELETE',
+                    url: '/user/deleteUser',
+                    data: {
+                        nickname: nickname,
+                        token: localStorage.getItem('kakaoToken')
+                    }
+                })
+                if (res.data.result === true) {
+                    localStorage.clear()
+                    alert('회원탈퇴가 완료되었습니다')
+                    location.href = '/'
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
