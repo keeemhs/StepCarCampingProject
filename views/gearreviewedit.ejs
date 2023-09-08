@@ -19,23 +19,6 @@
         <!-- header -->
         <%-include('header.ejs')%>
 
-        <!-- main -->
-        <!-- <section class="main" style="margin-top: 100px">
-            <img src="" alt="" />
-
-            <div class="regist">
-                <h2>제품 등록하기</h2>
-                <form name="regist" id="regist">
-                    <input type="text" id="gearTitle" placeholder="제품명" /><br />
-                    <input type="text" id="gearExplain" placeholder="제품설명" /><br />
-                    <br />
-                    <input type="file" id="gearImage" name="gearImage" accept="image/*" multiple />
-                    <br />
-                    <button type="button" id="registButton">등록하기</button>
-                </form>
-            </div>
-        </section> -->
-
         <section class="main" style="margin-top: 100px">
             <!-- logo -->
             <img src="" alt="" />
@@ -73,7 +56,7 @@
             }
 
             const result1 = await axios({
-                url: '/rent/singleAxios',
+                url: '/gear/singleAxios',
                 method: 'POST',
                 data: formData2,
                 Headers: {
@@ -82,34 +65,5 @@
             });
             console.log(result1.data.gearid);
         }
-        // document.getElementById('registButton').addEventListener('click', async function () {
-        //     const form = document.forms['regist'];
-        //     const formData = new FormData();
-        //     formData.append('gearTitle', form.gearTitle.value);
-        //     formData.append('gearExplain', form.gearExplain.value);
-
-        //     // 업로드된 이미지 파일 추가
-        //     const imageInput = document.getElementById('gearImage');
-        //     if (imageInput.files.length > 0) {
-        //         formData.append('gearImage', imageInput.files[0]);
-        //     }
-
-        //     try {
-        //         const res = await axios({
-        //             method: 'POST',
-        //             url: '/rent/regist',
-        //             data: formData,
-        //             headers: {
-        //                 'Content-Type': 'multipart/form-data', // 파일 업로드를 위한 헤더 설정
-        //             },
-        //         });
-        //         if (res.data.result) {
-        //             alert('제품이 등록되었습니다!');
-        //             window.location.href = '/rent';
-        //         }
-        //     } catch (error) {
-        //         console.log(error);
-        //     }
-        // });
     </script>
 </html>
