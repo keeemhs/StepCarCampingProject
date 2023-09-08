@@ -32,32 +32,60 @@ const uploadSingle = multer({
                 var dateNow = Date.now();
                 const fn = `gear/${Date.now()}_${path.basename(file.originalname)}`;
                 const gearEdit = await gear.create({
-                    gearid: gearid,
                     gearTitle: req.body.gearTitle,
                     gearExplain: req.body.gearExplain,
+                    writer: req.body.writer,
                     thunmnail: fn,
                 });
                 gearid = gearEdit.gearid;
-                console.log('gearid', gearid);
+                console.log('gearid1111', gearid);
 
-                gear_img.create({
+                await gear_img.create({
                     gearid: gearid,
                     imgurl: `https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/gear/${dateNow}_${path.basename(file.originalname)}`,
                 });
                 first += 1;
                 cb(null, fn); // original 폴더안에다 파일을 저장
             } else {
-                var dateNow = Date.now();
-                gear.create({
-                    gearid: gearid,
-                    imgurl: `https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/gear/${dateNow}_${path.basename(file.originalname)}`,
-                });
-                cb(null, `gear/${dateNow}_${path.basename(file.originalname)}`); // original 폴더안에다 파일을 저장
+                setTimeout(async () => {
+                    var dateNow = Date.now();
+                    gear_img.create({
+                        gearid: gearid,
+                        imgurl: `https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/gear/${dateNow}_${path.basename(file.originalname)}`,
+                    });
+                    cb(null, `gear/${dateNow}_${path.basename(file.originalname)}`); // original 폴더안에다 파일을 저장
+                }, 50);
             }
         },
     }),
     limits: {
         fileSize: 5 * 1024 * 1024, // 5MB
+    },
+});
+
+//멀티 업로드(사진들 업로드)
+const uploadMulti = multer({
+    storage: multers3({
+        s3: s3,
+        bucket: 'hwr-bucket',
+        acl: 'public-read',
+        metadata: function (req, file, cb) {
+            cb(null, { fieldName: file.fieldname });
+        },
+        key(req, file, cb) {
+            //DB에도 저장해야함(경로)
+            //여기서 폴더를 하나 만들었고, 폴더에 마음대로...저장해보시면됩니다.
+            const dateNow = Date.now();
+            console.log('key,result2');
+            gear_img.create({
+                gearid: gearid,
+                imgurl: `https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/gear/${dateNow}_${path.basename(file.originalname)}`,
+            });
+            cb(null, `gear/${dateNow}_${path.basename(file.originalname)}`); // original 폴더안에다 파일을 저장
+        },
+    }),
+    limits: {
+        fileSize: 5 * 1024 * 1024, //5mb
     },
 });
 //멀터 셋팅 끝!
@@ -89,15 +117,16 @@ exports.singleAxios = async (req, res) => {
             return;
         }
         console.log(result);
+        first = 0;
         return res.json({
             gearid: gearid,
         });
     });
 };
 
-exports.multipleAxios = (req, res) => {
-    const files = upload.array('gearImage');
-
+exports.multipleAxios = async (req, res) => {
+    console.log('multiAxios');
+    const files = uploadMulti.array('array_files');
     const result = files(req, res, function (err) {
         if (err instanceof multer.MulterError) {
             // A Multer error occurred when uploading.
@@ -119,6 +148,7 @@ exports.multipleAxios = (req, res) => {
 ////////////////////////////////////////////////////////////
 
 exports.gearreviewPage = async (req, res) => {
+    console.log(req.query.gearId);
     //본문
     const result1 = await gear.findOne({
         where: {
@@ -126,7 +156,6 @@ exports.gearreviewPage = async (req, res) => {
         },
     });
     //query - 사진 이미지 경로 가져오기
-
     const imgurl = await gear_img.findAll({
         where: {
             gearid: req.query.gearId,
@@ -139,7 +168,7 @@ exports.gearreviewPage = async (req, res) => {
         urlArray.urls.push(imgurl[i].imgurl);
     }
     console.log(urlArray);
-    res.render('gearreview', { mainText: result1.mainText, imgurl: urlArray });
+    res.render('gearreview', { gearTitle: result1.gearTitle, gearExplain: result1.gearExplain, writer: result1.writer, imgurl: urlArray });
 };
 
 exports.gearreviewEdit = async (req, res) => {
@@ -148,6 +177,7 @@ exports.gearreviewEdit = async (req, res) => {
         res.send(`<script type="text/javascript">alert("로그인이 되어있지 않습니다."); window.location = document.referrer; </script>`);
         return;
     }
+    const nickname = req.cookies.isLogin;
     //쿠키던 세션이던 저장되어있다고 생각하고 여기선 구현
-    res.render('gearreviewedit');
+    res.render('gearreviewedit', { nickname: nickname });
 };

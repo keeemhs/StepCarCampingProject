@@ -1,17 +1,3 @@
 const mysql = require('mysql');
 
-const db_regist = (data, cb) => {
-    const query = 'INSERT INTO regist_item ( gearTitle, gearExplain ) VALUES (?,?)';
-    conn.query(query, [data.gearTitle, data.gearExplain], (err, rows) => {
-        if (err) {
-            console.log(err);
-            return;
-        }
-        console.log('regist', rows);
-        cb();
-    });
-};
-
-module.exports = {
-    db_regist,
-};
+module.exports = {};

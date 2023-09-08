@@ -5,8 +5,17 @@ exports.indexPage = (req, res) => {
     res.render('index');
 };
 
-exports.gearPage = (req, res) => {
-    res.render('gear');
+exports.gearPage = async (req, res) => {
+    const result = await gear.findAll({
+        attribute: ['gearid', 'gearTitle', 'writer', 'thunmnail'],
+        order: [['gearid', 'desc']],
+    });
+    console.log(result);
+    res.render('gear', { data: result });
+};
+
+exports.gearreviewPage = (req, res) => {
+    res.render('gearreview');
 };
 
 exports.spotPage = (req, res) => {
@@ -31,6 +40,18 @@ exports.galleryPage = async (req, res) => {
     }
 };
 
+exports.reviewPage = (req, res) => {
+    res.render('review');
+};
+
 exports.recomCarPage = (req, res) => {
     res.render('recomCar');
+};
+
+exports.signupPage = (req, res) => {
+    res.render('signup');
+};
+
+exports.signinPage = (req, res) => {
+    res.render('signin');
 };
