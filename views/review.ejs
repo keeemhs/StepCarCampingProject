@@ -1,85 +1,185 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://kit.fontawesome.com/8786e78429.js" crossorigin="anonymous"></script>
-    <style>
-        #pictures{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <script src="https://kit.fontawesome.com/8786e78429.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-        .img--box {
-            width: 300px;
-            margin-left: 10px;
-            margin-right: 10px;
-        }
+        <style>
+            #pictures {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
 
+            .img--box {
+                width: 300px;
+                margin-left: 10px;
+                margin-right: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <%-include('header.ejs')%>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <hr />
+        <!-- user.name -->
+        <div><%= userInfo.username %>님의 캠핑스팟</div>
+        <!-- 사진넘기기-->
 
-    </style>
-</head>
-<body>
-    <%-include('header.ejs')%>
-
-    <hr>
-    <!-- user.name -->
-    <div>???님의 캠핑스팟 </div>
-    <!-- 사진넘기기-->
-    
-    <div id = 'pictures'>
-        <i class="fa-solid fa-arrow-left" onclick="left()"></i>
-        <img id="img-box" class="img--box" src="<%= imgurl.urls[0] %>"> 
-        <i class="fa-solid fa-arrow-right" onclick="right()"></i>
-    </div>
-
-    <!-- 본문 -->
-    <div>
-        본문
-        <div>
-            <%= mainText %>
+        <div id="pictures">
+            <i class="fa-solid fa-arrow-left" onclick="left()"></i>
+            <img id="img-box" class="img--box" src="<%= imgurl.urls[0] %>" />
+            <i class="fa-solid fa-arrow-right" onclick="right()"></i>
         </div>
-    </div>
-    <hr>
-    <button onclick="location.href='/gallery/del'">삭제</button>
-    <!-- 댓글-->
-    <hr>
-    <div>댓글</div>
-    <%-include('footer.ejs')%>
 
-    <script>
-        // imgurl를 stringfy해준뒤에, 다시 parse해서 jsonobject를 만든다.
-        // 나중에는 그냥 서버단에서 하는게 나을것같다.
-        var imgurl = JSON.parse('<%- JSON.stringify(imgurl) %>').urls; 
-        console.log(typeof imgurl)
-        console.log(imgurl)
-        var currentImg = 0
+        <!-- 본문 -->
+        <div>
+            본문
+            <div><%= data.mainText %></div>
+        </div>
+        <hr />
+        <button onclick="delReview()">삭제</button>
+        <button onclick="changeReview()">수정</button>
+        <!-- 댓글-->
+        <hr />
+        <div class="commentView">
+            <div>
+                <!-- 여기에 대댓글을 추가할 수 있는 method가 필요하다. -->
+                <% for(let i=0; i< comments.length; i++){ %>
+                <div>
+                    <%= comments[i].main.commentText %><br />
+                    <form name="maincomment<%= i %>">
+                        <span>대댓글</span>
+                        <input name="mainCommentInput" type="text" placeholder="댓글" />
+                        <button type="button" onclick="addSubComment('<%=i %>','<%= data.galleryid %>','<%= comments[i].main.commentGroup %>','<%= comments[i].main.deepComment %>')">댓글입력</button>
+                    </form>
+                </div>
+                <ul>
+                    <!-- 여길 ejs에서 불러온 데이터만큼 반복한다. -->
+                    <% for(let j=0; j < comments[i].sub.length; j++){ %>
+                    <li><%= comments[i].sub[j].commentText %></li>
+                    <% } %>
+                </ul>
+                <% } %>
+            </div>
+        </div>
+        <div class="inputComment">
+            <form name="maincomment">
+                <span>댓글</span>
+                <input name="mainCommentInput" type="text" placeholder="댓글" />
+                <button type="button" onclick="addMainComment()">댓글입력</button>
+            </form>
+        </div>
+        <%-include('footer.ejs')%>
 
-        var imgLength =imgurl.length
-        console.log(imgLength)
-        function left(){
-            console.log("left",currentImg)
-            if(currentImg==0){
-                currentImg=imgLength-1
-            }else{
-                currentImg--;
+        <script>
+            // imgurl를 stringfy해준뒤에, 다시 parse해서 jsonobject를 만든다.
+            // 나중에는 그냥 서버단에서 하는게 나을것같다.
+            var imgurl = JSON.parse('<%- JSON.stringify(imgurl) %>').urls;
+            console.log(typeof imgurl);
+            console.log(imgurl);
+            var currentImg = 0;
+
+            var imgLength = imgurl.length;
+            console.log(imgLength);
+            function left() {
+                console.log('left', currentImg);
+                if (currentImg == 0) {
+                    currentImg = imgLength - 1;
+                } else {
+                    currentImg--;
+                }
+                console.log(imgurl[currentImg]);
+                document.querySelector('#img-box').src = imgurl[currentImg];
             }
-            console.log(imgurl[currentImg])
-            document.querySelector("#img-box").src=imgurl[currentImg]
-        }
-        function right(){
-            console.log("right",currentImg)
-            if(currentImg==imgLength-1){
-                currentImg  =0
-            }else{
-                currentImg++;
+            function right() {
+                console.log('right', currentImg);
+                if (currentImg == imgLength - 1) {
+                    currentImg = 0;
+                } else {
+                    currentImg++;
+                }
+                console.log(imgurl, currentImg);
+                document.querySelector('#img-box').src = imgurl[currentImg];
             }
-            console.log(imgurl,currentImg)
-            document.querySelector("#img-box").src=imgurl[currentImg]
-        }
-    </script>
 
-</body>
+            async function delReview() {
+                const urlSearch = new URLSearchParams(location.search);
+                const gid = urlSearch.get('galleryId');
+                const result = await axios({
+                    url: '/gallery/review/del',
+                    method: 'delete',
+                    data: { gid },
+                });
+                console.log(result);
+                if (result.data.error == 'no error') {
+                    alert('삭제완료');
+                    location.href = '/';
+                }
+            }
+            //수정을 눌렀을 떄
+            async function changeReview() {
+                const urlSearch = new URLSearchParams(location.search);
+                const gid = urlSearch.get('galleryId');
+                const result = await axios({
+                    url: '/gallery/review/editCheck',
+                    method: 'post',
+                    data: { gid },
+                });
+                console.log(result.data.reviewInfo);
+                if (result.data.errcode == 0) {
+                    localStorage.setItem('galleryItems', JSON.stringify(result.data.reviewInfo));
+                    location.href = '/gallery/reviewEdit?mode=1';
+                } else {
+                    alert(result.data.error);
+                }
+            }
+
+            async function addMainComment() {
+                const urlSearch = new URLSearchParams(location.search);
+                const mode = urlSearch.get('galleryId');
+                const maincomment = document.forms['maincomment'].mainCommentInput.value;
+                console.log(maincomment);
+                const result = await axios({
+                    url: '/gallery/review/addMainComment',
+                    data: {
+                        maincomment,
+                        gid: mode,
+                    },
+                    method: 'POST',
+                });
+                if (result.data.errcode == 0) {
+                    location.reload();
+                }
+            }
+
+            async function addSubComment(i, gid, commentGroup, deepComment) {
+                const urlSearch = new URLSearchParams(location.search);
+                const mode = urlSearch.get('galleryId');
+                let formString = 'maincomment' + i;
+                const subcomment = document.forms[formString].mainCommentInput.value;
+                const result = await axios({
+                    url: '/gallery/review/addSubComment',
+                    data: {
+                        subcomment,
+                        gid: mode,
+                        commentGroup,
+                        deepComment,
+                    },
+                    method: 'POST',
+                });
+                if (result.data.errcode == 0) {
+                    location.reload();
+                }
+            }
+        </script>
+    </body>
 </html>

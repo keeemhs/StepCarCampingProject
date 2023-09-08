@@ -1,54 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>리뷰 에딧</title>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-</head>
-<body>
-    <%-include('header.ejs')%>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <hr>
-    <form name="reviewEdit">
-        <input name="title" type="text" placeholder="제목"><br>
-        <input name="mainText" type="text" placeholder="본문"><br>
-        <input type="radio" name="region"  value="1"/>지역1
-        <input type="radio" name="region"  value="2"/>지역2
-        <input type="radio" name="region"  value="3"/>지역3
-        <input type="radio" name="region"  value="4"/>지역4
-         <br />
-        <input name="spotInfo" type="text" placeholder="스팟정보"><br>
-        <button>제출</button>
-    </form>
-    <hr>
-    <%-include('footer.ejs')%>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>리뷰 에딧</title>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ijdya8hea0"></script>
+        <link rel="stylesheet" href="./css/spot.css" />
+    </head>
+    <body>
+        <%-include('header.ejs')%>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <hr />
+        <form onsubmit="fileupload(event)" name="reviewEdit">
+            <input name="title" type="text" placeholder="제목" /><br />
+            <input name="mainText" type="text" placeholder="본문" /><br />
+            <input type="radio" name="region" value="1" />경기/서울 <input type="radio" name="region" value="2" />강원 <input type="radio" name="region" value="3" />충청 <input type="radio" name="region" value="4" />경상 <input type="radio" name="region" value="5" />전라
+            <input type="radio" name="region" value="6" />제주
+            <br />
+            <input name="spotInfo" type="text" placeholder="스팟정보" /><br />
 
-    <script>
-        const form= document.forms['reviewEdit']
-        const title = form.title.value
-        const mainText = form.mainText.value
-        const region =form.region.value
-        const spotInfo = form.spotInfo.value
-        console.log(title)
-        console.log(mainText)
-        console.log(region)
-        console.log(spotInfo)
+            <input type="file" name="dynamic_files" multiple /><br />
 
-        // const result= await axios({
-        //     method : "POST",
-        //     url: "gallery/reviewEdit",
-        //     data : {
-        //         title,
-        //         mainText,
-        //         region,
-        //         spotInfo
-        //     }
-        // })
-    </script>
-</body>
+            <!-- 지도 -->
+            <div class="map-container">
+                <div class="map" id="map"></div>
+            </div>
+
+            <button>제출</button>
+        </form>
+        <hr />
+        <%-include('footer.ejs')%>
+
+        <script>
+            //지도 로직
+
+            //지도 초기 기준점 위치 설정
+            const mapOptions = {
+                center: new naver.maps.LatLng(36.626316, 127.936296),
+                zoom: 6,
+            };
+
+            var map = new naver.maps.Map('map', mapOptions);
+
+            const urlSearch = new URLSearchParams(location.search);
+            const mode = urlSearch.get('mode');
+
+            if (mode == 1) {
+                const form = document.forms['reviewEdit'];
+                const galleryInfos = JSON.parse(localStorage.getItem('galleryItems'));
+                console.log(galleryInfos);
+                form.title.value = galleryInfos.title;
+                form.mainText.value = galleryInfos.mainText;
+                form.region.value = galleryInfos.region;
+                form.spotInfo.value = galleryInfos.spotInform;
+            }
+
+            async function fileupload(event) {
+                event.preventDefault();
+                const form = document.forms['reviewEdit'];
+                const title = form.title.value;
+                const mainText = form.mainText.value;
+                const region = form.region.value;
+                const spotInfo = form.spotInfo.value;
+
+                const files = form.dynamic_files.files;
+                console.log(files);
+                //이미지들 url 만들기
+                const formData2 = new FormData();
+
+                for (let i = 0; i < files.length; i++) {
+                    formData2.append('title', title);
+                    formData2.append('mainText', mainText);
+                    formData2.append('region', region);
+                    formData2.append('spotInform', spotInfo);
+                    formData2.append('array_file', files[i]);
+                }
+                //reivew table 만들기
+                const result1 = await axios({
+                    url: '/gallery/singleAxios',
+                    method: 'POST',
+                    data: formData2,
+                    Headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
+                console.log(result1.data.galleryid);
+                location.href = '/gallery';
+
+                // const result2= await axios({
+                //     method : "POST",
+                //     url: "gallery/multipleAxios",
+                //     data : formData2
+                // })
+                // console.log("result2: ",result2)
+            }
+        </script>
+    </body>
 </html>
