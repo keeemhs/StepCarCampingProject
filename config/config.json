@@ -1,7 +1,7 @@
 {
     "development": {
         "username": "gichun",
-        "password": "spstar0518!",
+        "password": "0518",
         "database": "kdt9",
         "host": "127.0.0.1",
         "dialect": "mysql"

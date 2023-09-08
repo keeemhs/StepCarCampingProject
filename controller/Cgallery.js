@@ -121,7 +121,10 @@ exports.reviewPage = async (req, res) => {
             galleryid: req.query.galleryId,
         },
         include: gallery_comment,
-        order: [[gallery_comment, 'commentGroup', 'asc']],
+        order: [
+            [gallery_comment, 'commentGroup', 'asc'],
+            [gallery_comment, 'createdAt', 'asc'],
+        ],
     });
     if (result1 == null) {
         console.log('none');
@@ -148,6 +151,8 @@ exports.reviewPage = async (req, res) => {
     }
 
     const comments = [];
+    console.log('아마 여기서 멈출듯?');
+
     let k = 0;
     while (k < result1.gallery_comments.length) {
         const deepcomment = result1.gallery_comments[k].deepComment;
@@ -165,7 +170,8 @@ exports.reviewPage = async (req, res) => {
             k = k + deepcomment + 1;
         }
     }
-
+    console.log('아마 여기서 멈출듯?2');
+    console.log(result1);
     res.render('review', { userInfo: userInfo, data: result1, comments: comments, imgurl: urlArray });
 };
 
@@ -179,7 +185,12 @@ exports.reviewEdit = async (req, res) => {
     res.render('reviewedit');
 };
 exports.reviewDel = async (req, res) => {
-    console.log('del', req.body);
+    console.log('del', req.cookies);
+
+    if (!req.cookies.isLogin) {
+        res.send({ errcode: -1, error: '삭제 권한이 없습니다.' });
+        return;
+    }
     const loginuser = await User.findOne({
         where: {
             nickname: req.cookies.isLogin,
@@ -273,11 +284,13 @@ exports.addMainComment = async (req, res) => {
     });
     let maxGroup;
     try {
-        maxGroup = await gallery_comment.max('deepComment', { galleryid: req.body.gid });
+        maxGroup = Number(await gallery_comment.max('commentGroup', { galleryid: req.body.gid })) + 1;
     } catch {
         maxGroup = 0;
     }
-
+    if (maxGroup == null) {
+        maxGroup = 0;
+    }
     await gallery_comment.create({
         nickName: req.cookies.isLogin,
         commentText: req.body.maincomment,
@@ -310,7 +323,7 @@ exports.addSubComment = async (req, res) => {
         userid: loginuser.id,
     });
 
-    //조회수 로직
+    //딥커멘트(대댓글 개수 증가 로직)ㅌ`
     await gallery_comment.increment(
         { deepComment: 1 },
         {

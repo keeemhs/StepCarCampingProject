@@ -45,8 +45,8 @@
             <div><%= data.mainText %></div>
         </div>
         <hr />
-        <button onclick="delReview('<%= data.galleryId %>')">삭제</button>
-        <button onclick="changeReview('<%= data.galleryId %>')">수정</button>
+        <button onclick="delReview()">삭제</button>
+        <button onclick="changeReview()">수정</button>
         <!-- 댓글-->
         <hr />
         <div class="commentView">
@@ -58,7 +58,7 @@
                     <form name="maincomment<%= i %>">
                         <span>대댓글</span>
                         <input name="mainCommentInput" type="text" placeholder="댓글" />
-                        <button type="button" onclick="addSubComment('<%= i %>','<%= data.galleryid %>','<%= comments[i].main.commentGroup %>','<%= comments[i].main.deepComment %>')">댓글입력</button>
+                        <button type="button" onclick="addSubComment('<%=i %>','<%= data.galleryid %>','<%= comments[i].main.commentGroup %>','<%= comments[i].main.deepComment %>')">댓글입력</button>
                     </form>
                 </div>
                 <ul>
@@ -110,7 +110,9 @@
                 document.querySelector('#img-box').src = imgurl[currentImg];
             }
 
-            async function delReview(gid) {
+            async function delReview() {
+                const urlSearch = new URLSearchParams(location.search);
+                const gid = urlSearch.get('galleryId');
                 const result = await axios({
                     url: '/gallery/review/del',
                     method: 'delete',
@@ -123,7 +125,9 @@
                 }
             }
             //수정을 눌렀을 떄
-            async function changeReview(gid) {
+            async function changeReview() {
+                const urlSearch = new URLSearchParams(location.search);
+                const gid = urlSearch.get('galleryId');
                 const result = await axios({
                     url: '/gallery/review/editCheck',
                     method: 'post',
