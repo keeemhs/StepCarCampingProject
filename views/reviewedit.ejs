@@ -5,6 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>리뷰 에딧</title>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ijdya8hea0"></script>
+        <link rel="stylesheet" href="./css/spot.css" />
     </head>
     <body>
         <%-include('header.ejs')%>
@@ -24,13 +26,40 @@
 
             <input type="file" name="dynamic_files" multiple /><br />
 
-            <div>지도 및 경로 입력 받아야함.</div>
+            <!-- 지도 -->
+            <div class="map-container">
+                <div class="map" id="map"></div>
+            </div>
+
             <button>제출</button>
         </form>
         <hr />
         <%-include('footer.ejs')%>
 
         <script>
+            //지도 로직
+
+            //지도 초기 기준점 위치 설정
+            const mapOptions = {
+                center: new naver.maps.LatLng(36.626316, 127.936296),
+                zoom: 6,
+            };
+
+            var map = new naver.maps.Map('map', mapOptions);
+
+            const urlSearch = new URLSearchParams(location.search);
+            const mode = urlSearch.get('mode');
+
+            if (mode == 1) {
+                const form = document.forms['reviewEdit'];
+                const galleryInfos = JSON.parse(localStorage.getItem('galleryItems'));
+                console.log(galleryInfos);
+                form.title.value = galleryInfos.title;
+                form.mainText.value = galleryInfos.mainText;
+                form.region.value = galleryInfos.region;
+                form.spotInfo.value = galleryInfos.spotInform;
+            }
+
             async function fileupload(event) {
                 event.preventDefault();
                 const form = document.forms['reviewEdit'];
@@ -43,16 +72,14 @@
                 console.log(files);
                 //이미지들 url 만들기
                 const formData2 = new FormData();
-                for (let i = 0; i < files.length; i++) {
-                    formData2.append(`title`, title);
-                    formData2.append(`mainText`, mainText);
-                    formData2.append(`region`, region);
-                    formData2.append(`spotInform`, spotInfo);
-                    formData2.append(`array_file`, files[i]);
-                }
-                // for(let i =0 ; i<files.length; i++){
 
-                // }
+                for (let i = 0; i < files.length; i++) {
+                    formData2.append('title', title);
+                    formData2.append('mainText', mainText);
+                    formData2.append('region', region);
+                    formData2.append('spotInform', spotInfo);
+                    formData2.append('array_file', files[i]);
+                }
                 //reivew table 만들기
                 const result1 = await axios({
                     url: '/gallery/singleAxios',
@@ -63,6 +90,7 @@
                     },
                 });
                 console.log(result1.data.galleryid);
+                location.href = '/gallery';
 
                 // const result2= await axios({
                 //     method : "POST",

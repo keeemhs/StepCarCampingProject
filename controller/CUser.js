@@ -42,13 +42,14 @@ exports.signup = async (req, res) => {
 //로그인
 exports.signin = async (req, res) => {
     const { useremail, pw } = req.body;
-
+    console.log(useremail, pw);
     const result = await User.findOne({
         where: { useremail },
     });
 
     if (!result) {
         res.json({ result: false, message: '사용자가 존재하지 않습니다' });
+        return;
     }
     const compare = comparePassword(pw, result.pw);
 
