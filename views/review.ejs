@@ -5,10 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
         <script src="https://kit.fontawesome.com/8786e78429.js" crossorigin="anonymous"></script>
-<<<<<<< HEAD
-=======
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
->>>>>>> e9d53a53e5436e1e3b7ebac2282b6ebdae140225
+
         <style>
             #pictures {
                 display: flex;
@@ -25,14 +23,6 @@
     </head>
     <body>
         <%-include('header.ejs')%>
-<<<<<<< HEAD
-
-        <hr />
-        <!-- user.name -->
-        <div>???님의 캠핑스팟</div>
-        <!-- 사진넘기기-->
-
-=======
         <br />
         <br />
         <br />
@@ -44,7 +34,6 @@
         <div><%= userInfo.username %>님의 캠핑스팟</div>
         <!-- 사진넘기기-->
 
->>>>>>> e9d53a53e5436e1e3b7ebac2282b6ebdae140225
         <div id="pictures">
             <i class="fa-solid fa-arrow-left" onclick="left()"></i>
             <img id="img-box" class="img--box" src="<%= imgurl.urls[0] %>" />
@@ -57,12 +46,7 @@
             <div><%= mainText %></div>
         </div>
         <hr />
-<<<<<<< HEAD
         <button onclick="location.href='/gallery/del'">삭제</button>
-=======
-        <button onclick="delReview('<%= galleryId %>')">삭제</button>
-        <button onclick="location.href='/gallery/edit'">수정</button>
->>>>>>> e9d53a53e5436e1e3b7ebac2282b6ebdae140225
         <!-- 댓글-->
         <hr />
         <div>댓글</div>
@@ -98,9 +82,6 @@
                 console.log(imgurl, currentImg);
                 document.querySelector('#img-box').src = imgurl[currentImg];
             }
-<<<<<<< HEAD
-=======
-
             async function delReview(gid) {
                 const result = await axios({
                     url: '/gallery/review/del',
@@ -113,7 +94,6 @@
                     location.reload();
                 }
             }
->>>>>>> e9d53a53e5436e1e3b7ebac2282b6ebdae140225
         </script>
     </body>
 </html>
