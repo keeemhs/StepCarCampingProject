@@ -92,7 +92,8 @@
         const password = document.querySelector('#pw')
         const passwordConfirm = document.querySelector('#pwc')
         const duButton = document.querySelector('#duButton')
-        const duplicationResult = 0
+        var emailDuplicationResult = 0
+        var NickDuplicationResult = 0
 
 
         const url = new URLSearchParams(location.search)
@@ -124,7 +125,7 @@
                 })
                 if (res.data.result) {
                     alert('사용가능한 이메일입니다')
-                    duplicationResult = 1
+                    emailDuplicationResult = 1
                 } else {
                     alert('이미 사용중인 이메일입니다')
                 }
@@ -170,7 +171,7 @@
                 })
                 if (res.data.result) {
                     alert('사용가능한 닉네임입니다')
-                    duplicationResult = 1
+                    NickDuplicationResult = 1
                 } else {
                     alert('이미 사용중인 닉네임입니다')
                 }
@@ -195,8 +196,12 @@
                 return alert('차량보유를 선택해주세요')
             }
 
-            if (duplicationResult === 0) {
+            if (emailDuplicationResult === 0) {
                 return alert('이메일 중복검사를 해야합니다')
+            }
+
+            if (NickDuplicationResult === 0) {
+                return alert('닉네임 중복검사를 해야합니다')
             }
 
             try {
