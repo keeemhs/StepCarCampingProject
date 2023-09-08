@@ -102,6 +102,8 @@
         if (mode == 1) {
             form.email.value = localStorage.getItem("email")
             form.nickname.value = localStorage.getItem("nickname")
+            localStorage.removeItem("email")
+            localStorage.removeItem("nickname")
         }
 
         //이메일 정규식

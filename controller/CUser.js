@@ -55,7 +55,7 @@ exports.getToken = async (req, res) => {
 
 }
 
-//카카오 로그인 ~ 메인페이지 이동 전 -> 카카오 토큰 저장해서 사용자 정보 가져오기
+//카카오 로그인
 exports.postToken = async (req, res) => {
     console.log(req.body.token)
     const kakaoUser = await axios({

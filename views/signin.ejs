@@ -21,10 +21,10 @@
     <button onclick="authKaKao()">카카오톡 로그인</button>
     <script>
         const kakaotoken = localStorage.getItem('kakaoToken')
-        const token = localStorage.getItem('isLogin')
+
         //카카오톡 로그인
         function authKaKao() {
-            if (token !== null || kakaotoken !== null) {
+            if (kakaotoken !== null) {
                 alert('이미 로그인된 사용자입니다')
                 location.href = '/'
             }
@@ -35,6 +35,10 @@
         const form = document.forms['signin']
 
         async function signIn() {
+            if (token !== null || kakaotoken !== null) {
+                alert('이미 로그인된 사용자입니다')
+                location.href = '/'
+            }
             const res = await axios({
                 method: 'POST',
                 url: '/user/signin',
