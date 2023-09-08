@@ -52,6 +52,10 @@ exports.auth_kakao = async (req, res) => {
 
 exports.getToken = async (req, res) => {};
 
+exports.signinPage = (req, res) => {
+    res.render('signin');
+};
+
 //카카오 로그인
 exports.postToken = async (req, res) => {
     console.log(req.body.token);
