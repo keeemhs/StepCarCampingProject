@@ -46,7 +46,6 @@ exports.auth_kakao = async (req, res) => {
         });
         const token = result.data.access_token
         console.log(token)
-        res.cookie('kakaoToken', token)
         res.render('signinMiddle', { result: true, token: token })
     }
 
@@ -78,6 +77,7 @@ exports.postToken = async (req, res) => {
 
     //로그인 성공
     if (result !== null) {
+        res.cookie('isLoginKakao', nickname)
         res.json({ result: true })
     } else {
         //사용자 추가정보 입력요구(회원가입 페이지)
@@ -93,6 +93,21 @@ exports.duplication = async (req, res) => {
 
     const result = await User.findOne({
         where: { useremail }
+    })
+
+    if (result === null) {
+        res.json({ result: true })
+    } else {
+        res.json({ result: false })
+    }
+}
+
+//닉네임 중복검사
+exports.duplicationNickname = async (req, res) => {
+    const { nickname } = req.body
+
+    const result = await User.findOne({
+        where: { nickname }
     })
 
     if (result === null) {
@@ -143,17 +158,35 @@ exports.logoutMiddle = (req, res) => {
 }
 
 
-//카카오 로그아웃
-exports.logoutMiddlePost = (req, res) => {
-    const url = `https://kauth.kakao.com/oauth/logout?client_id=${REST_API_KEY}&logout_redirect_uri=${logout_REDIRECT_URI}`
+//로그아웃
+exports.logoutMiddlePost = async (req, res) => {
+    const url = "https://kapi.kakao.com/v1/user/unlink"
 
-    axios({
-        method: 'GET',
-        url: url
-    })
-    res.clearCookie('kakaoToken')
-    res.json({ result: true })
-    res.redirect(url);
+    //일반 로그아웃
+    if (req.body.token === null) {
+        res.clearCookie('isLogin')
+        res.json({ result: true })
+    } else {
+        //카카오 로그아웃
+        const result = await axios({
+            method: 'POST',
+            url: url,
+            headers: {
+                Authorization: `Bearer ${req.body.token}`,
+                "Content-type": 'application/x-www-form-urlencoded;charset=utf-8'
+            },
+        })
+        if (result !== null) {
+            res.clearCookie('isLoginKakao')
+            res.clearCookie('isLogin')
+            res.json({ result: true })
+
+        } else {
+            res.json({ result: false })
+        }
+
+    }
+
 }
 
 //로그아웃 post
@@ -163,16 +196,49 @@ exports.logoutPost = async (req, res) => {
 
 //회원탈퇴 get
 exports.deleteUser = (req, res) => {
-    res.render('deleteUser')
+    console.log(decodeURI(req.cookies.isLoginKakao))
+    if (req.cookies.isLoginKakao === undefined) {
+        res.render('deleteUser', { cookie: req.cookies.isLogin })
+    } else {
+        res.render('deleteUser', { cookie: decodeURI(req.cookies.isLoginKakao) })
+    }
 }
 
-//마이페이지 get
-exports.mypage = (req, res) => {
-    res.render('mypage')
+//회원탈퇴 delete
+exports.deleteUserPost = async (req, res) => {
+    if (req.cookies.isLoginKakao === undefined) {
+        User.destroy({
+            where: { nickname: req.body.nickname }
+        }).then(() => {
+            res.clearCookie('isLogin')
+            res.json({ result: true })
+        })
+    } else {
+        const result = await axios({
+            method: 'POST',
+            url: "https://kapi.kakao.com/v1/user/unlink",
+            headers: {
+                Authorization: `Bearer ${req.body.token}`,
+                "Content-type": 'application/x-www-form-urlencoded;charset=utf-8'
+            },
+        })
+        if (result !== null) {
+            User.destroy({
+                where: { nickname: req.body.nickname }
+            }).then(() => {
+                res.clearCookie('isLoginKakao')
+                res.json({ result: true })
+            })
+        }
+    }
+
+
 }
 
 
-/////function
+
+
+/////비밀번호 암호화
 const bcryptPassword = (password) => {
     return bcrypt.hashSync(password, 10);
 };
