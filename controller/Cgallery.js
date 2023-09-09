@@ -62,7 +62,7 @@ const uploadSingle = multer({
                         imgurl: `https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/gallery/${dateNow}_${path.basename(file.originalname)}`,
                     });
                     cb(null, `gallery/${dateNow}_${path.basename(file.originalname)}`); // original 폴더안에다 파일을 저장
-                }, 1000);
+                }, 50);
             }
         },
     }),
@@ -74,16 +74,17 @@ const uploadSingle = multer({
 //멀터 이용 싱글 테이블 만들기
 exports.singleAxios = async (req, res) => {
     const files = uploadSingle.array('array_file');
-    console.log(req.body);
+    console.log(decodeURI(req.cookies.isLogin));
     const user = await User.findOne({
         where: {
-            nickname: req.cookies.isLogin,
+            nickname: decodeURI(req.cookies.isLogin),
         },
     });
-    userid = user.id;
-    if (!userid) {
+    if (!user) {
         res.send({ result: false, errMessage: '로그인이 종료되었거나, 잘못된 접근입니다.' });
+        return;
     }
+    userid = user.id;
     const result = files(req, res, function (err) {
         if (err instanceof multer.MulterError) {
             // A Multer error occurred when uploading.
@@ -185,15 +186,13 @@ exports.reviewEdit = async (req, res) => {
     res.render('reviewedit');
 };
 exports.reviewDel = async (req, res) => {
-    console.log('del', req.cookies);
-
     if (!req.cookies.isLogin) {
         res.send({ errcode: -1, error: '삭제 권한이 없습니다.' });
         return;
     }
     const loginuser = await User.findOne({
         where: {
-            nickname: req.cookies.isLogin,
+            nickname: decodeURI(req.cookies.isLogin),
         },
     });
     const owner = await gallery.findOne({
@@ -201,6 +200,11 @@ exports.reviewDel = async (req, res) => {
             galleryid: req.body.gid,
         },
     });
+
+    if (!loginuser || !owner) {
+        res.send({ errcode: -1, error: '삭제 권한이 없습니다.' });
+        return;
+    }
 
     if (loginuser.id == owner.userid) {
         const imgurls = gallery_img.findAll({
@@ -247,7 +251,7 @@ exports.reviewChangeCheck = async (req, res) => {
     console.log('change', req.body);
     const loginuser = await User.findOne({
         where: {
-            nickname: req.cookies.isLogin,
+            nickname: decodeURI(req.cookies.isLogin),
         },
     });
     const owner = await gallery.findOne({
@@ -279,7 +283,7 @@ exports.addMainComment = async (req, res) => {
     }
     const loginuser = await User.findOne({
         where: {
-            nickname: req.cookies.isLogin,
+            nickname: decodeURI(req.cookies.isLogin),
         },
     });
     let maxGroup;
@@ -292,7 +296,7 @@ exports.addMainComment = async (req, res) => {
         maxGroup = 0;
     }
     await gallery_comment.create({
-        nickName: req.cookies.isLogin,
+        nickName: decodeURI(req.cookies.isLogin),
         commentText: req.body.maincomment,
         commentGroup: maxGroup,
         deepComment: 0,
@@ -310,12 +314,12 @@ exports.addSubComment = async (req, res) => {
     }
     const loginuser = await User.findOne({
         where: {
-            nickname: req.cookies.isLogin,
+            nickname: decodeURI(req.cookies.isLogin),
         },
     });
 
     await gallery_comment.create({
-        nickName: req.cookies.isLogin,
+        nickName: decodeURI(req.cookies.isLogin),
         commentText: req.body.subcomment,
         commentGroup: req.body.commentGroup,
         deepComment: -1,
