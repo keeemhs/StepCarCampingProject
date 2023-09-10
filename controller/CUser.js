@@ -55,8 +55,20 @@ exports.getToken = async (req, res) => {
 
 }
 
-exports.signinPage = (req, res) => {
-    res.render('signin');
+//로그인
+exports.login = (req, res) => {
+    console.log(req.cookies.isLoginKakao)
+    console.log(req.cookies.isLogin)
+    var kakaoCookie = ''
+    var cookie = ''
+    if (req.cookies.isLoginKakao === undefined) {
+        kakaoCookie = false
+    }
+
+    if (req.cookies.isLogin === undefined) {
+        cookie = false
+    }
+    res.render('signin', { kakaoCookie: kakaoCookie, cookie: cookie });
 };
 
 //카카오 로그인
@@ -120,9 +132,12 @@ exports.duplicationNickname = async (req, res) => {
         res.json({ result: false })
     }
 }
-
 //회원가입
-exports.signup = async (req, res) => {
+exports.signup = (req, res) => {
+    res.render('signup')
+}
+//회원가입
+exports.signupPost = async (req, res) => {
     console.log(req.body);
     const { useremail, pw, birth, username, nickname, levelc, ownc } = req.body;
     const hash = await bcryptPassword(pw);
@@ -199,20 +214,26 @@ exports.logoutPost = async (req, res) => {
 }
 
 //회원탈퇴 get
-exports.deleteUser = (req, res) => {
-    console.log(decodeURI(req.cookies.isLoginKakao))
+exports.deleteUser = async (req, res) => {
+    var usercookie = ''
     if (req.cookies.isLoginKakao === undefined) {
-        res.render('deleteUser', { cookie: req.cookies.isLogin })
+        usercookie = decodeURI(req.cookies.isLogin)
     } else {
-        res.render('deleteUser', { cookie: decodeURI(req.cookies.isLoginKakao) })
+        usercookie = decodeURI(req.cookies.isLoginKakao)
     }
+    console.log('usercookie', usercookie)
+    const result = await User.findOne({
+        where: { nickname: usercookie }
+    })
+
+    res.render('deleteUser', { user: result })
 }
 
 //회원탈퇴 delete
 exports.deleteUserPost = async (req, res) => {
     if (req.cookies.isLoginKakao === undefined) {
         User.destroy({
-            where: { nickname: req.body.nickname }
+            where: { id: req.body.id }
         }).then(() => {
             res.clearCookie('isLogin')
             res.json({ result: true })
@@ -239,7 +260,48 @@ exports.deleteUserPost = async (req, res) => {
 
 }
 
+//마이페이지(쿠키 사용하여 현재 로그인된 사용자 정보 불러오기)
+exports.mypage = async (req, res) => {
+    // var usercookie = ''
+    // if (req.cookies.isLoginKakao === undefined) {
+    //     usercookie = req.cookies.isLogin
+    // } else {
+    //     usercookie = req.cookies.isLoginKakao
+    // }
 
+    // const result = await User.findOne({
+    //     where: { nickname: decodeURI(usercookie) }
+    // })
+
+    // console.log(result)
+    // res.render('mypage', { user: result })
+
+    if (req.cookies.isLoginKakao === undefined) {
+        usercookie = req.cookies.isLogin
+        const result = await User.findOne({
+            where: { nickname: decodeURI(usercookie) }
+        })
+        res.render('mypage', { user: result })
+    } else {
+        res.render('mypage', { user: false, nickname: decodeURI(req.cookies.isLoginKakao) })
+    }
+}
+
+//마이페이지 수정(닉네임 -> 카카오 로그인일때는 수정불가)
+exports.mypagePatch = async (req, res) => {
+    const { patchnickname, id } = req.body
+    const result = await User.update({ nickname: patchnickname }, { where: { id: id } })
+
+    if (result) {
+        res.clearCookie('isLogin')
+        res.cookie('isLogin', patchnickname, cookieConfig)
+        res.json({ result: true })
+    } else {
+        res.json({ result: false, message: '수정을 실패했습니다' })
+    }
+
+
+}
 
 
 /////비밀번호 암호화

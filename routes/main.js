@@ -16,10 +16,7 @@ router.get('/spot', pageController.spotPage);
 router.get('/gallery', pageController.galleryPage);
 //갤러리 리뷰 페이지로
 router.get('/gallery/review', pageController.reviewPage);
-//회원가입 페이지로
-router.get('/signup', pageController.signupPage);
-//로그인 페이지로
-router.get('/signin', pageController.signinPage);
+
 
 
 
