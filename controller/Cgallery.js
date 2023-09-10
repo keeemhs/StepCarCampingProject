@@ -1,4 +1,4 @@
-const { gallery, gallery_img, gallery_comment, User } = require('../models');
+const { gallery, gallery_img, gallery_comment, userLocation, User } = require('../models');
 //multer upload용
 const aws = require('aws-sdk');
 const multers3 = require('multer-s3');
@@ -33,7 +33,6 @@ const uploadSingle = multer({
         async key(req, file, cb) {
             //DB에도 저장해야함(경로)
             //여기서 폴더를 하나 만들었고, 폴더에 마음대로...저장해보시면됩니다.
-            console.log(req.body);
             if (first == 0 && typeof req.body.title == 'string') {
                 var dateNow = Date.now();
                 const fn = `gallery/${Date.now()}_${path.basename(file.originalname)}`;
@@ -96,7 +95,6 @@ exports.singleAxios = async (req, res) => {
             console.log(err);
             return;
         }
-        console.log(result);
 
         first = 0;
         return res.json({
@@ -121,10 +119,11 @@ exports.reviewPage = async (req, res) => {
         where: {
             galleryid: req.query.galleryId,
         },
-        include: gallery_comment,
+        include: [gallery_comment, userLocation],
         order: [
             [gallery_comment, 'commentGroup', 'asc'],
             [gallery_comment, 'createdAt', 'asc'],
+            [userLocation, 'order', 'asc'],
         ],
     });
     if (result1 == null) {
@@ -340,4 +339,18 @@ exports.addSubComment = async (req, res) => {
         }
     );
     res.json({ errcode: 0 });
+};
+
+exports.sendMapData = async (req, res) => {
+    //쿠키던 세션이던 검증 필요
+    if (!req.cookies.isLogin) {
+        res.send(`<script type="text/javascript">alert("로그인이 되어있지 않습니다."); window.location = document.referrer; </script>`);
+        return;
+    }
+    console.log('getMapData', req.body.markerObject);
+
+    await userLocation.bulkCreate(req.body.markerObject);
+
+    //쿠키던 세션이던 저장되어있다고 생각하고 여기선 구현
+    res.send('noerr');
 };
