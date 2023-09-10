@@ -12,6 +12,9 @@ router.get('/reviewEdit', galleryController.reviewEdit);
 //review 만들떄 싱글 axios
 router.post('/singleAxios', galleryController.singleAxios);
 
+//review map 데이터 보내주기
+router.post('/sendMapData', galleryController.sendMapData);
+
 //갤러리 axiosTest
 router.delete('/review/del', galleryController.reviewDel);
 //리뷰 가능 상태 확인
@@ -22,4 +25,5 @@ router.post('/review/addMainComment', galleryController.addMainComment);
 
 //대댓글 달기.
 router.post('/review/addSubComment', galleryController.addSubComment);
+
 module.exports = router;
