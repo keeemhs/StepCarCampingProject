@@ -9,6 +9,12 @@
         <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ijdya8hea0"></script>
 
         <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f9f9f9;
+                margin: 0;
+                padding: 0;
+            }
             #pictures {
                 display: flex;
                 justify-content: center;
@@ -19,6 +25,24 @@
                 width: 300px;
                 margin-left: 10px;
                 margin-right: 10px;
+            }
+
+            .map {
+                width: 700px;
+                height: 350px;
+                margin-top: 15px;
+            }
+            #main-title {
+                text-align: center;
+            }
+            .img_container {
+                display: flex;
+                justify-content: space-evenly;
+            }
+
+            #body_container {
+                margin-left: 5%;
+                margin-right: 5%;
             }
         </style>
     </head>
@@ -32,71 +56,88 @@
         <br />
         <hr />
         <!-- user.name -->
-        <div><%= userInfo.username %>님의 캠핑스팟</div>
-        <!-- 사진넘기기-->
-
-        <div id="pictures">
-            <i class="fa-solid fa-arrow-left" onclick="left()"></i>
-            <img id="img-box" class="img--box" src="<%= imgurl.urls[0] %>" />
-            <i class="fa-solid fa-arrow-right" onclick="right()"></i>
-        </div>
-
-        <!-- 지도 -->
-        <div class="map-container">
-            <div class="map" id="map"></div>
-        </div>
-        <!-- 본문 -->
-        <div>
-            본문
-            <div><%= data.mainText %></div>
-        </div>
-        <hr />
-        <button onclick="delReview()">삭제</button>
-        <button onclick="changeReview()">수정</button>
-        <!-- 댓글-->
-        <hr />
-        <div class="commentView">
-            <div>
-                <!-- 여기에 대댓글을 추가할 수 있는 method가 필요하다. -->
-                <% for(let i=0; i< comments.length; i++){ %>
-                <div>
-                    <%= comments[i].main.commentText %><br />
-                    <form name="maincomment<%= i %>">
-                        <span>대댓글</span>
-                        <input name="mainCommentInput" type="text" placeholder="댓글" />
-                        <button type="button" onclick="addSubComment('<%=i %>','<%= data.galleryid %>','<%= comments[i].main.commentGroup %>','<%= comments[i].main.deepComment %>')">댓글입력</button>
-                    </form>
+        <div id="body_container">
+            <h2 id="main-title"><%= userInfo.username %>님의 캠핑스팟</h2>
+            <!-- 사진넘기기-->
+            <div class="img_container">
+                <div id="pictures">
+                    <i class="fa-solid fa-arrow-left" onclick="left()"></i>
+                    <img id="img-box" class="img--box" src="<%= imgurl.urls[0] %>" />
+                    <i class="fa-solid fa-arrow-right" onclick="right()"></i>
                 </div>
-                <ul>
-                    <!-- 여길 ejs에서 불러온 데이터만큼 반복한다. -->
-                    <% for(let j=0; j < comments[i].sub.length; j++){ %>
-                    <li><%= comments[i].sub[j].commentText %></li>
-                    <button type="button" onclick="deleteComment('<%=comments[i].main.commentid %>','<%= comments[i].sub[j].commentid %>')">댓글 삭제</button>
+                <!-- 지도 -->
+                <div class="map-container">
+                    <div class="map" id="map"></div>
+                </div>
+            </div>
 
+            <!-- 본문 -->
+            <h3>
+                본문
+                <div><%= data.mainText %></div>
+            </h3>
+            <hr />
+            <button onclick="delReview()">삭제</button>
+            <button onclick="changeReview()">수정</button>
+            <!-- 댓글-->
+            <hr />
+            <div class="commentView">
+                <div>
+                    <!-- 여기에 대댓글을 추가할 수 있는 method가 필요하다. -->
+                    <% for(let i=0; i< comments.length; i++){ %>
+                    <div>
+                        <%= comments[i].main.commentText %>
+                        <button type="button" onclick="deleteComment('<%=comments[i].main.commentid %>',-1,'<%= data.galleryid %>')">댓글 삭제</button>
+                        <br />
+                        <form name="maincomment<%= i %>">
+                            <span>대댓글</span>
+                            <input name="mainCommentInput" type="text" placeholder="댓글" />
+                            <button type="button" onclick="addSubComment('<%=i %>','<%= data.galleryid %>','<%= comments[i].main.commentGroup %>','<%= comments[i].main.deepComment %>')">댓글입력</button>
+                        </form>
+                    </div>
+                    <ul>
+                        <!-- 여길 ejs에서 불러온 데이터만큼 반복한다. -->
+                        <% for(let j=0; j < comments[i].sub.length; j++){ %>
+                        <li><%= comments[i].sub[j].commentText %></li>
+                        <button type="button" onclick="deleteComment('<%=comments[i].main.commentid %>','<%= comments[i].sub[j].commentid %>','<%= data.galleryid %>')">댓글 삭제</button>
+
+                        <% } %>
+                    </ul>
                     <% } %>
-                </ul>
-                <% } %>
+                </div>
+            </div>
+            <div class="inputComment">
+                <form name="maincomment">
+                    <span>댓글</span>
+                    <input name="mainCommentInput" type="text" placeholder="댓글" />
+                    <button type="button" onclick="addMainComment()">댓글입력</button>
+                </form>
             </div>
         </div>
-        <div class="inputComment">
-            <form name="maincomment">
-                <span>댓글</span>
-                <input name="mainCommentInput" type="text" placeholder="댓글" />
-                <button type="button" onclick="addMainComment()">댓글입력</button>
-            </form>
-        </div>
+
         <%-include('footer.ejs')%>
 
         <script>
             //지도 로직
-
+            var results = JSON.parse('<%- JSON.stringify(data) %>').userlocations;
+            console.log(results);
             //지도 초기 기준점 위치 설정
             const mapOptions = {
                 center: new naver.maps.LatLng(36.626316, 127.936296),
-                zoom: 6,
+                zoom: 7,
             };
 
             var map = new naver.maps.Map('map', mapOptions);
+            //해당 지역의 차박 스팟 마커찍기 + 스팟리스트 출력
+            var marker = [];
+            var polyline = new naver.maps.Polyline({ map, path: [] });
+            for (let i = 0; i < results.length; i++) {
+                marker[i] = new naver.maps.Marker({
+                    map: map,
+                    position: new naver.maps.LatLng(results[i].lat, results[i].lon),
+                });
+                polyline.path.push(new naver.maps.LatLng(results[i].lat, results[i].lon));
+            }
 
             // imgurl를 stringfy해준뒤에, 다시 parse해서 jsonobject를 만든다.
             // 나중에는 그냥 서버단에서 하는게 나을것같다.
@@ -179,26 +220,21 @@
                 }
             }
 
-            async function deleteComment(main, sub) {
+            async function deleteComment(main, sub, gid) {
                 console.log('main :', main);
                 console.log('sub :', sub);
-                // const urlSearch = new URLSearchParams(location.search);
-                // const mode = urlSearch.get('galleryId');
-                // let formString = 'maincomment' + i;
-                // const subcomment = document.forms[formString].mainCommentInput.value;
-                // const result = await axios({
-                //     url: '/gallery/review/addSubComment',
-                //     data: {
-                //         subcomment,
-                //         gid: mode,
-                //         commentGroup,
-                //         deepComment,
-                //     },
-                //     method: 'POST',
-                // });
-                // if (result.data.errcode == 0) {
-                //     location.reload();
-                // }
+
+                const result = await axios({
+                    url: '/gallery/review/deleteComment',
+                    data: {
+                        main: main,
+                        subid: sub,
+                    },
+                    method: 'POST',
+                });
+                if (result.data.errcode == 0) {
+                    location.reload();
+                }
             }
             async function addSubComment(i, gid, commentGroup, deepComment) {
                 const urlSearch = new URLSearchParams(location.search);
