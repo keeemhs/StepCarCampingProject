@@ -5,42 +5,30 @@ const controller = require('../controller/CUser');
 ////////////////////////////////////GET////////////////////////////////////
 
 //로그인
-router.get('/login', controller.login)
+router.get('/login', controller.login);
 //카카오톡 로그인
-router.get('/signin', controller.signin)
+router.get('/signin', controller.signin);
 //카카오톡 로그인 인증코드 받을 주소
 router.get('/signin/kakao', controller.signin_kakao);
 //카카오톡 리다이렉트 주소
 router.get('/oauth/kakao', controller.auth_kakao);
 //카카오톡 로그인 페이지 중간단계
-<<<<<<< HEAD
-router.get('/signin/middle', controller.getToken)
-//회원가입 페이지
-router.get('/signup', controller.signup)
-=======
 router.get('/signin/middle', controller.getToken);
->>>>>>> develop
+//회원가입 페이지
+router.get('/signup', controller.signup);
 //로그아웃 페이지
 router.get('/logout', controller.logout);
 //카카오 로그아웃 페이지 중간단계
 router.get('/logout/middle', controller.logoutMiddle);
 //회원탈퇴 페이지
-<<<<<<< HEAD
-router.get('/deleteUser', controller.deleteUser)
-//마이페이지
-router.get('/mypage', controller.mypage)
-=======
 router.get('/deleteUser', controller.deleteUser);
->>>>>>> develop
+//마이페이지
+router.get('/mypage', controller.mypage);
 
 ////////////////////////////////////POST////////////////////////////////////
 
 //회원가입 동작
-<<<<<<< HEAD
-router.post('/signup', controller.signupPost)
-=======
-router.post('/signup', controller.signup);
->>>>>>> develop
+router.post('/signup', controller.signupPost);
 //이메일 중복검사 동작
 router.post('/duplication', controller.duplication);
 //닉네임 중복검사 동작
@@ -54,10 +42,9 @@ router.post('/logout', controller.logoutPost);
 //로그아웃 중간단계 동작
 router.post('/logout/middle', controller.logoutMiddlePost);
 
-
 ////////////////////////////////////PATCH////////////////////////////////////
 //마이페이지 수정기능
-router.patch('/mypage/patch', controller.mypagePatch)
+router.patch('/mypage/patch', controller.mypagePatch);
 
 ////////////////////////////////////DELETE////////////////////////////////////
 
