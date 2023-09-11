@@ -19,6 +19,9 @@ exports.gearreviewPage = (req, res) => {
 };
 
 exports.spotPage = (req, res) => {
+    //쿠키를 불러와서
+    //익명으로 하시던, 그냥 저장된 닉네임불러와서 하시던 논리가 있ㅇ믄 OK 
+    //익명
     res.render('spot');
 };
 
@@ -48,10 +51,3 @@ exports.recomCarPage = (req, res) => {
     res.render('recomCar');
 };
 
-exports.signupPage = (req, res) => {
-    res.render('signup');
-};
-
-exports.signinPage = (req, res) => {
-    res.render('signin');
-};

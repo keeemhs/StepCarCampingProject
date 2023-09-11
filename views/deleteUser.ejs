@@ -13,21 +13,18 @@
     <button type="button" onclick="deleteUser()">회원탈퇴</button>
 
     <script>
-        const nickname = '<%= cookie %>'
+        var nickname = '<%= user.nickname %>'
+        var id = '<%= user.id%>'
         async function deleteUser() {
             if (localStorage.getItem('kakaoToken') === null) {
                 const res = await axios({
                     method: 'DELETE',
                     url: '/user/deleteUser',
                     data: {
-                        nickname: nickname
+                        nickname: nickname,
+                        id: id
                     }
                 })
-                if (res.data.result === true) {
-                    localStorage.clear()
-                    alert('회원탈퇴가 완료되었습니다')
-                    location.href = '/'
-                }
             } else {
                 const res = await axios({
                     method: 'DELETE',

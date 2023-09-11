@@ -6,6 +6,7 @@
         <title>Document</title>
         <script src="https://kit.fontawesome.com/8786e78429.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ijdya8hea0"></script>
 
         <style>
             #pictures {
@@ -40,6 +41,10 @@
             <i class="fa-solid fa-arrow-right" onclick="right()"></i>
         </div>
 
+        <!-- 지도 -->
+        <div class="map-container">
+            <div class="map" id="map"></div>
+        </div>
         <!-- 본문 -->
         <div>
             본문
@@ -66,6 +71,8 @@
                     <!-- 여길 ejs에서 불러온 데이터만큼 반복한다. -->
                     <% for(let j=0; j < comments[i].sub.length; j++){ %>
                     <li><%= comments[i].sub[j].commentText %></li>
+                    <button type="button" onclick="deleteComment('<%=comments[i].main.commentid %>','<%= comments[i].sub[j].commentid %>')">댓글 삭제</button>
+
                     <% } %>
                 </ul>
                 <% } %>
@@ -81,9 +88,20 @@
         <%-include('footer.ejs')%>
 
         <script>
+            //지도 로직
+
+            //지도 초기 기준점 위치 설정
+            const mapOptions = {
+                center: new naver.maps.LatLng(36.626316, 127.936296),
+                zoom: 6,
+            };
+
+            var map = new naver.maps.Map('map', mapOptions);
+
             // imgurl를 stringfy해준뒤에, 다시 parse해서 jsonobject를 만든다.
             // 나중에는 그냥 서버단에서 하는게 나을것같다.
             var imgurl = JSON.parse('<%- JSON.stringify(imgurl) %>').urls;
+
             console.log(typeof imgurl);
             console.log(imgurl);
             var currentImg = 0;
@@ -161,6 +179,27 @@
                 }
             }
 
+            async function deleteComment(main, sub) {
+                console.log('main :', main);
+                console.log('sub :', sub);
+                // const urlSearch = new URLSearchParams(location.search);
+                // const mode = urlSearch.get('galleryId');
+                // let formString = 'maincomment' + i;
+                // const subcomment = document.forms[formString].mainCommentInput.value;
+                // const result = await axios({
+                //     url: '/gallery/review/addSubComment',
+                //     data: {
+                //         subcomment,
+                //         gid: mode,
+                //         commentGroup,
+                //         deepComment,
+                //     },
+                //     method: 'POST',
+                // });
+                // if (result.data.errcode == 0) {
+                //     location.reload();
+                // }
+            }
             async function addSubComment(i, gid, commentGroup, deepComment) {
                 const urlSearch = new URLSearchParams(location.search);
                 const mode = urlSearch.get('galleryId');

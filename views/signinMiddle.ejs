@@ -32,7 +32,7 @@
                     alert('사용자 추가정보 입력이 필요합니다. 회원가입 페이지로 이동합니다.')
                     localStorage.setItem('email', res.data.useremail)
                     localStorage.setItem('nickname', res.data.nickname)
-                    location.href = '/signup?mode=1'
+                    location.href = '/user/signup?mode=1'
                 }
             }
         })()

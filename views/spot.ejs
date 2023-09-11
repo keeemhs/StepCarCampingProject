@@ -6,11 +6,20 @@
     <title>Document</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ijdya8hea0"></script>
-    <link rel="stylesheet" href="spot.css">
+    <link rel="stylesheet" href="spot.css" />
 </head>
 
 <body>
     <!-- 지역선택 -->
+    <%-include('header.ejs')%>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <hr>
     <div class="location-container">
         <div class="location-select">
             <button type="button" value="경기">경기/서울</button>
@@ -31,7 +40,7 @@
 
     <!-- 스팟리스트 -->
     <div class="spot-container">
-
+    <%-include('footer.ejs')%>
         <script>
             //지도 초기 기준점 위치 설정
             const mapOptions = {
@@ -68,7 +77,7 @@
                     for (let i = 0; i < res.data.spot.length; i++) {
                         marker[i] = new naver.maps.Marker({
                             map: map,
-                            position: new naver.maps.LatLng(res.data.spot[i].lon, res.data.spot[i].lat)
+                            position: new naver.maps.LatLng(res.data.spot[i].lat, res.data.spot[i].lon)
                         })
                         spotContainer.innerHTML += `
                         <div class="spot">

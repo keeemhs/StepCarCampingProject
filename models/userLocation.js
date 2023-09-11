@@ -1,18 +1,14 @@
 const DataTypes = require('sequelize');
 
-const Location = (sequelize) => {
+const userLocation = (sequelize) => {
     const location = sequelize.define(
-        'location',
+        'userlocation',
         {
             locationId: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
                 primaryKey: true,
                 autoIncrement: true,
-            },
-            locationName: {
-                type: DataTypes.STRING(255),
-                allowNull: false,
             },
             lon: {
                 type: DataTypes.STRING(255),
@@ -22,6 +18,15 @@ const Location = (sequelize) => {
                 type: DataTypes.STRING(255),
                 allowNull: false,
             },
+            order: {
+                type: DataTypes.STRING(255),
+                allowNull: false,
+            },
+            galleryid: {
+                type: DataTypes.INTEGER,
+                allowNull: false, //NOT NULL
+                foreignKEy: true,
+            },
         },
         {
             timestamps: false,
@@ -30,4 +35,4 @@ const Location = (sequelize) => {
     return location;
 };
 
-module.exports = Location;
+module.exports = userLocation;

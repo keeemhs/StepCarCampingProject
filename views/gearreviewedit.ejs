@@ -7,11 +7,74 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
         <title>Main Page</title>
         <style>
-            .regist {
-                text-align: center;
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #f4f4f4;
             }
+
             .main {
-                height: 300px;
+                text-align: center;
+                margin-top: 100px;
+                margin-bottom: 100px;
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                max-width: 600px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .logo {
+                max-width: 100%;
+                height: auto;
+                margin-bottom: 20px;
+            }
+
+            label {
+                display: inline-block;
+                width: 100px;
+                text-align: right;
+                margin-bottom: 5px;
+            }
+
+            input[type='text'] {
+                width: calc(100% - 110px);
+                padding: 10px;
+                margin: 5px 0;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+
+            /* 파일 업로드 버튼 스타일 */
+            input[type='file'] {
+                margin-top: 10px;
+                padding: 10px;
+                border: none;
+                background-color: #333;
+                color: #fff;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+
+            input[type='file']:hover {
+                background-color: #555;
+            }
+
+            button {
+                padding: 10px 20px;
+                background-color: #333;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+
+            button:hover {
+                background-color: #555;
             }
         </style>
     </head>
@@ -19,18 +82,29 @@
         <!-- header -->
         <%-include('header.ejs')%>
 
-        <section class="main" style="margin-top: 100px">
-            <!-- logo -->
-            <img src="" alt="" />
+        <section class="main">
+            <!-- 로고 이미지 -->
+            <img src="로고이미지주소" alt="로고" class="logo" />
             <h2>제품 등록하기</h2>
             <form onsubmit="fileupload(event)" name="gearEdit">
-                제목 : <input name="gearTitle" type="text" placeholder="제품명" /><br />
-                설명 : <input name="gearExplain" type="text" placeholder="제품설명" /><br />
-                작성자 : <input type="text" name="writer" value="<%= nickname %>" readonly />
-                <br />
-                <input type="file" name="dynamic_files" multiple />
-                <br />
-                <button>제출</button>
+                <div>
+                    <label for="gearTitle">제목:</label>
+                    <input name="gearTitle" type="text" id="gearTitle" placeholder="제품명" />
+                </div>
+                <div>
+                    <label for="gearExplain">설명:</label>
+                    <input name="gearExplain" type="text" id="gearExplain" placeholder="제품설명" />
+                </div>
+                <div>
+                    <label for="writer">작성자:</label>
+                    <input type="text" name="writer" id="writer" value="<%= nickname %>" readonly />
+                </div>
+                <div>
+                    <input type="file" name="dynamic_files" multiple />
+                </div>
+                <div style="margin-top: 20px">
+                    <button>등록하기</button>
+                </div>
             </form>
         </section>
 
@@ -66,7 +140,7 @@
                     'Content-Type': 'multipart/form-data',
                 },
             });
-            console.log(result1.data.gearid);
+            window.location.href = '/gear';
         }
     </script>
 </html>

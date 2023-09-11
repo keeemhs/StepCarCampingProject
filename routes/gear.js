@@ -1,5 +1,5 @@
 const express = require('express');
-const gearController = require('../controller/CGear');
+const gearController = require('../controller/Cgear');
 const router = express.Router();
 
 // 리뷰 페이지로
