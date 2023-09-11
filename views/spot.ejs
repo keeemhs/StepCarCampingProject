@@ -6,6 +6,7 @@
     <title>Document</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ijdya8hea0"></script>
+    <script src="/socket.io/socket.io.js"></script>
     <link rel="stylesheet" href="spot.css" />
 </head>
 
@@ -38,9 +39,52 @@
 
     <hr>
 
+    <!-- 채팅방 목록 및 입장 -->
+    <div id="chatlist">
+        <form id="roomli">
+            <ul>
+                <p>지역별 오픈 채팅</p>
+                <select id="roomList">
+                    <option value="null">지역</option>
+                    <option value="sk">서울/경인</option>
+                    <option value="kw">강원</option>
+                    <option value="cc">충청</option>
+                    <option value="jl">전라</option>
+                    <option value="ks">경상</option>
+                </select>
+                <select id="roomListNum">
+                    <option value="null">방번호</option>
+                    <option value="1">1번</option>
+                    <option value="2">2번</option>
+                    <option value="3">3번</option>
+                    <option value="4">4번</option>
+                    <option value="5">5번</option>
+                </select>
+                <input type="text" id="userName" placeholder="사용자 이름 입력" />
+
+                <button>입장</button>
+            </ul>
+        </form>
+    </div>
+
+    <!-- 채팅방 -->
+    <div id="chatroom" hidden>
+        <form id="exit">
+            <button>나가기</button>
+        </form>
+        <div id="msg">
+        </div>
+        <form id="chat">
+            <select id="userList"></select>
+            <input type="text" id="message" placeholder="메세지 입력" />
+            <button>입력</button>
+        </form>
+    </div>
+
     <!-- 스팟리스트 -->
     <div class="spot-container">
     <%-include('footer.ejs')%>
+
         <script>
             //지도 초기 기준점 위치 설정
             const mapOptions = {
@@ -102,6 +146,93 @@
 
                 })
             })
+
+
+            const socket = io();
+            const roomForm2 = document.querySelector('#roomli')
+            const chatForm = document.querySelector('#chat');
+            const msg = document.querySelector('#msg');
+            const notice = document.querySelector('#notice');
+            const chatexit = document.querySelector('#exit');
+            let myName;
+
+            //사용자 리스트
+            socket.on('userList', (userLists) => {
+                console.log(userLists);
+                const lists = document.querySelector('#userList');
+                lists.textContent = '';
+                let options = `<option value="all">전체</option>`;
+                for (let i of userLists) {
+                    options += `<option value="${i.key}">${i.name}</option>`;
+                }
+                lists.innerHTML = options;
+            });
+            //메세지 띄우기
+            socket.on('newMessage', (message, nick, bool) => {
+                console.log(message, nick);
+                const div = document.createElement('div');
+                const p = document.createElement('p');
+                if (myName === nick) {
+                    //내가입력한 텍스트
+                    div.classList.add('my-chat');
+                } else {
+                    div.classList.add('other-chat');
+                }
+                //개인메세지일때 bool이 true
+                if (bool) {
+                    div.classList.add('secret-chat');
+                }
+                //채팅 텍스트
+                p.textContent = bool ? `(귓속말) ${nick} : ${message}` : `${nick} : ${message}`;
+                div.appendChild(p);
+                msg.appendChild(div);
+            });
+            //입장 메세지 이벤트
+            socket.on('notice', (message) => {
+                const div = document.createElement('div');
+                const p = document.createElement('p');
+                div.classList.add('notice');
+                p.textContent = message;
+                div.appendChild(p);
+                msg.appendChild(div);
+            });
+            //채팅방 나가기
+            chatexit.addEventListener('click', (e) => {
+                socket.emit('disconnect');
+            })
+            ///폼 이벤트
+            roomForm2.addEventListener('submit', (e) => {
+                e.preventDefault();
+                let roomIndex = {};
+                const roomIndex1 = document.getElementById('roomList');
+                const roomIndex2 = document.getElementById('roomListNum');
+                roomIndex = roomIndex1.options[roomIndex1.selectedIndex].value + roomIndex2.options[roomIndex2.selectedIndex].value;
+                console.log(roomIndex);
+                const userName = roomForm2.querySelector('#userName');
+                if (userName.value === '' || roomIndex.includes('null')) {
+                    alert('※방 번호와 사용자 이름을 확인하세요');
+                    return;
+                }
+                socket.emit('create', roomIndex, userName.value, () => {
+                    const chatroom = document.querySelector('#chatroom');
+                    chatroom.hidden = false;
+                    //전역변수에 입력한 닉네임을 저장
+                    myName = userName.value;
+                });
+            });
+            chatForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const user = document.querySelector('#userList');
+                const message = document.querySelector('#message');
+                console.log(user.value);
+                const msg = {
+                    nick: myName,
+                    user: user.value,
+                    message: message.value,
+                };
+                socket.emit('sendMessage', msg);
+                message.value = '';
+            });
 
         </script>
 </body>
