@@ -43,7 +43,7 @@ app.use('/gear', gearRouter);
 
 //스팟 관련 라우터
 const spotRouter = require('./routes/spot');
-spotRouter(io);
+spotRouter.io(io);
 app.use('/spot', spotRouter);
 
 const user = require('./routes/user');

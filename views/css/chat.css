@@ -5,6 +5,7 @@
     background: #b8b8b8;
     right: 20px;
     bottom: 20px;
+    z-index: 0;
 }
 #chat {
     position: absolute;

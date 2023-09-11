@@ -73,3 +73,65 @@
 .chat-button {
     font-size: 12px;
 }
+
+/* -------------채팅방----------- css */
+#chatroom {
+    width: 400px;
+    height: 700px;
+    position: absolute;
+    background: #a0a0a0;
+    right: 20px;
+    bottom: 20px;
+    z-index: 100;
+    overflow: auto;
+}
+#chat {
+    position: absolute;
+    bottom: 0px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+#chat input {
+    width: 80%;
+}
+#exit {
+    position: relative;
+    justify-content: center;
+}
+.my-chat {
+    display: flex;
+    justify-content: end;
+    padding: 2px 0px;
+}
+.my-chat p {
+    margin: 0;
+    padding: 10px;
+    background: rgb(255, 255, 194);
+    border-radius: 10px;
+    margin-right: 10px;
+}
+.other-chat {
+    display: flex;
+    justify-content: start;
+    padding: 2px 0px;
+}
+.other-chat p {
+    margin: 0;
+    padding: 10px;
+    background: white;
+    border-radius: 10px;
+    margin-left: 10px;
+}
+.notice {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    color: rgb(99, 24, 24);
+}
+.notice p {
+    margin: 0;
+}
+.secret-chat p {
+    background: rgb(255, 201, 210);
+}
