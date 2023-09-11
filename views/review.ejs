@@ -71,6 +71,8 @@
                     <!-- 여길 ejs에서 불러온 데이터만큼 반복한다. -->
                     <% for(let j=0; j < comments[i].sub.length; j++){ %>
                     <li><%= comments[i].sub[j].commentText %></li>
+                    <button type="button" onclick="deleteComment('<%=comments[i].main.commentid %>','<%= comments[i].sub[j].commentid %>')">댓글 삭제</button>
+
                     <% } %>
                 </ul>
                 <% } %>
@@ -177,6 +179,27 @@
                 }
             }
 
+            async function deleteComment(main, sub) {
+                console.log('main :', main);
+                console.log('sub :', sub);
+                // const urlSearch = new URLSearchParams(location.search);
+                // const mode = urlSearch.get('galleryId');
+                // let formString = 'maincomment' + i;
+                // const subcomment = document.forms[formString].mainCommentInput.value;
+                // const result = await axios({
+                //     url: '/gallery/review/addSubComment',
+                //     data: {
+                //         subcomment,
+                //         gid: mode,
+                //         commentGroup,
+                //         deepComment,
+                //     },
+                //     method: 'POST',
+                // });
+                // if (result.data.errcode == 0) {
+                //     location.reload();
+                // }
+            }
             async function addSubComment(i, gid, commentGroup, deepComment) {
                 const urlSearch = new URLSearchParams(location.search);
                 const mode = urlSearch.get('galleryId');

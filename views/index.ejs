@@ -4,30 +4,266 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
         <title>Main Page</title>
     </head>
+    <style>
+        a {
+            text-decoration: none;
+        }
+        p {
+            color: black;
+        }
+        span {
+            color: black;
+        }
+        a:hover {
+            text-decoration: none !important;
+        }
+        .main_section .recommd ul li {
+            float: left;
+            margin-left: 20px;
+            width: 300px;
+            height: 300px;
+            border-radius: 10px;
+            /* overflow: hidden; */
+        }
+        .img_area > img {
+            width: 198px;
+            height: 198px;
+        }
+        .items_list {
+            display: flex;
+            justify-content: space-around;
+        }
+        ul {
+            list-style: none;
+        }
 
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-        <title>Main Page</title>
-    </head>
+        .theme_tour .theme_tabs {
+            margin-bottom: 24px;
+        }
+
+        .theme_tour .theme_tabs::after {
+            display: block;
+            content: '';
+            clear: both;
+        }
+
+        .theme_tour .theme_tabs li {
+            float: left;
+            padding: 0 20px;
+            margin-right: 10px;
+            margin-bottom: 13px;
+            line-height: 42px;
+            font-size: 16px;
+            font-weight: 400;
+            color: #999;
+            border: 1px solid #ddd;
+            border-radius: 50px;
+            cursor: pointer;
+            letter-spacing: -0.08em;
+        }
+
+        .theme_items_wrap .theme_items li a img {
+            max-width: 300px;
+        }
+        .theme_items {
+            display: grid;
+            grid-template-rows: repeat(3, 1fr);
+            grid-template-columns: repeat(3, 1fr);
+        }
+        .carousel-item {
+            height: 500px;
+        }
+    </style>
 
     <body>
         <!-- header -->
         <%-include('header.ejs')%>
         <p>메인페이지 입니다</p>
-        <button onclick="location.href = 'gear'">장비대여</button>
+        <!-- 나중에  br 지울것!-->
+        <br />
+        <br />
+        <br />
+
+        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <!--  -->
+                    <img src="https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/0.jpg" class="d-block w-100" alt="..." />
+                </div>
+                <div class="carousel-item">
+                    <img src="https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/11.jpg" class="d-block w-100" alt="..." />
+                </div>
+                <div class="carousel-item">
+                    <img src="https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/2.jpg" class="d-block w-100" alt="..." />
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+        <br />
+        <br />
+        <br />
+
+        <hr />
+        <br />
+
+        <p>여기에는 차박입문가이드 내용 불러오고 싶어요.</p>
+        <ul class="items_list">
+            <li>
+                <a href="https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/0.jpg" target="_self">
+                    <span class="img_area"
+                        ><img src="https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/0.jpg" alt="#" />
+                        <p style="font-size: 12px">경기도 노지 여행 적기</p>
+                        <br />
+                        <p style="font-size: 12px">찾아보기</p></span
+                    >
+                </a>
+            </li>
+
+            <li>
+                <a href="https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/0.jpg" target="_self">
+                    <span class="img_area"
+                        ><img src="https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/0.jpg" alt="#" />
+                        <p style="font-size: 12px">경기도 노지 여행</p>
+                        <p></p>
+                        <br />
+                        <p style="font-size: 12px">경기도 노지 여행</p></span
+                    >
+                </a>
+            </li>
+
+            <li>
+                <a href="https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/0.jpg" target="_self">
+                    <span class="img_area"
+                        ><img src="https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/0.jpg" alt="#" />
+                        <p style="font-size: 12px">경기도 노지 여행</p>
+                        <p></p>
+                        <br />
+                        <p style="font-size: 12px">경기도 노지 여행</p></span
+                    >
+                </a>
+            </li>
+
+            <li>
+                <a href="https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/0.jpg" target="_self">
+                    <span class="img_area"
+                        ><img src="https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/0.jpg" alt="#" />
+                        <p style="font-size: 12px">경기도 노지 여행</p>
+                        <p></p>
+                        <br />
+                        <p style="font-size: 12px">경기도 노지 여행</p></span
+                    >
+                </a>
+            </li>
+
+            <li>
+                <a href="https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/0.jpg" target="_self">
+                    <span class="img_area"
+                        ><img src="https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/0.jpg" alt="#" />
+                        <p style="font-size: 12px">일본여행 적기</p>
+                        <p></p>
+                        <br />
+                        <p style="font-size: 12px">특가상품보기</p></span
+                    >
+                </a>
+            </li>
+        </ul>
+        <br />
+        <br />
+        <br />
+        <br />
+        <hr />
+        <br />
+        <br />
+        <br />
+        <!-- https://www.modetour.com/main/default.aspx -->
+        <div class="theme_tour">
+            <ul class="theme_tabs">
+                <li class="">경기</li>
+
+                <li class="">강원</li>
+
+                <li class="">강릉</li>
+
+                <li class="">경상</li>
+
+                <li class="on">충청</li>
+            </ul>
+            <div class="theme_items_wrap">
+                <ul class="theme_items">
+                    <li>
+                        <a href="#">
+                            <span><img src="https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/0.jpg" /></span>
+                            <div class="desc">
+                                <span class="title">[세부] 베이직 상품 4/5/6일</span>
+                                <span class="price"><span>315,700</span>원~</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span><img src="https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/0.jpg" /></span>
+                            <div class="desc">
+                                <span class="title">[세부] 베이직 상품 4/5/6일</span>
+                                <span class="price"><span>315,700</span>원~</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span><img src="https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/0.jpg" /></span>
+                            <div class="desc">
+                                <span class="title">[세부] 베이직 상품 4/5/6일</span>
+                                <span class="price"><span>315,700</span>원~</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span><img src="https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/0.jpg" /></span>
+                            <div class="desc">
+                                <span class="title">[세부] 베이직 상품 4/5/6일</span>
+                                <span class="price"><span>315,700</span>원~</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span><img src="https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/0.jpg" /></span>
+                            <div class="desc">
+                                <span class="title">[세부] 베이직 상품 4/5/6일</span>
+                                <span class="price"><span>315,700</span>원~</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- <button onclick="location.href = 'gear'">장비대여</button>
         <button onclick="location.href = '/spot'">지도스팟</button>
         <button onclick="location.href = '/gallery'">갤러리</button>
         <button onclick="location.href = '/signup'">회원가입</button>
-        <button onclick="location.href = '/signin'">로그인</button>
-        <button onclick="location.href = '/user/logout'">로그아웃</button>
-        <button onclick="location.href = '/user/deleteUser'">회원탈퇴</button>
+        <button onclick="location.href = '/signin'">로그인</button> -->
+        <!-- <button onclick="location.href = '/user/logout'">로그아웃</button>
+        <button onclick="location.href = '/user/deleteUser'">회원탈퇴</button> -->
         <!-- main -->
         <div style="height: 1000px; background-color: blue"></div>
         <!-- Footer -->
         <%-include('footer.ejs')%>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     </body>
 </html>
