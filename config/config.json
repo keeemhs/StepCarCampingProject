@@ -1,9 +1,9 @@
 {
     "development": {
-        "username": "root",
-        "password": "itc801",
-        "database": "testMap",
-        "host": "127.0.0.1",
+        "username": "transpaction",
+        "password": "SPstar0518!",
+        "database": "codingonproject",
+        "host": "kdt9-hwr-test.cseqzxmek1jf.ap-southeast-2.rds.amazonaws.com",
         "dialect": "mysql"
     },
     "test": {
