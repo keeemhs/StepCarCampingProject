@@ -20,6 +20,12 @@ const cookieConfig = {
     signed: false,
 };
 
+const trashCookie = {
+    httpOnly: false,
+    maxAge: 6000 * 1000, //1000분
+    signed: false,
+};
+
 //카카오 인가코드 받기
 exports.signin_kakao = (req, res) => {
     const url = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}`;
@@ -59,6 +65,10 @@ exports.getToken = async (req, res) => {};
 
 //로그인
 exports.login = (req, res) => {
+    if (req.cookies.isLogin) {
+        res.send(`<script type="text/javascript">alert("로그인이 되어있습니다."); window.location = document.referrer; </script>`);
+        return;
+    }
     console.log(req.cookies.isLoginKakao);
     console.log(req.cookies.isLogin);
     var kakaoCookie = '';
@@ -102,6 +112,7 @@ exports.postToken = async (req, res) => {
     if (result !== null) {
         res.cookie('isLoginKakao', nickname);
         res.cookie('isLogin', encodeURI(nickname), cookieConfig);
+        res.cookie('isTrash', 'adfasdfsdfsdfdsfdsfadfasdfs', trashCookie);
         res.json({
             result: true,
         });
@@ -198,6 +209,7 @@ exports.signin = async (req, res) => {
 
     if (compare) {
         res.cookie('isLogin', result.nickname, cookieConfig);
+        res.cookie('isTrash', 'adfsdfdsfsdfsdfdsfsdasg', trashCookie);
         res.json({
             result: true,
         });

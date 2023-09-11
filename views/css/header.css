@@ -425,3 +425,7 @@ body.hero-anime #switch {
         margin-bottom: 20px !important;
     }
 }
+
+.hider {
+    display: none;
+}
