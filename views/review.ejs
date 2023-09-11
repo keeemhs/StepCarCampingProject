@@ -5,10 +5,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
         <script src="https://kit.fontawesome.com/8786e78429.js" crossorigin="anonymous"></script>
-<<<<<<< HEAD
-=======
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
->>>>>>> e9d53a53e5436e1e3b7ebac2282b6ebdae140225
+        <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ijdya8hea0"></script>
+
         <style>
             #pictures {
                 display: flex;
@@ -25,14 +24,6 @@
     </head>
     <body>
         <%-include('header.ejs')%>
-<<<<<<< HEAD
-
-        <hr />
-        <!-- user.name -->
-        <div>???님의 캠핑스팟</div>
-        <!-- 사진넘기기-->
-
-=======
         <br />
         <br />
         <br />
@@ -44,34 +35,71 @@
         <div><%= userInfo.username %>님의 캠핑스팟</div>
         <!-- 사진넘기기-->
 
->>>>>>> e9d53a53e5436e1e3b7ebac2282b6ebdae140225
         <div id="pictures">
             <i class="fa-solid fa-arrow-left" onclick="left()"></i>
             <img id="img-box" class="img--box" src="<%= imgurl.urls[0] %>" />
             <i class="fa-solid fa-arrow-right" onclick="right()"></i>
         </div>
 
+        <!-- 지도 -->
+        <div class="map-container">
+            <div class="map" id="map"></div>
+        </div>
         <!-- 본문 -->
         <div>
             본문
-            <div><%= mainText %></div>
+            <div><%= data.mainText %></div>
         </div>
         <hr />
-<<<<<<< HEAD
-        <button onclick="location.href='/gallery/del'">삭제</button>
-=======
-        <button onclick="delReview('<%= galleryId %>')">삭제</button>
-        <button onclick="location.href='/gallery/edit'">수정</button>
->>>>>>> e9d53a53e5436e1e3b7ebac2282b6ebdae140225
+        <button onclick="delReview()">삭제</button>
+        <button onclick="changeReview()">수정</button>
         <!-- 댓글-->
         <hr />
-        <div>댓글</div>
+        <div class="commentView">
+            <div>
+                <!-- 여기에 대댓글을 추가할 수 있는 method가 필요하다. -->
+                <% for(let i=0; i< comments.length; i++){ %>
+                <div>
+                    <%= comments[i].main.commentText %><br />
+                    <form name="maincomment<%= i %>">
+                        <span>대댓글</span>
+                        <input name="mainCommentInput" type="text" placeholder="댓글" />
+                        <button type="button" onclick="addSubComment('<%=i %>','<%= data.galleryid %>','<%= comments[i].main.commentGroup %>','<%= comments[i].main.deepComment %>')">댓글입력</button>
+                    </form>
+                </div>
+                <ul>
+                    <!-- 여길 ejs에서 불러온 데이터만큼 반복한다. -->
+                    <% for(let j=0; j < comments[i].sub.length; j++){ %>
+                    <li><%= comments[i].sub[j].commentText %></li>
+                    <% } %>
+                </ul>
+                <% } %>
+            </div>
+        </div>
+        <div class="inputComment">
+            <form name="maincomment">
+                <span>댓글</span>
+                <input name="mainCommentInput" type="text" placeholder="댓글" />
+                <button type="button" onclick="addMainComment()">댓글입력</button>
+            </form>
+        </div>
         <%-include('footer.ejs')%>
 
         <script>
+            //지도 로직
+
+            //지도 초기 기준점 위치 설정
+            const mapOptions = {
+                center: new naver.maps.LatLng(36.626316, 127.936296),
+                zoom: 6,
+            };
+
+            var map = new naver.maps.Map('map', mapOptions);
+
             // imgurl를 stringfy해준뒤에, 다시 parse해서 jsonobject를 만든다.
             // 나중에는 그냥 서버단에서 하는게 나을것같다.
             var imgurl = JSON.parse('<%- JSON.stringify(imgurl) %>').urls;
+
             console.log(typeof imgurl);
             console.log(imgurl);
             var currentImg = 0;
@@ -98,10 +126,10 @@
                 console.log(imgurl, currentImg);
                 document.querySelector('#img-box').src = imgurl[currentImg];
             }
-<<<<<<< HEAD
-=======
 
-            async function delReview(gid) {
+            async function delReview() {
+                const urlSearch = new URLSearchParams(location.search);
+                const gid = urlSearch.get('galleryId');
                 const result = await axios({
                     url: '/gallery/review/del',
                     method: 'delete',
@@ -110,10 +138,64 @@
                 console.log(result);
                 if (result.data.error == 'no error') {
                     alert('삭제완료');
+                    location.href = '/';
+                }
+            }
+            //수정을 눌렀을 떄
+            async function changeReview() {
+                const urlSearch = new URLSearchParams(location.search);
+                const gid = urlSearch.get('galleryId');
+                const result = await axios({
+                    url: '/gallery/review/editCheck',
+                    method: 'post',
+                    data: { gid },
+                });
+                console.log(result.data.reviewInfo);
+                if (result.data.errcode == 0) {
+                    localStorage.setItem('galleryItems', JSON.stringify(result.data.reviewInfo));
+                    location.href = '/gallery/reviewEdit?mode=1';
+                } else {
+                    alert(result.data.error);
+                }
+            }
+
+            async function addMainComment() {
+                const urlSearch = new URLSearchParams(location.search);
+                const mode = urlSearch.get('galleryId');
+                const maincomment = document.forms['maincomment'].mainCommentInput.value;
+                console.log(maincomment);
+                const result = await axios({
+                    url: '/gallery/review/addMainComment',
+                    data: {
+                        maincomment,
+                        gid: mode,
+                    },
+                    method: 'POST',
+                });
+                if (result.data.errcode == 0) {
                     location.reload();
                 }
             }
->>>>>>> e9d53a53e5436e1e3b7ebac2282b6ebdae140225
+
+            async function addSubComment(i, gid, commentGroup, deepComment) {
+                const urlSearch = new URLSearchParams(location.search);
+                const mode = urlSearch.get('galleryId');
+                let formString = 'maincomment' + i;
+                const subcomment = document.forms[formString].mainCommentInput.value;
+                const result = await axios({
+                    url: '/gallery/review/addSubComment',
+                    data: {
+                        subcomment,
+                        gid: mode,
+                        commentGroup,
+                        deepComment,
+                    },
+                    method: 'POST',
+                });
+                if (result.data.errcode == 0) {
+                    location.reload();
+                }
+            }
         </script>
     </body>
 </html>

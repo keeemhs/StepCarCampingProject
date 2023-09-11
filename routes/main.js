@@ -1,5 +1,5 @@
 const express = require('express');
-const pageController = require('../controller/pageController');
+const pageController = require('../controller/Cmain');
 const router = express.Router();
 
 // 어떤 페이지로 갈까를 모아둔곳 !!!!
@@ -20,6 +20,8 @@ router.get('/gallery/review', pageController.reviewPage);
 router.get('/signup', pageController.signupPage);
 //로그인 페이지로
 router.get('/signin', pageController.signinPage);
+
+
 
 /////////////////////////////////////////
 

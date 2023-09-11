@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    </head>
+    <body>
+        <h1>이메일 보내기</h1>
+        <form name="sendEmail" method="post">
+            <label for="subject">성함</label>
+            <input type="text" id="subject" name="subject" required /><br />
+            <label for="userEmail">발신자 이메일</label>
+            <input type="text" id="userEmail" name="userEmail" required /><br />
+            <label for="message">문의 사항</label>
+            <textarea id="message" name="message" rows="4" required></textarea><br />
+            <button id="sendButton">전송</button>
+        </form>
+
+        <script>
+            document.querySelector('#sendButton').addEventListener('click', (e) => {
+                e.preventDefault();
+                const form = document.forms['sendEmail'];
+                const formData = {
+                    to: '97lyle@gmail.com',
+                    subject: 'STEP 이용자 메일 발신자 : ' + form.subject.value,
+                    message: `발신자 이메일 : ${form.userEmail.value} \n문의 사항 : ${form.message.value}`,
+                };
+                //console.log(form.to.value, form.subject.value);
+                try {
+                    const response = axios.post('/email/sendEmail', formData);
+                    console.log('이메일 전송 성공:', response.data);
+                    alert('이메일 전송이 완료되었습니다.');
+                } catch (error) {
+                    console.error('이메일 전송 오류:', error);
+                }
+            });
+        </script>
+    </body>
+</html>
