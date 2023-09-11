@@ -123,11 +123,14 @@
                     <!-- 여기에 대댓글을 추가할 수 있는 method가 필요하다. -->
                     <% for(let i=0; i< comments.length; i++){ %>
                     <div>
-                        <%= comments[i].main.commentText %>
+                        <%= comments[i].main.nickName %> : <%= comments[i].main.commentText %>
+                        <button type="button" onclick="showSubComment('<%= i %>')">답글</button>
                         <button type="button" onclick="deleteComment('<%=comments[i].main.commentid %>',-1,'<%= data.galleryid %>')">댓글 삭제</button>
+
                         <br />
-                        <form name="maincomment<%= i %>">
-                            <span>대댓글</span>
+                        <br />
+                        <form style="display: none" class="hideComment<%= i %>" name="maincomment<%= i %>">
+                            <span>답글</span>
                             <input name="mainCommentInput" type="text" placeholder="댓글" />
                             <button type="button" onclick="addSubComment('<%=i %>','<%= data.galleryid %>','<%= comments[i].main.commentGroup %>','<%= comments[i].main.deepComment %>')">댓글입력</button>
                         </form>
@@ -135,9 +138,8 @@
                     <ul>
                         <!-- 여길 ejs에서 불러온 데이터만큼 반복한다. -->
                         <% for(let j=0; j < comments[i].sub.length; j++){ %>
-                        <li><%= comments[i].sub[j].commentText %></li>
+                        <li><%= comments[i].sub[j].nickName %> : <%= comments[i].sub[j].commentText %></li>
                         <button type="button" onclick="deleteComment('<%=comments[i].main.commentid %>','<%= comments[i].sub[j].commentid %>','<%= data.galleryid %>')">댓글 삭제</button>
-
                         <% } %>
                     </ul>
                     <% } %>
@@ -252,6 +254,9 @@
                     },
                     method: 'POST',
                 });
+                if (result.data.errcode == -2) {
+                    alert('로그인이 되어있지 않습니다!');
+                }
                 if (result.data.errcode == 0) {
                     location.reload();
                 }
@@ -291,6 +296,10 @@
                 if (result.data.errcode == 0) {
                     location.reload();
                 }
+            }
+            function showSubComment(idx) {
+                const subcommentForm = document.querySelector(`.hideComment${idx}`);
+                subcommentForm.style.display = 'block';
             }
         </script>
     </body>
