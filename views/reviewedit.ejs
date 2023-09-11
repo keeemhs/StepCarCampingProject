@@ -7,6 +7,75 @@
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ijdya8hea0"></script>
         <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #f4f4f4;
+            }
+
+            .main {
+                text-align: center;
+                margin-top: 50px;
+                margin-bottom: 100px;
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                max-width: 600px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .logo {
+                max-width: 100%;
+                height: auto;
+                margin-bottom: 20px;
+            }
+
+            label {
+                display: inline-block;
+                width: 100px;
+                text-align: right;
+                margin-bottom: 5px;
+            }
+
+            input[type='text'] {
+                width: calc(100% - 110px);
+                padding: 10px;
+                margin: 5px 0;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+
+            /* 파일 업로드 버튼 스타일 */
+            input[type='file'] {
+                margin-top: 10px;
+                padding: 10px;
+                border: none;
+                background-color: #333;
+                color: #fff;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+
+            input[type='file']:hover {
+                background-color: #555;
+            }
+
+            button {
+                padding: 10px 20px;
+                background-color: #333;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+
+            button:hover {
+                background-color: #555;
+            }
             .map {
                 width: 700px;
                 height: 350px;
@@ -25,26 +94,38 @@
         <br />
         <br />
         <br />
-        <br />
-        <hr />
-        <form onsubmit="fileupload(event)" name="reviewEdit">
-            <input name="title" type="text" placeholder="제목" /><br />
-            <input name="mainText" type="text" placeholder="본문" /><br />
-            <input type="radio" name="region" value="1" />경기/서울 <input type="radio" name="region" value="2" />강원 <input type="radio" name="region" value="3" />충청 <input type="radio" name="region" value="4" />경상 <input type="radio" name="region" value="5" />전라
-            <input type="radio" name="region" value="6" />제주
-            <br />
-            <input name="spotInfo" type="text" placeholder="스팟정보" /><br />
-
-            <input type="file" name="dynamic_files" multiple /><br />
-
-            <button>제출</button>
-        </form>
-
-        <!-- 지도 -->
-        <div class="map-container">
-            <div class="map" id="map"></div>
-        </div>
-        <button onclick="clearBtn()">클리어</button>
+        <section class="main">
+            <!-- 로고 이미지 -->
+            <img src="로고이미지주소" alt="로고" class="logo" />
+            <h2>지역 등록하기</h2>
+            <form onsubmit="fileupload(event)" name="reviewEdit">
+                <div>
+                    <label for="title">제목:</label>
+                    <input name="title" type="text" placeholder="제목" />
+                </div>
+                <div>
+                    <label for="mainText">본문:</label>
+                    <input name="mainText" type="text" placeholder="본문" />
+                </div>
+                <div>
+                    <input type="radio" name="region" value="1" />경기/서울 <input type="radio" name="region" value="2" />강원 <input type="radio" name="region" value="3" />충청 <input type="radio" name="region" value="4" />경상 <input type="radio" name="region" value="5" />전라
+                    <input type="radio" name="region" value="6" />제주
+                </div>
+                <div>
+                    <label for="spotInfo">스팟정보:</label>
+                    <input name="spotInfo" type="text" placeholder="스팟정보" />
+                </div>
+                <div><input type="file" name="dynamic_files" multiple /></div>
+                <!-- 지도 -->
+                <div class="map-container">
+                    <div class="map" id="map"></div>
+                </div>
+                <div style="margin-top: 20px">
+                    <button>제출</button>
+                    <button onclick="clearBtn()">클리어</button>
+                </div>
+            </form>
+        </section>
         <hr />
         <%-include('footer.ejs')%>
 
