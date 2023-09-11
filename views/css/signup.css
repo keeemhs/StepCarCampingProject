@@ -1,21 +1,143 @@
-.form-container {
+body,
+html {
+    height: 100%;
+}
+
+body {
+    width: 100%;
     display: flex;
     justify-content: center;
-    height: 350px;
     align-items: center;
 }
 
-.form-container input {
-    margin: 10px;
+label {
+    font-size: 11px;
 }
 
-.form-container div {
-    margin: 0px 10px;
+
+.signup-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
 }
 
+.signup-form-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 300px;
+}
+
+.input-style-error {
+    border-color: red;
+}
+
+.input-style {
+    width: 100%;
+    height: 35px;
+    padding: 0px;
+    font-size: 11px;
+    border: 2px solid #CCC;
+    border-radius: 5px;
+    padding-left: 10px;
+    margin-bottom: -13px;
+}
+
+.email-div {
+    display: flex;
+    width: 300px;
+    justify-content: space-between;
+    margin-bottom: -13px;
+}
+
+.input-style-email {
+    width: 80%;
+    height: 35px;
+    padding: 0px;
+    font-size: 11px;
+    border: 2px solid #CCC;
+    border-radius: 5px;
+    padding-left: 10px;
+}
+
+.duplication-btn {
+    height: 35px;
+    font-size: 11px;
+    background-color: #43604D;
+    color: white;
+}
+
+.duplication-btn:hover {
+    background-color: #223127;
+    color: white;
+}
+
+.input-text-style {
+    width: 300px;
+    font-size: 11px;
+    font-weight: bolder;
+}
+
+.birth-style {
+    width: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: -13px;
+}
+
+.birth-style-block {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.birth-select-style {
+    width: 80px;
+    height: 35px;
+    padding: 0px;
+    font-size: 11px;
+    border: 2px solid #CCC;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+
+.input-radio {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.input-radio-element {
+    display: flex;
+    align-items: center;
+}
+
+.input-radio-margin {
+    margin-right: 10px;
+}
+
+.input-radio-car {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
 
 .signup-button {
+    width: 100%;
+    height: 35px;
+    border: none;
     display: flex;
+    align-items: center;
     justify-content: center;
-    margin-top: 10px;
+    color: white;
+    background-color: #43604D;
+    font-size: 13px;
+    border-radius: 5px;
+}
+
+.signup-button:hover {
+    background-color: #223127;
+    color: white;
 }

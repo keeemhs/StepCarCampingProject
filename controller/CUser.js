@@ -142,7 +142,7 @@ exports.signupPost = async (req, res) => {
     });
 };
 
-//로그인
+//로그인 동작
 exports.signin = async (req, res) => {
     const { useremail, pw } = req.body;
     console.log(useremail, pw);
@@ -150,9 +150,10 @@ exports.signin = async (req, res) => {
         where: { useremail },
     });
 
-    if (!result) {
-        return res.json({ result: false, message: '사용자가 존재하지 않습니다' });
+    if (result === null) {
+        return res.json({ result: false });
     }
+
     const compare = comparePassword(pw, result.pw);
 
     if (compare) {
@@ -161,6 +162,8 @@ exports.signin = async (req, res) => {
     } else {
         res.json({ result: false });
     }
+
+
 };
 
 //로그아웃 get

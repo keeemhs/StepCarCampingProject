@@ -7,85 +7,116 @@
     <title>회원가입</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <link rel="stylesheet" href="signup.ejs">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
+    <link rel="stylesheet" href="../signup.css">
 
-    <style>
-        .input-style {
-            border-color: red;
-        }
-    </style>
 </head>
 
 <body>
-    <h1>회원가입</h1>
-    <div class="form-container">
-        <form name="signup" id="signup">
-            <input type="text" name="email" id="email" placeholder="이메일을 입력해주세요">
-            <button type="button" onclick="duplication()" id="duButton">중복</button>
-            <br>
-            <input type="password" name="pw" id="pw" placeholder="비밀번호를 입력해주세요">
-            <br>
-            <input type="password" name="pwc" id="pwc" placeholder="비밀번호를 한번 더 입력해주세요">
-            <br>
-            <div>
-                <select name="birth_year" id="birth_year">
-                    <%for(let i=1900; i < 2020; i++){ %>
-                        <option value="<%= i %>">
-                            <%= i%>
-                        </option>
-                        <%}%>
-                </select>
-                <label for="birth_year">년</label>
-                <select name="birth_month" id="birth_month">
-                    <%for(let i=1; i < 13; i++){ %>
-                        <option value="<%= i %>">
-                            <%= i%>
-                        </option>
-                        <%}%>
-                </select>
-                <label for="birth_month">월</label>
-                <select name="birth_day" id="birth_day">
-                    <%for(let i=1; i < 32; i++){ %>
-                        <option value="<%= i %>">
-                            <%= i%>
-                        </option>
-                        <%}%>
-                </select>
-                <label for="birth_day">일</label>
-            </div>
-            <br>
-            <input type="text" id="name" placeholder="이름을 입력해주세요">
-            <br>
-            <input type="text" id="nickname" placeholder="닉네임을 입력해주세요">
-            <button type="button" onclick="duplicationNickname()" id="duButton">중복</button>
-            <br>
-            <div>
-                차박레벨
-                <input type="radio" name="level" id="beginner" value="1" />
-                <label for="beginner">입문</label>
-                <input type="radio" name="level" id="intermediate" value="2" />
-                <label for="intermediate">중수</label>
-                <input type="radio" name="level" id="master" value="3" />
-                <label for="master">고수</label>
-            </div>
+    <div class="signup-container">
+        <img src="" alt="로고">
+        <div class="form-container">
+            <form name="signup" id="signup" class="signup-form-container">
+                <div class="input-text-style">이메일</div>
+                <div class="email-div">
+                    <input type="text" name="email" id="email" placeholder="이메일을 입력해주세요" class="input-style-email">
+                    <button type="button" onclick="duplication()" id="duButton" class="btn duplication-btn">중복</button>
+                </div>
+                <br>
+                <div class="input-text-style">비밀번호</div>
+                <input type="password" name="pw" id="pw" placeholder="비밀번호를 입력해주세요" class="input-style">
+                <br>
+                <div class="input-text-style">비밀번호 확인</div>
+                <input type="password" name="pwc" id="pwc" placeholder="비밀번호를 한번 더 입력해주세요" class="input-style">
+                <br>
+                <div class="input-text-style">생년월일</div>
+                <div class="birth-style">
+                    <div class="birth-style-block">
+                        <select name="birth_year" id="birth_year" class="birth-select-style">
+                            <%for(let i=1900; i < 2020; i++){ %>
+                                <option value="<%= i %>">
+                                    <%= i%>
+                                </option>
+                                <%}%>
+                        </select>
+                        <label for="birth_year">년</label>
+                    </div>
+                    <div class="birth-style-block">
+                        <select name="birth_month" id="birth_month" class="birth-select-style">
+                            <%for(let i=1; i < 13; i++){ %>
+                                <option value="<%= i %>">
+                                    <%= i%>
+                                </option>
+                                <%}%>
+                        </select>
+                        <label for="birth_month">월</label>
+                    </div>
+                    <div class="birth-style-block">
+                        <select name="birth_day" id="birth_day" class="birth-select-style">
+                            <%for(let i=1; i < 32; i++){ %>
+                                <option value="<%= i %>">
+                                    <%= i%>
+                                </option>
+                                <%}%>
+                        </select>
+                        <label for="birth_day">일</label>
+                    </div>
+                </div>
+                <br>
+                <div class="input-text-style">이름</div>
+                <input type="text" id="name" placeholder="이름을 입력해주세요" class="input-style">
+                <br>
+                <div class="input-text-style">닉네임</div>
+                <div class="email-div">
+                    <input type="text" id="nickname" placeholder="닉네임을 입력해주세요" class="input-style-email">
+                    <button type="button" onclick="duplicationNickname()" id="duButton"
+                        class="btn duplication-btn">중복</button>
+                </div>
+                <br>
+                <div>
+                    <div class="input-text-style">차박레벨</div>
+                    <div class="input-radio">
+                        <div class="input-radio-element">
+                            <input type="radio" name="level" id="beginner" value="1" class="input-radio-margin" />
+                            <label for="beginner">입문</label>
+                        </div>
+                        <div class="input-radio-element">
+                            <input type="radio" name="level" id="intermediate" value="2" class="input-radio-margin" />
+                            <label for="intermediate">중수</label>
+                        </div>
+                        <div class="input-radio-element">
+                            <input type="radio" name="level" id="master" value="3" class="input-radio-margin" />
+                            <label for="master">고수</label>
+                        </div>
+                    </div>
+                </div>
 
-            <br>
-            <div>
-                차량보유
-                <input type="radio" name="own" id="no" value="1" />
-                <label for="no">없음</label>
-                <input type="radio" name="own" id="yes" value="2">
-                <label for="yes">있음</label>
-                <input type="radio" name="own" id="expected" value="3">
-                <label for="expected">구매예정</label>
-            </div>
-            <br>
-            <div class="signup-button">
-                <button type="button" onclick="signUp()">회원가입</button>
-            </div>
-        </form>
+                <br>
+                <div>
+                    <div class="input-text-style">차량보유</div>
+                    <div class="input-radio-car">
+                        <div class="input-radio-element">
+                            <input type="radio" name="own" id="no" value="1" class="input-radio-margin">
+                            <label for="no">없음</label>
+                        </div>
+                        <div class="input-radio-element">
+                            <input type="radio" name="own" id="yes" value="2" class="input-radio-margin">
+                            <label for="yes">있음</label>
+                        </div>
+                        <div class="input-radio-element">
+                            <input type="radio" name="own" id="expected" value="3" class="input-radio-margin">
+                            <label for="expected">구매예정</label>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="signup-button">
+                    <button type="button" onclick="signUp()" class="btn signup-button">회원가입</button>
+                </div>
+            </form>
+        </div>
     </div>
-
     <script>
         const form = document.forms['signup']
         const email = document.querySelector('#email')
