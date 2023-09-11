@@ -324,6 +324,30 @@ exports.deleteUserPost = async (req, res) => {
     }
 };
 
+exports.mypage = async (req, res) => {
+    if (req.cookies.isLoginKakao === undefined) {
+        usercookie = req.cookies.isLogin;
+        const result = await User.findOne({
+            where: { nickname: decodeURI(usercookie) },
+        });
+        res.render('mypage', { user: result });
+    } else {
+        res.render('mypage', { user: false, nickname: decodeURI(req.cookies.isLoginKakao) });
+    }
+};
+//마이페이지 수정(닉네임 -> 카카오 로그인일때는 수정불가)
+exports.mypagePatch = async (req, res) => {
+    const { patchnickname, id } = req.body;
+    const result = await User.update({ nickname: patchnickname }, { where: { id: id } });
+    if (result) {
+        res.clearCookie('isLogin');
+        res.cookie('isLogin', patchnickname, cookieConfig);
+        res.json({ result: true });
+    } else {
+        res.json({ result: false, message: '수정을 실패했습니다' });
+    }
+};
+
 /////비밀번호 암호화
 const bcryptPassword = (password) => {
     return bcrypt.hashSync(password, 10);

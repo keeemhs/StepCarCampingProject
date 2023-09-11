@@ -45,7 +45,7 @@ const uploadSingle = multer({
                     thunmnail: fn,
                 });
                 galleryid = galleryEdit.galleryid;
-                console.log('galleryid', galleryid);
+                console.log('galleryid1', galleryid);
 
                 gallery_img.create({
                     galleryid: galleryid,
@@ -73,12 +73,13 @@ const uploadSingle = multer({
 //멀터 이용 싱글 테이블 만들기
 exports.singleAxios = async (req, res) => {
     const files = uploadSingle.array('array_file');
-    console.log(decodeURI(req.cookies.isLogin));
+    console.log('decodeURL', decodeURI(req.cookies.isLogin));
     const user = await User.findOne({
         where: {
             nickname: decodeURI(req.cookies.isLogin),
         },
     });
+    console.log(user);
     if (!user) {
         res.send({ result: false, errMessage: '로그인이 종료되었거나, 잘못된 접근입니다.' });
         return;
@@ -95,7 +96,7 @@ exports.singleAxios = async (req, res) => {
             console.log(err);
             return;
         }
-
+        console.log(galleryid);
         first = 0;
         return res.json({
             galleryid: galleryid,
@@ -353,4 +354,71 @@ exports.sendMapData = async (req, res) => {
 
     //쿠키던 세션이던 저장되어있다고 생각하고 여기선 구현
     res.send('noerr');
+};
+exports.deleteComment = async (req, res) => {
+    if (!req.cookies.isLogin) {
+        res.send({ errcode: -1, error: '삭제 권한이 없습니다.' });
+        return;
+    }
+    const { main, subid } = req.body;
+    console.log(main, subid);
+
+    if (subid == -1) {
+        const owner = await gallery_comment.findOne({
+            where: {
+                commentid: main,
+            },
+        });
+
+        if (decodeURI(req.cookies.isLogin == owner.nickName)) {
+            console.log('아이디 같음!', decodeURI(req.cookies.isLogin), owner.nickName);
+        } else {
+            console.log('아이디 다름!', decodeURI(req.cookies.isLogin), owner.nickName);
+            res.send({ errcode: -1, error: '삭제 권한이 없습니다.' });
+            return;
+        }
+    } else {
+        const owner = await gallery_comment.findOne({
+            where: {
+                commentid: subid,
+            },
+        });
+
+        if (decodeURI(req.cookies.isLogin == owner.nickName)) {
+            console.log('아이디 같음!', decodeURI(req.cookies.isLogin), owner.nickName);
+        } else {
+            console.log('아이디 다름!', decodeURI(req.cookies.isLogin), owner.nickName);
+            res.send({ errcode: -1, error: '삭제 권한이 없습니다.' });
+            return;
+        }
+    }
+
+    if (subid != -1) {
+        await gallery_comment.destroy({
+            where: {
+                commentid: subid,
+            },
+        });
+        await gallery_comment.increment(
+            { deepComment: -1 },
+            {
+                where: {
+                    commentid: main,
+                },
+            }
+        );
+        res.send({ errcode: 0, error: '에러 없음' });
+    } else {
+        await gallery_comment.update(
+            {
+                commentText: '삭제되었습니다.',
+            },
+            {
+                where: {
+                    commentid: main,
+                },
+            }
+        );
+        res.send({ errcode: 0, error: '에러 없음' });
+    }
 };
