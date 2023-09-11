@@ -6,7 +6,18 @@
         <title>리뷰 에딧</title>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ijdya8hea0"></script>
-        <link rel="stylesheet" href="./css/spot.css" />
+        <style>
+            .map {
+                width: 700px;
+                height: 350px;
+                margin-top: 15px;
+            }
+
+            .map-container {
+                display: flex;
+                justify-content: center;
+            }
+        </style>
     </head>
     <body>
         <%-include('header.ejs')%>
@@ -130,7 +141,7 @@
                 });
                 console.log(result2.data);
 
-                // location.href = '/gallery';
+                location.href = '/gallery';
 
                 // const result2= await axios({
                 //     method : "POST",

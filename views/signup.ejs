@@ -131,21 +131,21 @@
         const mode = url.get('mode')
 
         if (mode == 1) {
-            form.email.value = localStorage.getItem("email")
-            form.nickname.value = localStorage.getItem("nickname")
-            localStorage.removeItem("email")
-            localStorage.removeItem("nickname")
+            form.email.value = localStorage.getItem('email');
+            form.nickname.value = localStorage.getItem('nickname');
+            localStorage.removeItem('email');
+            localStorage.removeItem('nickname');
         }
 
         //이메일 정규식
-        var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+        var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         //비밀번호 정규식(영문,숫자 조합 8자리 이상)
-        var passwordPattern = RegExp(/^(?=.*[a-zA-Z])(?=.*[0-9]).{8,25}$/)
+        var passwordPattern = RegExp(/^(?=.*[a-zA-Z])(?=.*[0-9]).{8,25}$/);
 
         //이메일 중복검사
         async function duplication() {
             if (!emailPattern.test(form.email.value)) {
-                return alert('이메일 형식이 올바르지 않습니다')
+                return alert('이메일 형식이 올바르지 않습니다');
             }
 
             try {
@@ -153,44 +153,42 @@
                     method: 'POST',
                     url: '/user/duplication',
                     data: {
-                        useremail: form.email.value
-                    }
-                })
+                        useremail: form.email.value,
+                    },
+                });
                 if (res.data.result) {
-                    alert('사용가능한 이메일입니다')
-                    emailDuplicationResult = 1
+                    alert('사용가능한 이메일입니다');
+                    emailDuplicationResult = 1;
                 } else {
-                    alert('이미 사용중인 이메일입니다')
+                    alert('이미 사용중인 이메일입니다');
                 }
             } catch (error) {
-                console.log(error)
+                console.log(error);
             }
         }
 
-
-
         //비밀번호 유효성 검사
         $('#pw').change(function () {
-            var pw = $('#pw').val()
+            var pw = $('#pw').val();
             if (!passwordPattern.test(pw)) {
-                $('#pw').addClass('input-style')
-                alert('비밀번호는 숫자+영문 조합으로 최소 8자리 이상 입력해주세요')
+                $('#pw').addClass('input-style');
+                alert('비밀번호는 숫자+영문 조합으로 최소 8자리 이상 입력해주세요');
             } else {
-                $('#pw').removeClass('input-style')
+                $('#pw').removeClass('input-style');
             }
-        })
+        });
 
         //비밀번호 일치 검사
         $('#pwc').change(function () {
-            var pw1 = $('#pw').val()
-            var pw2 = $('#pwc').val()
+            var pw1 = $('#pw').val();
+            var pw2 = $('#pwc').val();
             if (pw1 !== pw2) {
-                $('#pwc').addClass('input-style')
-                alert('비밀번호가 일치하지 않습니다')
+                $('#pwc').addClass('input-style');
+                alert('비밀번호가 일치하지 않습니다');
             } else {
-                $('#pwc').removeClass('input-style')
+                $('#pwc').removeClass('input-style');
             }
-        })
+        });
 
         //닉네임 중복 검사
         async function duplicationNickname() {
@@ -199,42 +197,42 @@
                     method: 'POST',
                     url: '/user/duplicationNickname',
                     data: {
-                        nickname: form.nickname.value
-                    }
-                })
+                        nickname: form.nickname.value,
+                    },
+                });
                 if (res.data.result) {
-                    alert('사용가능한 닉네임입니다')
-                    NickDuplicationResult = 1
+                    alert('사용가능한 닉네임입니다');
+                    NickDuplicationResult = 1;
                 } else {
-                    alert('이미 사용중인 닉네임입니다')
+                    alert('이미 사용중인 닉네임입니다');
                 }
             } catch (error) {
-                console.log(error)
+                console.log(error);
             }
         }
 
         //회원가입 동작
         async function signUp() {
-            const birthday = `${form.birth_year.value}-${form.birth_month.value}-${form.birth_day.value}`
+            const birthday = `${form.birth_year.value}-${form.birth_month.value}-${form.birth_day.value}`;
 
             if (form.name.value == '' || form.nickname.value == '') {
-                return alert('이름 또는 닉네임을 입력하지 않았습니다')
+                return alert('이름 또는 닉네임을 입력하지 않았습니다');
             }
 
             if (form.level.value == '') {
-                return alert('차박레벨을 선택해주세요')
+                return alert('차박레벨을 선택해주세요');
             }
 
             if (form.own.value == '') {
-                return alert('차량보유를 선택해주세요')
+                return alert('차량보유를 선택해주세요');
             }
 
             if (emailDuplicationResult === 0) {
-                return alert('이메일 중복검사를 해야합니다')
+                return alert('이메일 중복검사를 해야합니다');
             }
 
             if (NickDuplicationResult === 0) {
-                return alert('닉네임 중복검사를 해야합니다')
+                return alert('닉네임 중복검사를 해야합니다');
             }
 
             try {
@@ -248,19 +246,17 @@
                         username: form.name.value,
                         nickname: form.nickname.value,
                         levelc: form.level.value,
-                        ownc: form.own.value
-                    }
-                })
+                        ownc: form.own.value,
+                    },
+                });
                 if (res.data.result) {
-                    alert('회원가입이 완료되었습니다')
-                    window.location.href = '/'
+                    alert('회원가입이 완료되었습니다');
+                    window.location.href = '/';
                 }
             } catch (error) {
-                console.log(error)
+                console.log(error);
             }
-
         }
-
     </script>
 </body>
 

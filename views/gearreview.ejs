@@ -1,11 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="kr">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
         <script src="https://kit.fontawesome.com/8786e78429.js" crossorigin="anonymous"></script>
         <style>
+            @font-face {
+                font-family: 'Dovemayo_gothic';
+                src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.1/Dovemayo_gothic.woff2') format('woff2');
+                font-weight: normal;
+                font-style: normal;
+            }
             body {
                 font-family: Arial, sans-serif;
                 background-color: #f9f9f9;
@@ -27,6 +33,7 @@
             }
 
             .product-container {
+                font-family: 'Dovemayo_gothic';
                 text-align: center;
                 margin: 50px auto;
                 margin-top: 100px;
@@ -37,25 +44,30 @@
                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             }
 
-            .product-image-container {
+            .product-image {
                 position: relative;
+                width: 300px; /* 원하는 가로 크기 */
+                height: 200px; /* 원하는 세로 크기 */
+                background-image: url('이미지 URL');
+                background-size: cover; /* 이미지가 영역을 완전히 채우도록 설정 */
+                background-position: center center; /* 이미지 중앙 정렬 */
             }
 
             .arrow-icon {
                 font-size: 24px;
                 color: #333;
                 cursor: pointer;
-                position: absolute;
+                position: relative;
                 top: 50%;
                 transform: translateY(-50%);
             }
 
             .arrow-left {
-                left: 10px;
+                left: 0;
             }
 
             .arrow-right {
-                right: 10px;
+                right: 0;
             }
 
             .product-image {
@@ -67,6 +79,7 @@
             .product-description {
                 margin-top: 20px;
                 color: #333;
+                word-wrap: break-word; /* 긴 단어들을 줄바꿈하여 표시 */
             }
 
             .author-info {
@@ -83,9 +96,9 @@
             <h2>제품명 : <%= gearTitle %></h2>
 
             <div id="pictures">
-                <i class="arrow-icon fa-solid fa-arrow-left" onclick="left()"></i>
+                <i class="arrow-icon fa-solid fa-arrow-left arrow-left" onclick="left()"></i>
                 <img id="img-box" class="product-image" src="<%= imgurl.urls[0] %>" alt="Product Image" />
-                <i class="arrow-icon fa-solid fa-arrow-right" onclick="right()"></i>
+                <i class="arrow-icon fa-solid fa-arrow-right arrow-right" onclick="right()"></i>
             </div>
 
             <h4 class="product-description">제품설명 : <%= gearExplain %></h4>

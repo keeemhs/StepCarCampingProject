@@ -25,5 +25,7 @@ router.post('/review/addMainComment', galleryController.addMainComment);
 
 //대댓글 달기.
 router.post('/review/addSubComment', galleryController.addSubComment);
+//대댓글 달기.
+router.post('/review/deleteComment', galleryController.deleteComment);
 
 module.exports = router;

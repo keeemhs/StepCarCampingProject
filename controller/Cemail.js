@@ -39,7 +39,47 @@ const sendEmail = async (req, res) => {
   }
 };
 
+// // 인증번호 생성 + 이메일 변수 가져오기
+// // 인증번호 메일 보내는 양식
+// const sendEmail2 = async (req, res) => {
+//   try {
+//     const message = req.body.message;
+//     const email = req.body.email;
+//     const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
+//     const mailOptions2 = {
+//       to: email,
+//       text: `${message}인증 코드: ${verificationCode}`,
+//     };
+
+//     await transporter.sendMail(mailOptions2);
+//     res.status(200).json({
+//       message: '인증번호가 이메일로 전송되었습니다.'
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({
+//       message: '이메일 전송 중 오류가 발생했습니다.'
+//     });
+//   }
+// };
+
+// exports.verifyCode = async (req, res) => {
+//   const email = req.body.email;
+//   const user = await User.findOne({
+//     where: {
+//       email
+//     }
+//   });
+
+//   if (user && user.verificationCode === req.body.verificationCode) {
+//     res.send('인증 성공');
+//   } else {
+//     res.send('인증 실패');
+//   }
+// };
+
 module.exports = {
   showEmailForm,
-  sendEmail
+  sendEmail,
+  // sendEmail2
 };
