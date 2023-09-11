@@ -6,33 +6,92 @@
         <title>Document</title>
         <script src="https://kit.fontawesome.com/8786e78429.js" crossorigin="anonymous"></script>
         <style>
-            #pictures {
-                display: flex;
-                justify-content: center;
-                align-items: center;
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f9f9f9;
+                margin: 0;
+                padding: 0;
             }
 
-            .img--box {
-                width: 300px;
-                margin-left: 10px;
-                margin-right: 10px;
+            header {
+                background-color: #333;
+                color: #fff;
+                padding: 10px;
+                text-align: center;
+            }
+
+            header a {
+                color: #fff;
+                text-decoration: none;
+                margin: 0 10px;
+            }
+
+            .product-container {
+                text-align: center;
+                margin: 50px auto;
+                margin-top: 100px;
+                max-width: 800px;
+                padding: 20px;
+                background-color: #fff;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .product-image-container {
+                position: relative;
+            }
+
+            .arrow-icon {
+                font-size: 24px;
+                color: #333;
+                cursor: pointer;
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+
+            .arrow-left {
+                left: 10px;
+            }
+
+            .arrow-right {
+                right: 10px;
+            }
+
+            .product-image {
+                max-width: 100%;
+                height: auto;
+                border-radius: 5px;
+            }
+
+            .product-description {
+                margin-top: 20px;
+                color: #333;
+            }
+
+            .author-info {
+                margin-top: 30px;
+                font-style: italic;
+                color: #555;
             }
         </style>
     </head>
     <body>
         <%-include('header.ejs')%>
-        <h2 style="margin-top: 100px; text-align: center">제품명 : <%= gearTitle %></h2>
 
-        <div id="pictures">
-            <i class="fa-solid fa-arrow-left" onclick="left()"></i>
-            <img id="img-box" class="img--box" src="<%= imgurl.urls[0] %>" />
-            <i class="fa-solid fa-arrow-right" onclick="right()"></i>
+        <div class="product-container">
+            <h2>제품명 : <%= gearTitle %></h2>
+
+            <div id="pictures">
+                <i class="arrow-icon fa-solid fa-arrow-left" onclick="left()"></i>
+                <img id="img-box" class="product-image" src="<%= imgurl.urls[0] %>" alt="Product Image" />
+                <i class="arrow-icon fa-solid fa-arrow-right" onclick="right()"></i>
+            </div>
+
+            <h4 class="product-description">제품설명 : <%= gearExplain %></h4>
+
+            <h6 class="author-info">작성자 : <%= writer %></h6>
         </div>
-
-        <!-- 본문 -->
-        <h4 style="text-align: center; margin-bottom: 10px">제품설명 : <%= gearExplain %></h4>
-
-        <h6 style="text-align: center; margin-bottom: 100px">작성자 : <%= writer %></h6>
 
         <!-- footer -->
         <%-include('footer.ejs')%>

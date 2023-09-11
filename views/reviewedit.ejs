@@ -6,7 +6,19 @@
         <title>리뷰 에딧</title>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ijdya8hea0"></script>
-        <link rel="stylesheet" href="./css/spot.css" />
+        <link rel="stylesheet" href="spot.css" />
+        <style>
+            .map {
+                width: 700px;
+                height: 350px;
+                margin-top: 15px;
+            }
+
+            .map-container {
+                display: flex;
+                justify-content: center;
+            }
+        </style>
     </head>
     <body>
         <%-include('header.ejs')%>
@@ -83,9 +95,9 @@
             }
             function clearBtn() {
                 for (let i = 0; i < markers.length; i++) {
-                    console.log(markers[i].getPosition().lat());
                     markers[i].setMap(null);
                 }
+                markers.length = 0;
                 polyline.setMap(null);
             }
 
@@ -120,6 +132,7 @@
                     },
                 });
                 const markerObject = [];
+                console.log('gid: ', result1.data);
                 for (let i = 0; i < markers.length; i++) {
                     markerObject.push({ lat: markers[i].getPosition().lat(), lon: markers[i].getPosition().lng(), order: i, galleryid: result1.data.galleryid });
                 }
@@ -130,7 +143,7 @@
                 });
                 console.log(result2.data);
 
-                // location.href = '/gallery';
+                location.href = '/gallery';
 
                 // const result2= await axios({
                 //     method : "POST",

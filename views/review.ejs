@@ -20,6 +20,17 @@
                 margin-left: 10px;
                 margin-right: 10px;
             }
+
+            .map {
+                width: 700px;
+                height: 350px;
+                margin-top: 15px;
+            }
+
+            .map-container {
+                display: flex;
+                justify-content: center;
+            }
         </style>
     </head>
     <body>
@@ -60,7 +71,9 @@
                 <!-- 여기에 대댓글을 추가할 수 있는 method가 필요하다. -->
                 <% for(let i=0; i< comments.length; i++){ %>
                 <div>
-                    <%= comments[i].main.commentText %><br />
+                    <%= comments[i].main.commentText %>
+                    <button type="button" onclick="deleteComment('<%=comments[i].main.commentid %>',-1,'<%= data.galleryid %>')">댓글 삭제</button>
+                    <br />
                     <form name="maincomment<%= i %>">
                         <span>대댓글</span>
                         <input name="mainCommentInput" type="text" placeholder="댓글" />
@@ -71,7 +84,7 @@
                     <!-- 여길 ejs에서 불러온 데이터만큼 반복한다. -->
                     <% for(let j=0; j < comments[i].sub.length; j++){ %>
                     <li><%= comments[i].sub[j].commentText %></li>
-                    <button type="button" onclick="deleteComment('<%=comments[i].main.commentid %>','<%= comments[i].sub[j].commentid %>')">댓글 삭제</button>
+                    <button type="button" onclick="deleteComment('<%=comments[i].main.commentid %>','<%= comments[i].sub[j].commentid %>','<%= data.galleryid %>')">댓글 삭제</button>
 
                     <% } %>
                 </ul>
@@ -179,26 +192,21 @@
                 }
             }
 
-            async function deleteComment(main, sub) {
+            async function deleteComment(main, sub, gid) {
                 console.log('main :', main);
                 console.log('sub :', sub);
-                // const urlSearch = new URLSearchParams(location.search);
-                // const mode = urlSearch.get('galleryId');
-                // let formString = 'maincomment' + i;
-                // const subcomment = document.forms[formString].mainCommentInput.value;
-                // const result = await axios({
-                //     url: '/gallery/review/addSubComment',
-                //     data: {
-                //         subcomment,
-                //         gid: mode,
-                //         commentGroup,
-                //         deepComment,
-                //     },
-                //     method: 'POST',
-                // });
-                // if (result.data.errcode == 0) {
-                //     location.reload();
-                // }
+
+                const result = await axios({
+                    url: '/gallery/review/deleteComment',
+                    data: {
+                        main: main,
+                        subid: sub,
+                    },
+                    method: 'POST',
+                });
+                if (result.data.errcode == 0) {
+                    location.reload();
+                }
             }
             async function addSubComment(i, gid, commentGroup, deepComment) {
                 const urlSearch = new URLSearchParams(location.search);

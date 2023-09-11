@@ -1,4 +1,6 @@
-const { DataTypes } = require('sequelize');
+const {
+    DataTypes
+} = require('sequelize');
 
 const User = (sequelize) => {
     const model = sequelize.define('user', {
@@ -36,11 +38,9 @@ const User = (sequelize) => {
             type: DataTypes.INTEGER,
             allowNull: false,
         }
-    },
-        {
-            timestamps: false,
-        }
-    );
+    }, {
+        timestamps: false,
+    });
     return model
 };
 
