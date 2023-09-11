@@ -51,10 +51,3 @@ exports.recomCarPage = (req, res) => {
     res.render('recomCar');
 };
 
-exports.signupPage = (req, res) => {
-    res.render('signup');
-};
-
-exports.signinPage = (req, res) => {
-    res.render('signin');
-};
