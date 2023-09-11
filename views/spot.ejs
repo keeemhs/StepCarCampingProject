@@ -6,7 +6,9 @@
     <title>Document</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ijdya8hea0"></script>
+    <script src="/socket.io/socket.io.js"></script>
     <link rel="stylesheet" href="spot.css" />
+    <link rel="stylesheet" href="chat.css">
 </head>
 
 <body>
@@ -38,10 +40,120 @@
 
     <hr>
 
+    <!-- 채팅방 목록 및 입장 -->
+    <div id="chatlist">
+        <form id="roomli">
+            <ul>
+                <p>지역별 오픈 채팅</p>
+                <select id="roomList">
+                    <option value="null">지역</option>
+                    <option value="sk">서울/경인</option>
+                    <option value="kw">강원</option>
+                    <option value="cc">충청</option>
+                    <option value="jl">전라</option>
+                    <option value="ks">경상</option>
+                </select>
+                <select id="roomListNum">
+                    <option value="null">방번호</option>
+                    <option value="1">1번</option>
+                    <option value="2">2번</option>
+                    <option value="3">3번</option>
+                    <option value="4">4번</option>
+                    <option value="5">5번</option>
+                </select>
+                <input type="text" id="userName" placeholder="사용자 이름 입력" />
+
+                <button>입장</button>
+            </ul>
+        </form>
+    </div>
+
+    <!-- 채팅방 -->
+    <div id="chatroom" hidden>
+        <div id="msg">
+            <div id="notice"></div>
+            <!-- <div class="my-chat">
+                <p>채팅테스트(나)</p>
+            </div>
+            <div class="other-chat">
+                <p>채팅테스트(상대방)</p>
+            </div> -->
+        </div>
+        <form id="chat">
+            <select id="userList"></select>
+            <input type="text" id="message" placeholder="메세지 입력" />
+            <button>입력</button>
+            <button>나가기</button>
+        </form>
+    </div>
+
     <!-- 스팟리스트 -->
     <div class="spot-container">
     <%-include('footer.ejs')%>
         <script>
+            const socket = io();
+            const roomForm2 = document.querySelector('#roomli');
+            const chatForm = document.querySelector('#chat');
+            const msg = document.querySelector('#msg');
+            const notice = document.querySelector('#notice');
+
+            let myName;
+            //메세지 띄우기
+            socket.on('newMessage', (message, nick, bool) => {
+                console.log(message, nick);
+                const div = document.createElement('div');
+                const p = document.createElement('p');
+                if (myName === nick) {
+                    //내가입력한 텍스트
+                    div.classList.add('my-chat');
+                } else {
+                    div.classList.add('other-chat');
+                }
+                //개인메세지일때 bool이 true
+                if (bool) {
+                    div.classList.add('secret-chat');
+                }
+
+                //채팅 텍스트
+                p.textContent = bool ? `(귓속말) ${nick} : ${message}` : `${nick} : ${message}`;
+                div.appendChild(p);
+                msg.appendChild(div);
+            });
+            //입장 메세지 이벤트
+            socket.on('notice', (message) => {
+                const div = document.createElement('div');
+                const p = document.createElement('p');
+                p.textContent = message;
+                div.appendChild(p);
+                notice.appendChild(div);
+            });
+
+            ///폼 이벤트
+            roomForm2.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const roomName = document.getElementById('roomListNum');
+                const userName = roomForm.querySelector('#userName');
+                socket.emit('create', roomName.options[roomName.selectedIndex].value, userName.value, () => {
+                    const body = document.querySelector('#chatroom');
+                    body.hidden = false;
+                    //전역변수에 입력한 닉네임을 저장
+                    myName = userName.value;
+                });
+            });
+            chatForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const user = document.querySelector('#userList');
+                const message = document.querySelector('#message');
+                console.log(user.value);
+                const msg = {
+                    nick: myName,
+                    user: user.value,
+                    message: message.value,
+                };
+                socket.emit('sendMessage', msg);
+                message.value = '';
+            });
+            
             //지도 초기 기준점 위치 설정
             const mapOptions = {
                 center: new naver.maps.LatLng(36.626316, 127.936296),
