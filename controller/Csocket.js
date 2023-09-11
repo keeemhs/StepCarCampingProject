@@ -1,4 +1,3 @@
-//////////////////Socket////////////////////////////
 const roomList = [];
 
 exports.connection = (io, socket) => {
@@ -66,33 +65,3 @@ exports.connection = (io, socket) => {
         return users;
     }
 };
-
-const {
-    Location,
-    Spot
-} = require('../models')
-
-///////////////////////GET///////////////////////
-exports.spot = (req, res) => {
-    res.render('spot')
-}
-
-///////////////////////POST///////////////////////
-exports.location = async (req, res) => {
-    const location = await Location.findOne({
-        where: {
-            locationName: req.body.location
-        }
-    })
-
-    const spot = await Spot.findAll({
-        where: {
-            locationLocationId: location.locationId
-        }
-    })
-
-    res.send({
-        location,
-        spot
-    })
-}

@@ -8,5 +8,10 @@ router.get('/', controller.spot)
 //POST
 router.post('/location', controller.location)
 
+module.exports = router;
 
-module.exports = router
+module.exports.io = function (io) {
+    io.on('connection', (socket) => {
+        controller.connection(io, socket);
+    });
+};

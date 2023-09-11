@@ -1,224 +1,263 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>회원가입</title>
-        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-        <link rel="stylesheet" href="signup.ejs" />
 
-        <style>
-            .input-style {
-                border-color: red;
-            }
-        </style>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
+    <link rel="stylesheet" href="../signup.css">
 
-    <body>
-        <h1>회원가입</h1>
+</head>
+
+<body>
+    <div class="signup-container">
+        <img src="" alt="로고">
         <div class="form-container">
-            <form name="signup" id="signup">
-                <input type="text" name="email" id="email" placeholder="이메일을 입력해주세요" />
-                <button type="button" onclick="duplication()" id="duButton">중복</button>
-                <br />
-                <br />
-                <input type="password" name="pw" id="pw" placeholder="비밀번호를 입력해주세요" />
-                <br />
-                <input type="password" name="pwc" id="pwc" placeholder="비밀번호를 한번 더 입력해주세요" />
-                <br />
-                <div>
-                    <select name="birth_year" id="birth_year">
-                        <%for(let i=1900; i < 2020; i++){ %>
-                        <option value="<%= i %>"><%= i%></option>
-                        <%}%>
-                    </select>
-                    <label for="birth_year">년</label>
-                    <select name="birth_month" id="birth_month">
-                        <%for(let i=1; i < 13; i++){ %>
-                        <option value="<%= i %>"><%= i%></option>
-                        <%}%>
-                    </select>
-                    <label for="birth_month">월</label>
-                    <select name="birth_day" id="birth_day">
-                        <%for(let i=1; i < 32; i++){ %>
-                        <option value="<%= i %>"><%= i%></option>
-                        <%}%>
-                    </select>
-                    <label for="birth_day">일</label>
+            <form name="signup" id="signup" class="signup-form-container">
+                <div class="input-text-style">이메일</div>
+                <div class="email-div">
+                    <input type="text" name="email" id="email" placeholder="이메일을 입력해주세요" class="input-style-email">
+                    <button type="button" onclick="duplication()" id="duButton" class="btn duplication-btn">중복</button>
                 </div>
-                <br />
-                <input type="text" id="name" placeholder="이름을 입력해주세요" />
-                <br />
-                <input type="text" id="nickname" placeholder="닉네임을 입력해주세요" />
-                <button type="button" onclick="duplicationNickname()" id="duButton">중복</button>
-                <br />
+                <br>
+                <div class="input-text-style">비밀번호</div>
+                <input type="password" name="pw" id="pw" placeholder="비밀번호를 입력해주세요" class="input-style">
+                <br>
+                <div class="input-text-style">비밀번호 확인</div>
+                <input type="password" name="pwc" id="pwc" placeholder="비밀번호를 한번 더 입력해주세요" class="input-style">
+                <br>
+                <div class="input-text-style">생년월일</div>
+                <div class="birth-style">
+                    <div class="birth-style-block">
+                        <select name="birth_year" id="birth_year" class="birth-select-style">
+                            <%for(let i=1900; i < 2020; i++){ %>
+                                <option value="<%= i %>">
+                                    <%= i%>
+                                </option>
+                                <%}%>
+                        </select>
+                        <label for="birth_year">년</label>
+                    </div>
+                    <div class="birth-style-block">
+                        <select name="birth_month" id="birth_month" class="birth-select-style">
+                            <%for(let i=1; i < 13; i++){ %>
+                                <option value="<%= i %>">
+                                    <%= i%>
+                                </option>
+                                <%}%>
+                        </select>
+                        <label for="birth_month">월</label>
+                    </div>
+                    <div class="birth-style-block">
+                        <select name="birth_day" id="birth_day" class="birth-select-style">
+                            <%for(let i=1; i < 32; i++){ %>
+                                <option value="<%= i %>">
+                                    <%= i%>
+                                </option>
+                                <%}%>
+                        </select>
+                        <label for="birth_day">일</label>
+                    </div>
+                </div>
+                <br>
+                <div class="input-text-style">이름</div>
+                <input type="text" id="name" placeholder="이름을 입력해주세요" class="input-style">
+                <br>
+                <div class="input-text-style">닉네임</div>
+                <div class="email-div">
+                    <input type="text" id="nickname" placeholder="닉네임을 입력해주세요" class="input-style-email">
+                    <button type="button" onclick="duplicationNickname()" id="duButton"
+                        class="btn duplication-btn">중복</button>
+                </div>
+                <br>
                 <div>
-                    차박레벨
-                    <input type="radio" name="level" id="beginner" value="1" />
-                    <label for="beginner">입문</label>
-                    <input type="radio" name="level" id="intermediate" value="2" />
-                    <label for="intermediate">중수</label>
-                    <input type="radio" name="level" id="master" value="3" />
-                    <label for="master">고수</label>
+                    <div class="input-text-style">차박레벨</div>
+                    <div class="input-radio">
+                        <div class="input-radio-element">
+                            <input type="radio" name="level" id="beginner" value="1" class="input-radio-margin" />
+                            <label for="beginner">입문</label>
+                        </div>
+                        <div class="input-radio-element">
+                            <input type="radio" name="level" id="intermediate" value="2" class="input-radio-margin" />
+                            <label for="intermediate">중수</label>
+                        </div>
+                        <div class="input-radio-element">
+                            <input type="radio" name="level" id="master" value="3" class="input-radio-margin" />
+                            <label for="master">고수</label>
+                        </div>
+                    </div>
                 </div>
 
-                <br />
+                <br>
                 <div>
-                    차량보유
-                    <input type="radio" name="own" id="no" value="1" />
-                    <label for="no">없음</label>
-                    <input type="radio" name="own" id="yes" value="2" />
-                    <label for="yes">있음</label>
-                    <input type="radio" name="own" id="expected" value="3" />
-                    <label for="expected">구매예정</label>
+                    <div class="input-text-style">차량보유</div>
+                    <div class="input-radio-car">
+                        <div class="input-radio-element">
+                            <input type="radio" name="own" id="no" value="1" class="input-radio-margin">
+                            <label for="no">없음</label>
+                        </div>
+                        <div class="input-radio-element">
+                            <input type="radio" name="own" id="yes" value="2" class="input-radio-margin">
+                            <label for="yes">있음</label>
+                        </div>
+                        <div class="input-radio-element">
+                            <input type="radio" name="own" id="expected" value="3" class="input-radio-margin">
+                            <label for="expected">구매예정</label>
+                        </div>
+                    </div>
                 </div>
-                <br />
+                <br>
                 <div class="signup-button">
-                    <button type="button" onclick="signUp()">회원가입</button>
+                    <button type="button" onclick="signUp()" class="btn signup-button">회원가입</button>
                 </div>
             </form>
         </div>
+    </div>
+    <script>
+        const form = document.forms['signup']
+        const email = document.querySelector('#email')
+        const password = document.querySelector('#pw')
+        const passwordConfirm = document.querySelector('#pwc')
+        const duButton = document.querySelector('#duButton')
+        var emailDuplicationResult = 0
+        var NickDuplicationResult = 0
 
-        <script>
-            const form = document.forms['signup'];
-            const email = document.querySelector('#email');
-            const password = document.querySelector('#pw');
-            const passwordConfirm = document.querySelector('#pwc');
-            const duButton = document.querySelector('#duButton');
-            var emailDuplicationResult = 0;
-            var NickDuplicationResult = 0;
 
-            const url = new URLSearchParams(location.search);
-            const mode = url.get('mode');
+        const url = new URLSearchParams(location.search)
+        const mode = url.get('mode')
 
-            if (mode == 1) {
-                form.email.value = localStorage.getItem('email');
-                form.nickname.value = localStorage.getItem('nickname');
-                localStorage.removeItem('email');
-                localStorage.removeItem('nickname');
+        if (mode == 1) {
+            form.email.value = localStorage.getItem('email');
+            form.nickname.value = localStorage.getItem('nickname');
+            localStorage.removeItem('email');
+            localStorage.removeItem('nickname');
+        }
+
+        //이메일 정규식
+        var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        //비밀번호 정규식(영문,숫자 조합 8자리 이상)
+        var passwordPattern = RegExp(/^(?=.*[a-zA-Z])(?=.*[0-9]).{8,25}$/);
+
+        //이메일 중복검사
+        async function duplication() {
+            if (!emailPattern.test(form.email.value)) {
+                return alert('이메일 형식이 올바르지 않습니다');
             }
 
-            //이메일 정규식
-            var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-            //비밀번호 정규식(영문,숫자 조합 8자리 이상)
-            var passwordPattern = RegExp(/^(?=.*[a-zA-Z])(?=.*[0-9]).{8,25}$/);
-
-            //이메일 중복검사
-            async function duplication() {
-                if (!emailPattern.test(form.email.value)) {
-                    return alert('이메일 형식이 올바르지 않습니다');
-                }
-
-                try {
-                    const res = await axios({
-                        method: 'POST',
-                        url: '/user/duplication',
-                        data: {
-                            useremail: form.email.value,
-                        },
-                    });
-                    if (res.data.result) {
-                        alert('사용가능한 이메일입니다');
-                        emailDuplicationResult = 1;
-                    } else {
-                        alert('이미 사용중인 이메일입니다');
-                    }
-                } catch (error) {
-                    console.log(error);
-                }
-            }
-
-            //비밀번호 유효성 검사
-            $('#pw').change(function () {
-                var pw = $('#pw').val();
-                if (!passwordPattern.test(pw)) {
-                    $('#pw').addClass('input-style');
-                    alert('비밀번호는 숫자+영문 조합으로 최소 8자리 이상 입력해주세요');
+            try {
+                const res = await axios({
+                    method: 'POST',
+                    url: '/user/duplication',
+                    data: {
+                        useremail: form.email.value,
+                    },
+                });
+                if (res.data.result) {
+                    alert('사용가능한 이메일입니다');
+                    emailDuplicationResult = 1;
                 } else {
-                    $('#pw').removeClass('input-style');
+                    alert('이미 사용중인 이메일입니다');
                 }
-            });
+            } catch (error) {
+                console.log(error);
+            }
+        }
 
-            //비밀번호 일치 검사
-            $('#pwc').change(function () {
-                var pw1 = $('#pw').val();
-                var pw2 = $('#pwc').val();
-                if (pw1 !== pw2) {
-                    $('#pwc').addClass('input-style');
-                    alert('비밀번호가 일치하지 않습니다');
+        //비밀번호 유효성 검사
+        $('#pw').change(function () {
+            var pw = $('#pw').val();
+            if (!passwordPattern.test(pw)) {
+                $('#pw').addClass('input-style');
+                alert('비밀번호는 숫자+영문 조합으로 최소 8자리 이상 입력해주세요');
+            } else {
+                $('#pw').removeClass('input-style');
+            }
+        });
+
+        //비밀번호 일치 검사
+        $('#pwc').change(function () {
+            var pw1 = $('#pw').val();
+            var pw2 = $('#pwc').val();
+            if (pw1 !== pw2) {
+                $('#pwc').addClass('input-style');
+                alert('비밀번호가 일치하지 않습니다');
+            } else {
+                $('#pwc').removeClass('input-style');
+            }
+        });
+
+        //닉네임 중복 검사
+        async function duplicationNickname() {
+            try {
+                const res = await axios({
+                    method: 'POST',
+                    url: '/user/duplicationNickname',
+                    data: {
+                        nickname: form.nickname.value,
+                    },
+                });
+                if (res.data.result) {
+                    alert('사용가능한 닉네임입니다');
+                    NickDuplicationResult = 1;
                 } else {
-                    $('#pwc').removeClass('input-style');
+                    alert('이미 사용중인 닉네임입니다');
                 }
-            });
+            } catch (error) {
+                console.log(error);
+            }
+        }
 
-            //닉네임 중복 검사
-            async function duplicationNickname() {
-                try {
-                    const res = await axios({
-                        method: 'POST',
-                        url: '/user/duplicationNickname',
-                        data: {
-                            nickname: form.nickname.value,
-                        },
-                    });
-                    if (res.data.result) {
-                        alert('사용가능한 닉네임입니다');
-                        NickDuplicationResult = 1;
-                    } else {
-                        alert('이미 사용중인 닉네임입니다');
-                    }
-                } catch (error) {
-                    console.log(error);
-                }
+        //회원가입 동작
+        async function signUp() {
+            const birthday = `${form.birth_year.value}-${form.birth_month.value}-${form.birth_day.value}`;
+
+            if (form.name.value == '' || form.nickname.value == '') {
+                return alert('이름 또는 닉네임을 입력하지 않았습니다');
             }
 
-            //회원가입 동작
-            async function signUp() {
-                const birthday = `${form.birth_year.value}-${form.birth_month.value}-${form.birth_day.value}`;
-
-                if (form.name.value == '' || form.nickname.value == '') {
-                    return alert('이름 또는 닉네임을 입력하지 않았습니다');
-                }
-
-                if (form.level.value == '') {
-                    return alert('차박레벨을 선택해주세요');
-                }
-
-                if (form.own.value == '') {
-                    return alert('차량보유를 선택해주세요');
-                }
-
-                if (emailDuplicationResult === 0) {
-                    return alert('이메일 중복검사를 해야합니다');
-                }
-
-                if (NickDuplicationResult === 0) {
-                    return alert('닉네임 중복검사를 해야합니다');
-                }
-
-                try {
-                    const res = await axios({
-                        method: 'POST',
-                        url: '/user/signup',
-                        data: {
-                            useremail: form.email.value,
-                            pw: form.pw.value,
-                            birth: birthday,
-                            username: form.name.value,
-                            nickname: form.nickname.value,
-                            levelc: form.level.value,
-                            ownc: form.own.value,
-                        },
-                    });
-                    if (res.data.result) {
-                        alert('회원가입이 완료되었습니다');
-                        window.location.href = '/';
-                    }
-                } catch (error) {
-                    console.log(error);
-                }
+            if (form.level.value == '') {
+                return alert('차박레벨을 선택해주세요');
             }
-        </script>
-    </body>
+
+            if (form.own.value == '') {
+                return alert('차량보유를 선택해주세요');
+            }
+
+            if (emailDuplicationResult === 0) {
+                return alert('이메일 중복검사를 해야합니다');
+            }
+
+            if (NickDuplicationResult === 0) {
+                return alert('닉네임 중복검사를 해야합니다');
+            }
+
+            try {
+                const res = await axios({
+                    method: 'POST',
+                    url: '/user/signup',
+                    data: {
+                        useremail: form.email.value,
+                        pw: form.pw.value,
+                        birth: birthday,
+                        username: form.name.value,
+                        nickname: form.nickname.value,
+                        levelc: form.level.value,
+                        ownc: form.own.value,
+                    },
+                });
+                if (res.data.result) {
+                    alert('회원가입이 완료되었습니다');
+                    window.location.href = '/';
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    </script>
+</body>
+
 </html>

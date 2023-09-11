@@ -5,7 +5,12 @@ const db = require('./models');
 const path = require('path'); // path 모듈 추가
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const http = require('http');
+const SocketIO = require('socket.io');
 require('dotenv').config();
+
+const server = http.createServer(app);
+const io = SocketIO(server);
 
 app.use(bodyParser.json());
 app.use(
@@ -38,6 +43,7 @@ app.use('/gear', gearRouter);
 
 //스팟 관련 라우터
 const spotRouter = require('./routes/spot');
+spotRouter.io(io);
 app.use('/spot', spotRouter);
 
 const user = require('./routes/user');
@@ -46,7 +52,7 @@ app.use('/user', user);
 const router = require('./routes/main');
 app.use(router);
 
-//이메일 전송 임시 라우터
+//이메일 전송
 const email = require('./routes/email');
 app.use('/email', email);
 
@@ -65,7 +71,7 @@ db.sequelize
         force: false,
     })
     .then(() => {
-        app.listen(PORT, () => {
+        server.listen(PORT, () => {
             console.log(`http://localhost:${PORT}`);
         });
     });
