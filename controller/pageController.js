@@ -7,7 +7,7 @@ exports.indexPage = (req, res) => {
 
 exports.gearPage = async (req, res) => {
     const result = await gear.findAll({
-        // attribute: ['gearid', 'gearTitle', 'thunmnail'],
+        attribute: ['gearid', 'gearTitle', 'writer', 'thunmnail'],
         order: [['gearid', 'desc']],
     });
     console.log(result);
