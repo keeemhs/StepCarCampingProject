@@ -25,7 +25,6 @@ router.get('/deleteUser', controller.deleteUser)
 //마이페이지
 router.get('/mypage', controller.mypage)
 
-
 ////////////////////////////////////POST////////////////////////////////////
 
 //회원가입 동작
