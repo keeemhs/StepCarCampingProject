@@ -52,8 +52,20 @@ exports.auth_kakao = async (req, res) => {
 
 exports.getToken = async (req, res) => {};
 
-exports.signinPage = (req, res) => {
-    res.render('signin');
+//로그인
+exports.login = (req, res) => {
+    console.log(req.cookies.isLoginKakao);
+    console.log(req.cookies.isLogin);
+    var kakaoCookie = '';
+    var cookie = '';
+    if (req.cookies.isLoginKakao === undefined) {
+        kakaoCookie = false;
+    }
+
+    if (req.cookies.isLogin === undefined) {
+        cookie = false;
+    }
+    res.render('signin', { kakaoCookie: kakaoCookie, cookie: cookie });
 };
 
 //카카오 로그인
@@ -116,9 +128,12 @@ exports.duplicationNickname = async (req, res) => {
         res.json({ result: false });
     }
 };
-
 //회원가입
-exports.signup = async (req, res) => {
+exports.signup = (req, res) => {
+    res.render('signup');
+};
+//회원가입
+exports.signupPost = async (req, res) => {
     console.log(req.body);
     const { useremail, pw, birth, username, nickname, levelc, ownc } = req.body;
     const hash = await bcryptPassword(pw);

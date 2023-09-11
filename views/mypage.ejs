@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        .image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>마이페이지</h1>
+    <div>
+        <%= user.username %>
+    </div>
+    <div>
+        <img src="../static/bulguk.jpeg" alt="" class="image">
+    </div>
+    <div>
+        <%if(user===false){%>
+            닉네임 : <input type="text" id="nickname" name="nickname" value="<%= nickname%>" readonly>
+            <br>
+            <%}else{%>
+                닉네임 : <input type="text" id="nickname" name="nickname" value="<%= user.nickname%>" readonly>
+                <br>
+                닉네임 수정란 : <input type="text" name="patchNickname" id="patchNickname">
+                <button type="button" onclick="duplicationNickname()">닉네임 중복 검사</button>
+                <button type="button" onclick="nicknamePatch()">닉네임 수정</button>
+
+                <%}%>
+    </div>
+
+
+
+    <script>
+
+        var patchnickname = document.querySelector('#patchNickname')
+        var nickname = document.querySelector('#nickname')
+        var NickDuplicationResult = 0
+
+        async function duplicationNickname() {
+            if (patchnickname.value === '') {
+                return alert('수정할 닉네임을 알려주세요')
+            }
+            try {
+                const res = await axios({
+                    method: 'POST',
+                    url: '/user/duplicationNickname',
+                    data: {
+                        nickname: patchnickname.value,
+                    }
+                })
+                if (res.data.result) {
+                    alert('사용가능한 닉네임입니다')
+                    NickDuplicationResult = 1
+                } else {
+                    alert('이미 사용중인 닉네임입니다')
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+        async function nicknamePatch() {
+            if (NickDuplicationResult === 0) {
+                return alert('닉네임 중복검사를 해야합니다')
+            }
+
+            const result = await axios({
+                method: 'PATCH',
+                url: '/user/mypage/patch',
+                data: {
+                    nickname: patchnickname.value,
+                    patchnickname: patchnickname.value,
+                    id: '<%= user.id %>'
+                }
+            })
+
+            if (result) {
+                alert('닉네임을 수정했습니다')
+                document.location.reload();
+            } else {
+                alert(result.data.message)
+            }
+
+        }
+    </script>
+</body>
+
+</html>
