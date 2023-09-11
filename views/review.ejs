@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="kr">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -44,6 +44,45 @@
                 margin-left: 5%;
                 margin-right: 5%;
             }
+
+            .mainComment {
+            }
+            .inputComment {
+                margin-top: 20px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                padding: 10px;
+                background-color: #fff;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                margin-bottom: 20px;
+            }
+
+            .inputComment span {
+                font-weight: bold;
+                margin-right: 10px;
+            }
+
+            .inputComment input[type='text'] {
+                width: calc(100% - 120px);
+                padding: 5px;
+                border: 1px solid #ccc;
+                border-radius: 3px;
+            }
+
+            .inputComment button {
+                width: 60px;
+                padding: 5px;
+                background-color: #43604d;
+                color: #fff;
+                border: none;
+                border-radius: 3px;
+                cursor: pointer;
+                font-size: 14px;
+            }
+
+            .inputComment button:hover {
+                background-color: #43604d;
+            }
         </style>
     </head>
     <body>
@@ -53,8 +92,6 @@
         <br />
         <br />
         <br />
-        <br />
-        <hr />
         <!-- user.name -->
         <div id="body_container">
             <h2 id="main-title"><%= userInfo.username %>님의 캠핑스팟</h2>
@@ -107,7 +144,7 @@
                 </div>
             </div>
             <div class="inputComment">
-                <form name="maincomment">
+                <form name="maincomment" class="mainComment">
                     <span>댓글</span>
                     <input name="mainCommentInput" type="text" placeholder="댓글" />
                     <button type="button" onclick="addMainComment()">댓글입력</button>
