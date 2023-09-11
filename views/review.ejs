@@ -158,12 +158,23 @@
 
         <script>
             //지도 로직
-            var results = JSON.parse('<%- JSON.stringify(data) %>').userlocations;
+            var locations = {
+                1: [127.175308, 37.542608],
+                2: [128.408642, 37.813589],
+                3: [127.345474, 36.736896],
+                4: [128.486217, 35.82567],
+                5: [127.215317, 35.283847],
+                6: [126.562305, 33.375393],
+            };
+
+            var datas = JSON.parse('<%- JSON.stringify(data) %>');
+            console.log(datas.region);
+            var results = datas.userlocations;
             console.log(results);
             //지도 초기 기준점 위치 설정
             const mapOptions = {
-                center: new naver.maps.LatLng(36.626316, 127.936296),
-                zoom: 7,
+                center: new naver.maps.LatLng(locations[datas.region]),
+                zoom: 9,
             };
 
             var map = new naver.maps.Map('map', mapOptions);
