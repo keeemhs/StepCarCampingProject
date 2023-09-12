@@ -88,7 +88,7 @@
     border-radius: 12px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
 }
-.wrapper i.wrapperButton {
+.wrapper i.button {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -104,7 +104,7 @@
     z-index: 100;
     cursor: pointer;
 }
-i.wrapperButton:active {
+i.button:active {
     transform: scale(0.94) translateY(-50%);
 }
 i#prev {
@@ -113,13 +113,13 @@ i#prev {
 i#next {
     right: 25px;
 }
-.imageContainer {
+.image-container {
     height: 320px;
     max-width: 900px;
     width: 100%;
     overflow: hidden;
 }
-.imageContainer .carousel {
+.image-container .carousel {
     display: flex;
     height: 100%;
     width: 100%;
