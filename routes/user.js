@@ -25,6 +25,9 @@ router.get('/deleteUser', controller.deleteUser);
 //마이페이지
 router.get('/mypage', controller.mypage);
 
+//마이페이지 - 내 정보 수정
+router.get('/mypage/patch', controller.mypagePatch)
+
 ////////////////////////////////////POST////////////////////////////////////
 
 //회원가입 동작
@@ -44,7 +47,7 @@ router.post('/logout/middle', controller.logoutMiddlePost);
 
 ////////////////////////////////////PATCH////////////////////////////////////
 //마이페이지 수정기능
-router.patch('/mypage/patch', controller.mypagePatch);
+router.patch('/mypage/patch', controller.mypagePatchPost);
 
 ////////////////////////////////////DELETE////////////////////////////////////
 
