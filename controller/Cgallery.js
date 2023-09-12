@@ -330,6 +330,7 @@ exports.reviewDel = async (req, res) => {
         res.send({ error: 'no error' });
         return;
     } else {
+        console.log(loginuser.id, owner.userid);
         console.log('삭제실패, 아이디가 다름');
         res.send({ error: '삭제 권한이 없습니다.' });
     }
