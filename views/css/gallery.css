@@ -1,0 +1,224 @@
+/* * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+} */
+/* h1 {
+    text-align: center;
+    margin-top: 50px;
+} */
+
+#buttonBox {
+    position: relative;
+    display: inline;
+}
+
+.sortButton {
+    font-family: 'Dovemayo_gothic';
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 2px solid black;
+    transition: background-color 0.3s, color 0.3s;
+    background-color: white;
+    color: black;
+    border: none;
+}
+
+.sortButton:hover {
+    background-color: #43604d;
+    color: #fff;
+}
+
+.sorting {
+    display: block;
+    text-align: left;
+    margin: 20px;
+    align-items: first baseline;
+}
+
+.new-button {
+    font-family: 'Dovemayo_gothic';
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 2px solid black;
+    transition: background-color 0.3s, color 0.3s;
+    background-color: white;
+    color: black;
+    border: none;
+}
+
+.new-button:hover {
+    background-color: #43604d;
+    color: #fff;
+}
+
+.new-button-container {
+    display: block;
+    text-align: right;
+    margin: 20px;
+}
+
+/* 갤러리 피드 형식 정렬 */
+
+.gallery {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.gallery .images {
+    gap: 15px;
+    max-width: 85%;
+    margin: 40px 0;
+    columns: 5 310px;
+    list-style: none;
+}
+.gallery .images .img {
+    display: flex;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 14px;
+    border-radius: 4px;
+}
+.gallery .images a {
+    width: 100%;
+    transition: transform 0.2s ease;
+}
+
+.gallery .images .img:hover a {
+    transform: scale(1.1);
+}
+
+@media screen and (max-width: 688px) {
+    .gallery .images {
+        max-width: 100%;
+        padding: 0 13px;
+        margin-top: 20px;
+    }
+}
+
+/* 기존 갤러리 css */
+/* 
+@font-face {
+    font-family: 'Dovemayo_gothic';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.1/Dovemayo_gothic.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+.sorting {
+    text-align: right;
+    margin-right: 10px;
+}
+
+.header {
+    background-color: #f8f9fa;
+    padding: 10px;
+    text-align: center;
+}
+
+.main-content {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+.grid-container {
+    display: grid;
+    margin-top: 50px;
+    padding: 10px;
+    gap: 10px 20px;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    justify-items: center; 
+    align-items: center; 
+}
+.card:hover {
+    box-shadow: 0 0 10px #43604d; 
+}
+
+.card {
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+    transition: box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: scale(1.03);
+}
+
+.card-img-top {
+    max-width: 100%;
+    max-height: 150px;
+    object-fit: cover;
+}
+
+.card-body {
+    font-family: 'Dovemayo_gothic';
+    text-align: center;
+}
+
+.card-title {
+    font-size: 1.2rem;
+    margin: 0;
+    color: black;
+}
+
+.card-subtitle {
+    font-size: 1rem;
+    color: #6c757d;
+    margin: 0;
+}
+
+.new-button {
+    font-family: 'Dovemayo_gothic';
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 2px solid black;
+    transition: background-color 0.3s, color 0.3s;
+    background-color: white;
+    color: black;
+    border: none;
+}
+
+.new-button:hover {
+    background-color: #43604d;
+    color: #fff;
+}
+
+.writer {
+    font-size: 10px;
+}
+
+.mainsection {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.new-button-container {
+    text-align: right;
+    margin: 20px;
+} */

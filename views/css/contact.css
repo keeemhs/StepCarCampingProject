@@ -3,15 +3,28 @@
     padding: 0;
 } */
 
+@font-face {
+    font-family: 'Dovemayo_gothic';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.1/Dovemayo_gothic.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: 'Dovemayo_gothic';
+}
+
 section {
+    font-family: 'Dovemayo_gothic';
     display: flex;
     align-items: center;
     flex-direction: column;
-    padding: 80px 0 0;
+    padding: 50px 0 0;
 }
 
 #contact {
-    margin: 60px 0 90px;
+    margin: 0 0 90px;
+    padding-top: 10px;
     display: flex;
     /* max-width: 1200px; */
     width: 100%;
@@ -58,4 +71,79 @@ section {
 }
 
 @media screen and (max-width: 860px) {
+}
+
+.qna {
+    margin: 0;
+}
+
+html > body {
+    font-family: 'LotteMartDream', sans-serif;
+}
+
+.faq-box {
+    border: 2px solid black;
+    background-color: #fff;
+    color: inherit;
+    padding: 10px;
+}
+
+.faq-box__question {
+    cursor: pointer;
+}
+
+.faq-box__question::after {
+    content: '▼';
+    float: right;
+}
+.faq-box > ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.faq-box > ul > li {
+    padding: 10px;
+}
+
+.faq-box > ul > li.hover > .faq-box__question::after {
+    content: '▲';
+}
+
+.faq-box__answer {
+    display: none;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+main > div.faqCon {
+    width: 60vw;
+    height: 600px;
+    margin: auto;
+    padding-top: 10px;
+}
+
+.faq-box__answer {
+    height: 150px;
+    overflow: auto;
+}
+
+main > div.faqCon .faqTitle {
+    font-size: 40px;
+}
+
+@media screen and (max-width: 1024px) {
+    main > div.faqCon {
+        width: 90vw;
+        height: 550px;
+    }
+
+    .faq-box__answer {
+        height: 100px;
+        overflow: scroll;
+    }
+
+    main div.faq-box * {
+        font-size: 13px;
+    }
 }
