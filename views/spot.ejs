@@ -5,13 +5,22 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        <script
-            type="text/javascript"
-            src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ijdya8hea0"
-        ></script>
+        <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ijdya8hea0"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
         <script src="/socket.io/socket.io.js"></script>
         <link rel="stylesheet" href="spot.css" />
+        <style>
+            .main-container {
+                margin-left: 5%;
+                margin-right: 5%;
+            }
+            .wrapper {
+                margin: auto;
+            }
+            .image-container {
+                margin: auto;
+            }
+        </style>
     </head>
 
     <body>
@@ -25,73 +34,75 @@
         <br />
 
         <hr />
-        <div class="location-container">
-            <div class="location-select">
-                <button type="button" value="경기">경기/서울</button>
-                <button type="button" value="강원">강원</button>
-                <button type="button" value="충청">충청</button>
-                <button type="button" value="경상">경상</button>
-                <button type="button" value="전라">전라</button>
-                <!-- <button type="button" value="제주">제주</button> -->
+        <div class="main-container">
+            <div class="location-container">
+                <div class="location-select">
+                    <button type="button" value="경기">경기/서울</button>
+                    <button type="button" value="강원">강원</button>
+                    <button type="button" value="충청">충청</button>
+                    <button type="button" value="경상">경상</button>
+                    <button type="button" value="전라">전라</button>
+                    <!-- <button type="button" value="제주">제주</button> -->
+                </div>
             </div>
-        </div>
 
-        <!-- 지도 -->
-        <div class="map-container">
-            <div class="map" id="map"></div>
-        </div>
+            <!-- 지도 -->
+            <div class="map-container">
+                <div class="map" id="map"></div>
+            </div>
 
-        <hr />
+            <hr />
 
-        <!-- 채팅방 목록 및 입장 -->
-        <div id="chatlist">
-            <form id="roomli">
-                <ul>
-                    <p>지역별 오픈 채팅</p>
-                    <select id="roomList">
-                        <option value="null">지역</option>
-                        <option value="sk">서울/경인</option>
-                        <option value="kw">강원</option>
-                        <option value="cc">충청</option>
-                        <option value="jl">전라</option>
-                        <option value="ks">경상</option>
-                    </select>
-                    <select id="roomListNum">
-                        <option value="null">방번호</option>
-                        <option value="1">1번</option>
-                        <option value="2">2번</option>
-                        <option value="3">3번</option>
-                        <option value="4">4번</option>
-                        <option value="5">5번</option>
-                    </select>
-                    <input type="text" id="userName" placeholder="사용자 이름 입력" />
+            <!-- 채팅방 목록 및 입장 -->
+            <div id="chatlist">
+                <form id="roomli">
+                    <ul>
+                        <p>지역별 오픈 채팅</p>
+                        <select id="roomList">
+                            <option value="null">지역</option>
+                            <option value="sk">서울/경인</option>
+                            <option value="kw">강원</option>
+                            <option value="cc">충청</option>
+                            <option value="jl">전라</option>
+                            <option value="ks">경상</option>
+                        </select>
+                        <select id="roomListNum">
+                            <option value="null">방번호</option>
+                            <option value="1">1번</option>
+                            <option value="2">2번</option>
+                            <option value="3">3번</option>
+                            <option value="4">4번</option>
+                            <option value="5">5번</option>
+                        </select>
+                        <input type="text" id="userName" placeholder="사용자 이름 입력" />
 
-                    <button>입장</button>
-                </ul>
-            </form>
-        </div>
+                        <button>입장</button>
+                    </ul>
+                </form>
+            </div>
 
-        <!-- 채팅방 -->
-        <div id="chatroom" hidden>
-            <form id="exit">
-                <button>나가기</button>
-            </form>
-            <div id="msg"></div>
-            <form id="chat">
-                <select id="userList"></select>
-                <input type="text" id="message" placeholder="메세지 입력" />
-                <button>입력</button>
-            </form>
-        </div>
+            <!-- 채팅방 -->
+            <div id="chatroom" hidden>
+                <form id="exit">
+                    <button>나가기</button>
+                </form>
+                <div id="msg"></div>
+                <form id="chat">
+                    <select id="userList"></select>
+                    <input type="text" id="message" placeholder="메세지 입력" />
+                    <button>입력</button>
+                </form>
+            </div>
 
-        <!-- 스팟리스트 -->
-        <section class="wrapper">
-            <i class="fa-solid fa-arrow-left button" id="prev"></i>
-            <div class="image-container">
-                <div class="carousel"></div>
+            <!-- 스팟리스트 -->
+            <section id="wrapper" class="wrapper" style="display: none">
+                <i class="fa-solid fa-arrow-left button" id="prev"></i>
+                <div class="image-container">
+                    <div class="carousel"></div>
+                </div>
                 <i class="fa-solid fa-arrow-right button" id="next"></i>
-            </div>
-        </section>
+            </section>
+        </div>
         <%-include('footer.ejs')%>
 
         <script>
@@ -116,11 +127,10 @@
                             location: button.value,
                         },
                     });
-
-                    console.log(res);
                     mapOptions.center = new naver.maps.LatLng(res.data.location.lon, res.data.location.lat);
                     mapOptions.zoom = 7;
                     map = new naver.maps.Map('map', mapOptions);
+                    document.getElementById('wrapper').style.display = 'flex';
 
                     //해당 지역의 차박 스팟 마커찍기 + 스팟리스트 출력
                     var marker = [];
@@ -207,9 +217,7 @@
                 let roomIndex = {};
                 const roomIndex1 = document.getElementById('roomList');
                 const roomIndex2 = document.getElementById('roomListNum');
-                roomIndex =
-                    roomIndex1.options[roomIndex1.selectedIndex].value +
-                    roomIndex2.options[roomIndex2.selectedIndex].value;
+                roomIndex = roomIndex1.options[roomIndex1.selectedIndex].value + roomIndex2.options[roomIndex2.selectedIndex].value;
                 console.log(roomIndex);
                 const userName = roomForm2.querySelector('#userName');
                 if (userName.value === '' || roomIndex.includes('null')) {

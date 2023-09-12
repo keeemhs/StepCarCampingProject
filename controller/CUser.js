@@ -1,4 +1,9 @@
+<<<<<<< HEAD
+
+const { gallery, gallery_img, gallery_comment, userLocation, User, gear } = require('../models');
+=======
 const { User } = require('../models');
+>>>>>>> develop
 const bcrypt = require('bcrypt');
 const axios = require('axios');
 
@@ -61,7 +66,7 @@ exports.auth_kakao = async (req, res) => {
     }
 };
 
-exports.getToken = async (req, res) => {};
+exports.getToken = async (req, res) => { };
 
 //로그인
 exports.login = (req, res) => {
@@ -110,7 +115,7 @@ exports.postToken = async (req, res) => {
     console.log(nickname);
     //로그인 성공
     if (result !== null) {
-        res.cookie('isLoginKakao', nickname);
+        res.cookie('isLoginKakao', nickname, cookieConfig);
         res.cookie('isLogin', encodeURI(nickname), cookieConfig);
         res.cookie('isTrash', 'adfasdfsdfsdfdsfdsfadfasdfs', trashCookie);
         res.json({
@@ -266,7 +271,7 @@ exports.logoutMiddlePost = async (req, res) => {
 };
 
 //로그아웃 post
-exports.logoutPost = async (req, res) => {};
+exports.logoutPost = async (req, res) => { };
 
 //회원탈퇴 get
 exports.deleteUser = (req, res) => {
@@ -321,19 +326,43 @@ exports.deleteUserPost = async (req, res) => {
 
 exports.mypage = async (req, res) => {
     if (req.cookies.isLoginKakao === undefined) {
-        usercookie = req.cookies.isLogin;
+        const usercookie = req.cookies.isLogin
+
         const result = await User.findOne({
-            where: { nickname: decodeURI(usercookie) },
-        });
-        res.render('mypage', { user: result });
+            where: { nickname: decodeURI(usercookie) }
+        })
+
+        const galleryList = await gallery.findAll({
+            where: { userid: result.id }
+        })
+
+        const gearList = await gear.findAll({
+            where: { writer: result.nickname }
+        })
+
+        res.render('mypage', { user: result, galleryList: galleryList, gearList: gearList })
     } else {
         res.render('mypage', { user: false, nickname: decodeURI(req.cookies.isLoginKakao) });
     }
-};
+}
+
+// exports.mypagePatch = async (req, res) => {
+//     if (req.cookies.isLoginKakao === undefined) {
+//         usercookie = req.cookies.isLogin
+//         const result = await User.findOne({
+//             where: { nickname: decodeURI(usercookie) }
+//         })
+//         res.render('userPatch', { user: result })
+//     } else {
+//         res.render('userPatch', { user: false, nickname: decodeURI(req.cookies.isLoginKakao) })
+//     }
+// }
+
+
 //마이페이지 수정(닉네임 -> 카카오 로그인일때는 수정불가)
-exports.mypagePatch = async (req, res) => {
-    const { patchnickname, id } = req.body;
-    const result = await User.update({ nickname: patchnickname }, { where: { id: id } });
+exports.mypagePatchPost = async (req, res) => {
+    const { patchnickname, id } = req.body
+    const result = await User.update({ nickname: patchnickname }, { where: { id: id } })
     if (result) {
         res.clearCookie('isLogin');
         res.cookie('isLogin', patchnickname, cookieConfig);
@@ -351,24 +380,25 @@ const comparePassword = (password, dbPassword) => {
     return bcrypt.compareSync(password, dbPassword);
 };
 
-exports.mypage = async (req, res) => {
-    if (req.cookies.isLoginKakao === undefined) {
-        usercookie = req.cookies.isLogin;
-        const result = await User.findOne({
-            where: {
-                nickname: decodeURI(usercookie),
-            },
-        });
-        res.render('mypage', {
-            user: result,
-        });
-    } else {
-        res.render('mypage', {
-            user: false,
-            nickname: decodeURI(req.cookies.isLoginKakao),
-        });
-    }
-};
+
+// exports.mypage = async (req, res) => {
+//     if (req.cookies.isLoginKakao === undefined) {
+//         usercookie = req.cookies.isLogin
+//         const result = await User.findOne({
+//             where: {
+//                 nickname: decodeURI(usercookie)
+//             }
+//         })
+//         res.render('mypage', {
+//             user: result
+//         })
+//     } else {
+//         res.render('mypage', {
+//             user: false,
+//             nickname: decodeURI(req.cookies.isLoginKakao)
+//         })
+//     }
+// }
 //마이페이지 수정(닉네임 -> 카카오 로그인일때는 수정불가)
 exports.mypagePatch = async (req, res) => {
     const { patchnickname, id } = req.body;
