@@ -253,6 +253,7 @@ exports.logoutMiddlePost = async (req, res) => {
         if (result !== null) {
             res.clearCookie('isLoginKakao');
             res.clearCookie('isLogin');
+            res.clearCookie('isTrash');
             res.json({
                 result: true,
             });
@@ -262,7 +263,6 @@ exports.logoutMiddlePost = async (req, res) => {
             });
         }
     }
-    res.clearCookie('isLogin');
 };
 
 //로그아웃 post

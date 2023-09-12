@@ -12,6 +12,9 @@ router.get('/reviewEdit', galleryController.reviewEdit);
 //review 만들떄 싱글 axios
 router.post('/singleAxios', galleryController.singleAxios);
 
+//review 수정시 multer 없으면
+router.post('/uploadWithoutMulter', galleryController.uploadWithoutMulter);
+
 //review map 데이터 보내주기
 router.post('/sendMapData', galleryController.sendMapData);
 

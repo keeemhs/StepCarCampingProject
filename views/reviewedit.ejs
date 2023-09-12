@@ -137,13 +137,14 @@
                 center: new naver.maps.LatLng(36.626316, 127.936296),
                 zoom: 6,
             };
-
+            const userLocation = JSON.parse(localStorage.getItem('userlocations'));
+            console.log(userLocation);
             var map = new naver.maps.Map('map', mapOptions);
             const polyList = [];
             const markers = [];
             var polyline = new naver.maps.Polyline({
                 map: map,
-                path: [],
+                path: userLocation,
                 strokeColor: '#5347AA',
                 strokeWeight: 2,
             });
@@ -191,9 +192,10 @@
                 const files = form.dynamic_files.files;
 
                 const formData2 = new FormData();
-
+                //업데이트(mode ==1 이면 gid를 , 아니면 -1)
+                const gid = mode == 1 ? galleryInfos.galleryid : -1;
                 for (let i = 0; i < files.length; i++) {
-                    formData2.append('mode', mode);
+                    formData2.append('gid', gid);
                     formData2.append('title', title);
                     formData2.append('mainText', mainText);
                     formData2.append('region', region);
@@ -214,6 +216,7 @@
                             region,
                             spotInfo,
                             mode,
+                            thumnnail: '../static/ever2.jpeg',
                         },
                     });
                 }

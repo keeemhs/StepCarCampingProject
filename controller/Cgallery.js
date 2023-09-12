@@ -37,15 +37,48 @@ const uploadSingle = multer({
             if (first == 0 && typeof req.body.title == 'string') {
                 var dateNow = Date.now();
                 const fn = `gallery/${Date.now()}_${path.basename(file.originalname)}`;
-                const galleryEdit = await gallery.create({
-                    userid: userid,
-                    title: req.body.title,
-                    mainText: req.body.mainText,
-                    region: req.body.region,
-                    spotInform: req.body.spotInform,
-                    thunmnail: fn,
+                await userLocation.destroy({
+                    where: {
+                        galleryid: req.body.gid,
+                    },
                 });
-                galleryid = galleryEdit.galleryid;
+                if (req.body.gid != -1) {
+                    console.log('사진넣고수정');
+                    await gallery_img.destroy({
+                        where: {
+                            galleryid: req.body.gid,
+                        },
+                    });
+                    console.log('현재 gid : ', req.body.gid);
+                    const galleryUpdate = await gallery.update(
+                        {
+                            userid: userid,
+                            title: req.body.title,
+                            mainText: req.body.mainText,
+                            region: req.body.region,
+                            spotInform: req.body.spotInform,
+                            galleryid: req.body.gid,
+                            thunmnail: fn,
+                        },
+                        {
+                            where: {
+                                galleryid: req.body.gid,
+                            },
+                        }
+                    );
+                    galleryid = req.body.gid;
+                } else {
+                    const galleryEdit = await gallery.create({
+                        userid: userid,
+                        title: req.body.title,
+                        mainText: req.body.mainText,
+                        region: req.body.region,
+                        spotInform: req.body.spotInform,
+                        thunmnail: fn,
+                    });
+                    galleryid = galleryEdit.galleryid;
+                }
+
                 console.log('galleryid1', galleryid);
 
                 gallery_img.create({
@@ -123,6 +156,7 @@ exports.uploadWithoutMulter = async (req, res) => {
 
     //uploadWithoutMulter몰라
     if (mode == 1) {
+        console.log('mode1, multer X');
         const galleryUpdate = await gallery.update(
             {
                 userid: userid,
@@ -130,7 +164,6 @@ exports.uploadWithoutMulter = async (req, res) => {
                 mainText: mainText,
                 region: region,
                 spotInform: spotInfo,
-                thunmnail: thunmnail,
             },
             {
                 where: {
@@ -143,6 +176,7 @@ exports.uploadWithoutMulter = async (req, res) => {
         });
     } else {
         //mode=0 create
+        console.log('mode0, multer X');
         const galleryCreate = await gallery.create({
             userid: userid,
             title: title,
@@ -254,8 +288,9 @@ exports.reviewDel = async (req, res) => {
         },
     });
 
-    if (!loginuser || !owner) {
-        res.send({ errcode: -1, error: '삭제 권한이 없습니다.' });
+    if (loginuser.id != owner.userid) {
+        console.log(loginuser.id, owner.userid);
+        res.send({ errcode: -1, error: '아이디가 달라 삭제 권한이 없습니다.' });
         return;
     }
 
@@ -423,7 +458,7 @@ exports.deleteComment = async (req, res) => {
             },
         });
 
-        if (decodeURI(req.cookies.isLogin == owner.nickName)) {
+        if (decodeURI(req.cookies.isLogin) == owner.nickName) {
             console.log('아이디 같음!', decodeURI(req.cookies.isLogin), owner.nickName);
         } else {
             console.log('아이디 다름!', decodeURI(req.cookies.isLogin), owner.nickName);
@@ -437,7 +472,7 @@ exports.deleteComment = async (req, res) => {
             },
         });
 
-        if (decodeURI(req.cookies.isLogin == owner.nickName)) {
+        if (decodeURI(req.cookies.isLogin) == owner.nickName) {
             console.log('아이디 같음!', decodeURI(req.cookies.isLogin), owner.nickName);
         } else {
             console.log('아이디 다름!', decodeURI(req.cookies.isLogin), owner.nickName);
@@ -475,3 +510,51 @@ exports.deleteComment = async (req, res) => {
         res.send({ errcode: 0, error: '에러 없음' });
     }
 };
+
+const uploadUpdate = multer({
+    storage: multers3({
+        s3: s3,
+        bucket: 'hwr-bucket',
+        acl: 'public-read',
+        metadata: function (req, file, cb) {
+            cb(null, { fieldName: file.fieldname });
+        },
+        async key(req, file, cb) {
+            //DB에도 저장해야함(경로)
+            //여기서 폴더를 하나 만들었고, 폴더에 마음대로...저장해보시면됩니다.
+            if (first == 0 && typeof req.body.title == 'string') {
+                var dateNow = Date.now();
+                const fn = `gallery/${Date.now()}_${path.basename(file.originalname)}`;
+                const galleryEdit = await gallery.update({
+                    userid: userid,
+                    title: req.body.title,
+                    mainText: req.body.mainText,
+                    region: req.body.region,
+                    spotInform: req.body.spotInform,
+                    thunmnail: fn,
+                });
+                galleryid = galleryEdit.galleryid;
+                console.log('galleryid2', galleryid);
+
+                gallery_img.create({
+                    galleryid: galleryid,
+                    imgurl: `https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/gallery/${dateNow}_${path.basename(file.originalname)}`,
+                });
+                first += 1;
+                cb(null, fn); // original 폴더안에다 파일을 저장
+            } else {
+                setTimeout(() => {
+                    var dateNow = Date.now();
+                    gallery_img.create({
+                        galleryid: galleryid,
+                        imgurl: `https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/gallery/${dateNow}_${path.basename(file.originalname)}`,
+                    });
+                    cb(null, `gallery/${dateNow}_${path.basename(file.originalname)}`); // original 폴더안에다 파일을 저장
+                }, 50);
+            }
+        },
+    }),
+    limits: {
+        fileSize: 5 * 1024 * 1024, //5mb
+    },
+});
