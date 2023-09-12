@@ -9,8 +9,17 @@
         <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ijdya8hea0"></script>
 
         <style>
+            @font-face {
+                font-family: 'Dovemayo_gothic';
+                src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.1/Dovemayo_gothic.woff2') format('woff2');
+                font-weight: normal;
+                font-style: normal;
+            }
+            html {
+                font-family: 'Dovemayo_gothic';
+            }
             body {
-                font-family: Arial, sans-serif;
+                font-family: 'Dovemayo_gothic';
                 background-color: #f9f9f9;
                 margin: 0;
                 padding: 0;
@@ -41,12 +50,11 @@
             }
 
             #body_container {
+                font-family: 'Dovemayo_gothic';
                 margin-left: 5%;
                 margin-right: 5%;
             }
 
-            .mainComment {
-            }
             .inputComment {
                 margin-top: 20px;
                 border: 1px solid #ccc;
@@ -83,6 +91,51 @@
             .inputComment button:hover {
                 background-color: #43604d;
             }
+            .new-button-container {
+                text-align: right;
+            }
+            .new-button {
+                font-family: 'Dovemayo_gothic';
+                display: inline-block;
+                padding: 10px 20px;
+                font-size: 1rem;
+                font-weight: bold;
+                text-align: center;
+                text-decoration: none;
+                cursor: pointer;
+                border-radius: 5px;
+                border: 2px solid black;
+                transition: background-color 0.3s, color 0.3s;
+                background-color: white;
+                color: black;
+                border: none;
+            }
+
+            .new-button:hover {
+                background-color: #43604d;
+                color: #fff;
+            }
+            .del-button {
+                font-family: 'Dovemayo_gothic';
+                display: inline-block;
+                padding: 5px 10px;
+                font-size: 1rem;
+                font-weight: bold;
+                text-align: center;
+                text-decoration: none;
+                cursor: pointer;
+                border-radius: 5px;
+                border: 2px solid black;
+                transition: background-color 0.3s, color 0.3s;
+                background-color: white;
+                color: black;
+                border: none;
+            }
+
+            .del-button:hover {
+                background-color: #43604d;
+                color: #fff;
+            }
         </style>
     </head>
     <body>
@@ -102,20 +155,22 @@
                     <img id="img-box" class="img--box" src="<%= imgurl.urls[0] %>" alt="../static/ever2.jpeg" onerror="this.src= '../static/ever2.jpeg'" />
                     <i class="fa-solid fa-arrow-right" onclick="right()"></i>
                 </div>
+                <br />
                 <!-- 지도 -->
                 <div class="map-container">
                     <div class="map" id="map"></div>
                 </div>
             </div>
-
+            <br />
             <!-- 본문 -->
             <h3>
-                본문
+                <div style="font-size: 20px">--캠핑스팟 설명--</div>
                 <div><%= data.mainText %></div>
             </h3>
-            <hr />
-            <button onclick="delReview()">삭제</button>
-            <button onclick="changeReview()">수정</button>
+            <div class="new-button-container">
+                <button class="new-button" onclick="changeReview()">수정</button>
+                <button class="new-button" onclick="delReview()">삭제</button>
+            </div>
             <!-- 댓글-->
             <hr />
             <div class="commentView">
@@ -124,22 +179,22 @@
                     <% for(let i=0; i< comments.length; i++){ %>
                     <div>
                         <%= comments[i].main.nickName %> : <%= comments[i].main.commentText %>
-                        <button type="button" onclick="showSubComment('<%= i %>')">답글</button>
-                        <button type="button" onclick="deleteComment('<%=comments[i].main.commentid %>',-1,'<%= data.galleryid %>')">댓글 삭제</button>
-
+                        <button type="button" class="del-button" onclick="showSubComment('<%= i %>')">답글</button>
+                        <button type="button" class="del-button" onclick="deleteComment('<%=comments[i].main.commentid %>',-1,'<%= data.galleryid %>')">댓글 삭제</button>
                         <br />
                         <br />
                         <form style="display: none" class="hideComment<%= i %>" name="maincomment<%= i %>">
                             <span>답글</span>
                             <input name="mainCommentInput" type="text" placeholder="댓글" />
-                            <button type="button" onclick="addSubComment('<%=i %>','<%= data.galleryid %>','<%= comments[i].main.commentGroup %>','<%= comments[i].main.deepComment %>')">댓글입력</button>
+                            <button type="button" class="del-button" onclick="addSubComment('<%=i %>','<%= data.galleryid %>','<%= comments[i].main.commentGroup %>','<%= comments[i].main.deepComment %>')">댓글입력</button>
                         </form>
                     </div>
                     <ul>
                         <!-- 여길 ejs에서 불러온 데이터만큼 반복한다. -->
                         <% for(let j=0; j < comments[i].sub.length; j++){ %>
                         <li><%= comments[i].sub[j].nickName %> : <%= comments[i].sub[j].commentText %></li>
-                        <button type="button" onclick="deleteComment('<%=comments[i].main.commentid %>','<%= comments[i].sub[j].commentid %>','<%= data.galleryid %>')">댓글 삭제</button>
+                        <button type="button" class="del-button" onclick="deleteComment('<%=comments[i].main.commentid %>','<%= comments[i].sub[j].commentid %>','<%= data.galleryid %>')">댓글 삭제</button>
+
                         <% } %>
                     </ul>
                     <% } %>
@@ -227,7 +282,9 @@
                     data: { gid },
                 });
                 console.log(result);
-                if (result.data.error == 'no error') {
+                if (result.data.errcode == -1) {
+                    alert('삭제권한이 없습니다.');
+                } else if (result.data.error == 'no error') {
                     alert('삭제완료');
                     location.href = '/';
                 }
