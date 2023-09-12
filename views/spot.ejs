@@ -1,128 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ijdya8hea0"></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <link rel="stylesheet" href="spot.css" />
-</head>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ijdya8hea0"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+        <script src="/socket.io/socket.io.js"></script>
+        <link rel="stylesheet" href="spot.css" />
+        <style>
+            .main-container {
+                margin-left: 5%;
+                margin-right: 5%;
+            }
+            .wrapper {
+                margin: auto;
+            }
+            .image-container {
+                margin: auto;
+            }
+        </style>
+    </head>
 
-<body>
-    <!-- 지역선택 -->
-    <%-include('header.ejs')%>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
+    <body>
+        <!-- 지역선택 -->
+        <%-include('header.ejs')%>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
 
-    <hr>
-    <div class="location-container">
-        <div class="location-select">
-            <button type="button" value="경기">경기/서울</button>
-            <button type="button" value="강원">강원</button>
-            <button type="button" value="충청">충청</button>
-            <button type="button" value="경상">경상</button>
-            <button type="button" value="전라">전라</button>
-            <button type="button" value="제주">제주</button>
+        <hr />
+        <div class="main-container">
+            <div class="location-container">
+                <div class="location-select">
+                    <button type="button" value="경기">경기/서울</button>
+                    <button type="button" value="강원">강원</button>
+                    <button type="button" value="충청">충청</button>
+                    <button type="button" value="경상">경상</button>
+                    <button type="button" value="전라">전라</button>
+                    <!-- <button type="button" value="제주">제주</button> -->
+                </div>
+            </div>
+
+            <!-- 지도 -->
+            <div class="map-container">
+                <div class="map" id="map"></div>
+            </div>
+
+            <hr />
+
+            <!-- 채팅방 목록 및 입장 -->
+            <div id="chatlist">
+                <form id="roomli">
+                    <ul>
+                        <p>지역별 오픈 채팅</p>
+                        <select id="roomList">
+                            <option value="null">지역</option>
+                            <option value="sk">서울/경인</option>
+                            <option value="kw">강원</option>
+                            <option value="cc">충청</option>
+                            <option value="jl">전라</option>
+                            <option value="ks">경상</option>
+                        </select>
+                        <select id="roomListNum">
+                            <option value="null">방번호</option>
+                            <option value="1">1번</option>
+                            <option value="2">2번</option>
+                            <option value="3">3번</option>
+                            <option value="4">4번</option>
+                            <option value="5">5번</option>
+                        </select>
+                        <input type="text" id="userName" placeholder="사용자 이름 입력" />
+
+                        <button>입장</button>
+                    </ul>
+                </form>
+            </div>
+
+            <!-- 채팅방 -->
+            <div id="chatroom" hidden>
+                <form id="exit">
+                    <button>나가기</button>
+                </form>
+                <div id="msg"></div>
+                <form id="chat">
+                    <select id="userList"></select>
+                    <input type="text" id="message" placeholder="메세지 입력" />
+                    <button>입력</button>
+                </form>
+            </div>
+
+            <!-- 스팟리스트 -->
+            <section id="wrapper" class="wrapper" style="display: none">
+                <i class="fa-solid fa-arrow-left button" id="prev"></i>
+                <div class="image-container">
+                    <div class="carousel"></div>
+                </div>
+                <i class="fa-solid fa-arrow-right button" id="next"></i>
+            </section>
         </div>
-    </div>
-
-    <!-- 지도 -->
-    <div class="map-container">
-        <div class="map" id="map"></div>
-    </div>
-
-    <hr>
-
-    <!-- 채팅방 목록 및 입장 -->
-    <div id="chatlist">
-        <form id="roomli">
-            <ul>
-                <p>지역별 오픈 채팅</p>
-                <select id="roomList">
-                    <option value="null">지역</option>
-                    <option value="sk">서울/경인</option>
-                    <option value="kw">강원</option>
-                    <option value="cc">충청</option>
-                    <option value="jl">전라</option>
-                    <option value="ks">경상</option>
-                </select>
-                <select id="roomListNum">
-                    <option value="null">방번호</option>
-                    <option value="1">1번</option>
-                    <option value="2">2번</option>
-                    <option value="3">3번</option>
-                    <option value="4">4번</option>
-                    <option value="5">5번</option>
-                </select>
-                <input type="text" id="userName" placeholder="사용자 이름 입력" />
-
-                <button>입장</button>
-            </ul>
-        </form>
-    </div>
-
-    <!-- 채팅방 -->
-    <div id="chatroom" hidden>
-        <form id="exit">
-            <button>나가기</button>
-        </form>
-        <div id="msg">
-        </div>
-        <form id="chat">
-            <select id="userList"></select>
-            <input type="text" id="message" placeholder="메세지 입력" />
-            <button>입력</button>
-        </form>
-    </div>
-
-    <!-- 스팟리스트 -->
-    <div class="spot-container">
-    <%-include('footer.ejs')%>
+        <%-include('footer.ejs')%>
 
         <script>
             //지도 초기 기준점 위치 설정
             const mapOptions = {
                 center: new naver.maps.LatLng(36.626316, 127.936296),
-                zoom: 6
-            }
+                zoom: 6,
+            };
 
             var map = new naver.maps.Map('map', mapOptions);
 
-            var spotContainer = document.querySelector('.spot-container')
-
+            var spotContainer = document.querySelector('.carousel');
 
             // 해당 지역버튼 클릭 시 지도 기준점 위치 이동
-            var locationButton = document.querySelectorAll('.location-select > button')
-            locationButton.forEach(button => {
+            var locationButton = document.querySelectorAll('.location-select > button');
+            locationButton.forEach((button) => {
                 button.addEventListener('click', async () => {
                     const res = await axios({
                         method: 'POST',
                         url: '/spot/location',
                         data: {
-                            location: button.value
-                        }
-                    })
-
-                    console.log(res)
-                    mapOptions.center = new naver.maps.LatLng(res.data.location.lon, res.data.location.lat)
-                    mapOptions.zoom = 7
+                            location: button.value,
+                        },
+                    });
+                    mapOptions.center = new naver.maps.LatLng(res.data.location.lon, res.data.location.lat);
+                    mapOptions.zoom = 7;
                     map = new naver.maps.Map('map', mapOptions);
-
+                    document.getElementById('wrapper').style.display = 'flex';
 
                     //해당 지역의 차박 스팟 마커찍기 + 스팟리스트 출력
-                    var marker = []
-                    spotContainer.textContent = ''
+                    var marker = [];
+                    spotContainer.textContent = '';
                     for (let i = 0; i < res.data.spot.length; i++) {
                         marker[i] = new naver.maps.Marker({
                             map: map,
-                            position: new naver.maps.LatLng(res.data.spot[i].lat, res.data.spot[i].lon)
-                        })
+                            position: new naver.maps.LatLng(res.data.spot[i].lat, res.data.spot[i].lon),
+                        });
                         spotContainer.innerHTML += `
                         <div class="spot">
                             <div class="spot-name">${res.data.spot[i].spotName}</div>
@@ -131,25 +148,19 @@
                                 </div>
                             <div class="spot-address">${res.data.spot[i].address}</div>
                             <div class="spot-information">${res.data.spot[i].information}</div>
-                            <div>
-                                <button class="chat-button">채팅</button>
-                            </div>
                         </div>
-                        `
+                        `;
 
                         //마커 클릭 이벤트
                         // naver.maps.Event.addListener(marker[i], 'click', () => {
 
                         // })
-
                     }
-
-                })
-            })
-
+                });
+            });
 
             const socket = io();
-            const roomForm2 = document.querySelector('#roomli')
+            const roomForm2 = document.querySelector('#roomli');
             const chatForm = document.querySelector('#chat');
             const msg = document.querySelector('#msg');
             const notice = document.querySelector('#notice');
@@ -199,7 +210,7 @@
             //채팅방 나가기
             chatexit.addEventListener('click', (e) => {
                 socket.emit('disconnect');
-            })
+            });
             ///폼 이벤트
             roomForm2.addEventListener('submit', (e) => {
                 e.preventDefault();
@@ -233,8 +244,7 @@
                 socket.emit('sendMessage', msg);
                 message.value = '';
             });
-
         </script>
-</body>
-
+        <script src="../spot.js"></script>
+    </body>
 </html>

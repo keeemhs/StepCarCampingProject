@@ -5,18 +5,30 @@
 }
 
 .location-select {
-    width: 400px;
+    width: auto;
     display: flex;
     justify-content: space-evenly;
 }
 
 .location-select button {
-    border: none;
+    /* border: none; */
+    border-radius: 30pt;
+    border: 1px solid black;
+    margin-right: 10px;
+    letter-spacing: -0.08em;
+    line-height: 42px;
+    font-size: 16px;
+    font-weight: 400;
+    color: black;
+    padding: 0 20px;
     background-color: transparent;
 }
 
 .location-select button:hover {
     cursor: pointer;
+    box-shadow: 0 0 10px #43604d; /* 파스텔 느낌의 그림자 */
+    background-color: #43604d;
+    color: white;
 }
 
 .map {
@@ -30,7 +42,7 @@
     justify-content: center;
 }
 
-.spot {
+/* .spot {
     width: 200px;
     height: 270px;
     border: 2px;
@@ -72,7 +84,77 @@
 
 .chat-button {
     font-size: 12px;
+} */
+
+/* -------------스팟 목록-------------- */
+
+.wrapper {
+    display: flex;
+    max-width: 1080px;
+    width: 100%;
+    height: 400px;
+    background: #fff;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border-radius: 12px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
 }
+.wrapper i.button {
+    position: relative;
+    transform: translateY(-50%);
+    height: 36px;
+    width: 36px;
+    background-color: #343f4f;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 36px;
+    color: #fff;
+    font-size: 15px;
+    transition: all 0.3s linear;
+    z-index: 100;
+    cursor: pointer;
+}
+i.button:active {
+    transform: scale(0.94) translateY(-50%);
+}
+i#prev {
+    left: 25px;
+}
+i#next {
+    right: 25px;
+}
+.image-container {
+    height: 320px;
+    max-width: 900px;
+    width: 100%;
+    overflow: hidden;
+}
+.image-container .carousel {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    transition: all 0.4s ease;
+}
+.carousel .spot {
+    height: 100%;
+    width: 100%;
+    border-radius: 18px;
+    border: 10px solid #fff;
+    object-fit: cover;
+}
+
+.carousel .spot img {
+    height: 150px;
+}
+
+/* .carousel .spot {
+    width: 300px;
+    height: 100%;
+    object-fit: cover;
+    justify-content: space-between;
+} */
 
 /* -------------채팅방----------- css */
 #chatroom {
