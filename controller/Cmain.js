@@ -1,8 +1,10 @@
-const { gallery } = require('../models');
+const { Spot, gallery } = require('../models');
 const { gear } = require('../models');
 
-exports.indexPage = (req, res) => {
-    res.render('index');
+exports.indexPage = async (req, res) => {
+    const result = await Spot.findAll();
+    console.log(result[0]);
+    res.render('index', { result });
 };
 exports.gearPage = async (req, res) => {
     const result = await gear.findAll({

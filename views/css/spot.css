@@ -5,18 +5,30 @@
 }
 
 .location-select {
-    width: 400px;
+    width: auto;
     display: flex;
     justify-content: space-evenly;
 }
 
 .location-select button {
-    border: none;
+    /* border: none; */
+    border-radius: 30pt;
+    border: 1px solid black;
+    margin-right: 10px;
+    letter-spacing: -0.08em;
+    line-height: 42px;
+    font-size: 16px;
+    font-weight: 400;
+    color: black;
+    padding: 0 20px;
     background-color: transparent;
 }
 
 .location-select button:hover {
     cursor: pointer;
+    box-shadow: 0 0 10px #43604d; /* 파스텔 느낌의 그림자 */
+    background-color: #43604d;
+    color: white;
 }
 
 .map {
@@ -89,8 +101,7 @@
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
 }
 .wrapper i.button {
-    position: absolute;
-    top: 50%;
+    position: relative;
     transform: translateY(-50%);
     height: 36px;
     width: 36px;
