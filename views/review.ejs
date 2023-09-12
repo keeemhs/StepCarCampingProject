@@ -99,7 +99,7 @@
             <div class="img_container">
                 <div id="pictures">
                     <i class="fa-solid fa-arrow-left" onclick="left()"></i>
-                    <img id="img-box" class="img--box" src="<%= imgurl.urls[0] %>" />
+                    <img id="img-box" class="img--box" src="<%= imgurl.urls[0] %>" alt="../static/ever2.jpeg" />
                     <i class="fa-solid fa-arrow-right" onclick="right()"></i>
                 </div>
                 <!-- 지도 -->
@@ -200,7 +200,6 @@
             var imgLength = imgurl.length;
             console.log(imgLength);
             function left() {
-                console.log('left', currentImg);
                 if (currentImg == 0) {
                     currentImg = imgLength - 1;
                 } else {
@@ -210,7 +209,6 @@
                 document.querySelector('#img-box').src = imgurl[currentImg];
             }
             function right() {
-                console.log('right', currentImg);
                 if (currentImg == imgLength - 1) {
                     currentImg = 0;
                 } else {

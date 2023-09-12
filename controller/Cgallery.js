@@ -22,6 +22,7 @@ const limits = {
 var userid = 0;
 var galleryid = 0;
 var first = 0;
+
 const uploadSingle = multer({
     storage: multers3({
         s3: s3,
@@ -102,6 +103,58 @@ exports.singleAxios = async (req, res) => {
             galleryid: galleryid,
         });
     });
+};
+
+exports.uploadWithoutMulter = async (req, res) => {
+    const { galleryid, title, mainText, region, spotInfo, mode } = req.body;
+    const thunmnail = '../static/ever2.jpeg';
+    console.log('decodeCookie', decodeURI(req.cookies.isLogin));
+    const user = await User.findOne({
+        where: {
+            nickname: decodeURI(req.cookies.isLogin),
+        },
+    });
+    console.log(user);
+    if (!user) {
+        res.send({ result: false, errMessage: '로그인이 종료되었거나, 잘못된 접근입니다.' });
+        return;
+    }
+    userid = user.id;
+
+    //uploadWithoutMulter몰라
+    if (mode == 1) {
+        const galleryUpdate = await gallery.update(
+            {
+                userid: userid,
+                title: title,
+                mainText: mainText,
+                region: region,
+                spotInform: spotInfo,
+                thunmnail: thunmnail,
+            },
+            {
+                where: {
+                    galleryid,
+                },
+            }
+        );
+        return res.json({
+            galleryid: galleryid,
+        });
+    } else {
+        //mode=0 create
+        const galleryCreate = await gallery.create({
+            userid: userid,
+            title: title,
+            mainText: mainText,
+            region: region,
+            spotInform: spotInfo,
+            thunmnail: thunmnail,
+        });
+        return res.json({
+            galleryid: galleryCreate.galleryid,
+        });
+    }
 };
 
 exports.reviewPage = async (req, res) => {
