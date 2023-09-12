@@ -122,7 +122,7 @@
                 </div>
                 <div style="margin-top: 20px">
                     <button>제출</button>
-                    <button onclick="clearBtn()">클리어</button>
+                    <button type="button" onclick="clearBtn()">클리어</button>
                 </div>
             </form>
         </section>
@@ -139,12 +139,16 @@
             };
             const userLocation = JSON.parse(localStorage.getItem('userlocations'));
             console.log(userLocation);
+            const urlSearch = new URLSearchParams(location.search);
+            const mode = urlSearch.get('mode') ? urlSearch.get('mode') : 0;
+
             var map = new naver.maps.Map('map', mapOptions);
             const polyList = [];
             const markers = [];
+
             var polyline = new naver.maps.Polyline({
                 map: map,
-                path: userLocation,
+                path: [],
                 strokeColor: '#5347AA',
                 strokeWeight: 2,
             });
@@ -161,9 +165,6 @@
                     })
                 );
             });
-
-            const urlSearch = new URLSearchParams(location.search);
-            const mode = urlSearch.get('mode') ? urlSearch.get('mode') : 0;
             const galleryInfos = JSON.parse(localStorage.getItem('galleryItems'));
             if (mode == 1) {
                 const form = document.forms['reviewEdit'];
@@ -239,7 +240,6 @@
                         url: '/gallery/uploadWithoutMulter',
                         method: 'POST',
                         data: {
-                            galleryid: galleryInfos.galleryid,
                             title,
                             mainText,
                             region,
