@@ -35,6 +35,7 @@ const uploadSingle = multer({
                     gearTitle: req.body.gearTitle,
                     gearExplain: req.body.gearExplain,
                     writer: decodeURI(req.body.writer),
+                    category: req.body.category,
                     thunmnail: fn,
                 });
                 gearid = gearEdit.gearid;
@@ -228,7 +229,7 @@ exports.gearreviewPage = async (req, res) => {
         urlArray.urls.push(imgurl[i].imgurl);
     }
     console.log(urlArray);
-    res.render('gearreview', { gearTitle: result1.gearTitle, gearExplain: result1.gearExplain, writer: result1.writer, imgurl: urlArray });
+    res.render('gearreview', { gearTitle: result1.gearTitle, gearExplain: result1.gearExplain, writer: result1.writer, category: result1.category, imgurl: urlArray });
 };
 
 exports.gearreviewEdit = async (req, res) => {
