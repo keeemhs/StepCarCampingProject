@@ -152,7 +152,7 @@
             <div class="img_container">
                 <div id="pictures">
                     <i class="fa-solid fa-arrow-left" onclick="left()"></i>
-                    <img id="img-box" class="img--box" src="<%= imgurl.urls[0] %>" />
+                    <img id="img-box" class="img--box" src="<%= imgurl.urls[0] %>" alt="../static/ever2.jpeg" onerror="this.src= '../static/ever2.jpeg'" />
                     <i class="fa-solid fa-arrow-right" onclick="right()"></i>
                 </div>
                 <br />
@@ -178,11 +178,13 @@
                     <!-- 여기에 대댓글을 추가할 수 있는 method가 필요하다. -->
                     <% for(let i=0; i< comments.length; i++){ %>
                     <div>
-                        <%= comments[i].main.commentText %>
+                        <%= comments[i].main.nickName %> : <%= comments[i].main.commentText %>
+                        <button type="button" class="del-button" onclick="showSubComment('<%= i %>')">답글</button>
                         <button type="button" class="del-button" onclick="deleteComment('<%=comments[i].main.commentid %>',-1,'<%= data.galleryid %>')">댓글 삭제</button>
                         <br />
-                        <form name="maincomment<%= i %>">
-                            <span>대댓글</span>
+                        <br />
+                        <form style="display: none" class="hideComment<%= i %>" name="maincomment<%= i %>">
+                            <span>답글</span>
                             <input name="mainCommentInput" type="text" placeholder="댓글" />
                             <button type="button" class="del-button" onclick="addSubComment('<%=i %>','<%= data.galleryid %>','<%= comments[i].main.commentGroup %>','<%= comments[i].main.deepComment %>')">댓글입력</button>
                         </form>
@@ -190,7 +192,7 @@
                     <ul>
                         <!-- 여길 ejs에서 불러온 데이터만큼 반복한다. -->
                         <% for(let j=0; j < comments[i].sub.length; j++){ %>
-                        <li><%= comments[i].sub[j].commentText %></li>
+                        <li><%= comments[i].sub[j].nickName %> : <%= comments[i].sub[j].commentText %></li>
                         <button type="button" class="del-button" onclick="deleteComment('<%=comments[i].main.commentid %>','<%= comments[i].sub[j].commentid %>','<%= data.galleryid %>')">댓글 삭제</button>
 
                         <% } %>
@@ -211,12 +213,23 @@
 
         <script>
             //지도 로직
-            var results = JSON.parse('<%- JSON.stringify(data) %>').userlocations;
+            var locations = {
+                1: [127.175308, 37.542608],
+                2: [128.408642, 37.813589],
+                3: [127.345474, 36.736896],
+                4: [128.486217, 35.82567],
+                5: [127.215317, 35.283847],
+                6: [126.562305, 33.375393],
+            };
+
+            var datas = JSON.parse('<%- JSON.stringify(data) %>');
+            console.log(datas.region);
+            var results = datas.userlocations;
             console.log(results);
             //지도 초기 기준점 위치 설정
             const mapOptions = {
-                center: new naver.maps.LatLng(36.626316, 127.936296),
-                zoom: 7,
+                center: new naver.maps.LatLng(locations[datas.region]),
+                zoom: 9,
             };
 
             var map = new naver.maps.Map('map', mapOptions);
@@ -242,7 +255,6 @@
             var imgLength = imgurl.length;
             console.log(imgLength);
             function left() {
-                console.log('left', currentImg);
                 if (currentImg == 0) {
                     currentImg = imgLength - 1;
                 } else {
@@ -252,7 +264,6 @@
                 document.querySelector('#img-box').src = imgurl[currentImg];
             }
             function right() {
-                console.log('right', currentImg);
                 if (currentImg == imgLength - 1) {
                     currentImg = 0;
                 } else {
@@ -290,9 +301,10 @@
                 console.log(result.data.reviewInfo);
                 if (result.data.errcode == 0) {
                     localStorage.setItem('galleryItems', JSON.stringify(result.data.reviewInfo));
+                    localStorage.setItem('userlocations', JSON.stringify(results));
                     location.href = '/gallery/reviewEdit?mode=1';
                 } else {
-                    alert(result.data.error);
+                    alert('수정 권한이 없습니다!');
                 }
             }
 
@@ -309,6 +321,9 @@
                     },
                     method: 'POST',
                 });
+                if (result.data.errcode == -2) {
+                    alert('로그인이 되어있지 않습니다!');
+                }
                 if (result.data.errcode == 0) {
                     location.reload();
                 }
@@ -326,6 +341,10 @@
                     },
                     method: 'POST',
                 });
+                console.log(result);
+                if (result.data.errcode == -1) {
+                    alert('삭제 권한이 없습니다!');
+                }
                 if (result.data.errcode == 0) {
                     location.reload();
                 }
@@ -348,6 +367,10 @@
                 if (result.data.errcode == 0) {
                     location.reload();
                 }
+            }
+            function showSubComment(idx) {
+                const subcommentForm = document.querySelector(`.hideComment${idx}`);
+                subcommentForm.style.display = 'block';
             }
         </script>
     </body>

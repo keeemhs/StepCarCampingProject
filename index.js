@@ -23,7 +23,7 @@ app.use(cookieParser());
 
 app.use('/static', express.static(__dirname + '/static'));
 app.set('view engine', 'ejs');
-
+app.set('io', io);
 app.set('views', './views');
 
 app.use(express.static(__dirname + '/views/css')); // css폴더 경로 셋팅
