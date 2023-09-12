@@ -1,9 +1,5 @@
-<<<<<<< HEAD
 
 const { gallery, gallery_img, gallery_comment, userLocation, User, gear } = require('../models');
-=======
-const { User } = require('../models');
->>>>>>> develop
 const bcrypt = require('bcrypt');
 const axios = require('axios');
 
