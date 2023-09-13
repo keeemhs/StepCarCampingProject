@@ -287,9 +287,18 @@ exports.deleteUser = (req, res) => {
 //회원탈퇴 delete
 exports.deleteUserPost = async (req, res) => {
     if (req.cookies.isLoginKakao === undefined) {
+        const { nickname, id } = req.body;
+        gallery.destroy({
+            where: { userid: id },
+        });
+
+        gear.destroy({
+            where: { writer: nickname },
+        });
+
         User.destroy({
             where: {
-                nickname: req.body.nickname,
+                id: id,
             },
         }).then(() => {
             res.clearCookie('isLogin');
@@ -307,9 +316,18 @@ exports.deleteUserPost = async (req, res) => {
             },
         });
         if (result !== null) {
+            const { nickname, id } = req.body;
+            gallery.destroy({
+                where: { userid: id },
+            });
+
+            gear.destroy({
+                where: { writer: nickname },
+            });
+
             User.destroy({
                 where: {
-                    nickname: req.body.nickname,
+                    id: id,
                 },
             }).then(() => {
                 res.clearCookie('isLoginKakao');
@@ -324,28 +342,30 @@ exports.deleteUserPost = async (req, res) => {
 exports.mypage = async (req, res) => {
     if (req.cookies.isLoginKakao === undefined) {
         const usercookie = req.cookies.isLogin;
-
         const result = await User.findOne({
             where: { nickname: decodeURI(usercookie) },
         });
-
         const galleryList = await gallery.findAll({
             where: { userid: result.id },
         });
-
         const gearList = await gear.findAll({
             where: { writer: result.nickname },
         });
-
         res.render('mypage', { user: result, galleryList: galleryList, gearList: gearList });
     } else {
-        res.render('mypage', {
-            user: false,
-            nickname: decodeURI(req.cookies.isLoginKakao),
+        const usercookie = req.cookies.isLoginKakao;
+        const result = await User.findOne({
+            where: { nickname: decodeURI(usercookie) },
         });
+        const galleryList = await gallery.findAll({
+            where: { userid: result.id },
+        });
+        const gearList = await gear.findAll({
+            where: { writer: result.nickname },
+        });
+        res.render('mypage', { user: result, galleryList: galleryList, gearList: gearList });
     }
 };
-
 //유저 체크하는 새창
 
 exports.checkpw = async (req, res) => {
