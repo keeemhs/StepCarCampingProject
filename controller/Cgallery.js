@@ -147,7 +147,7 @@ exports.uploadWithoutMulter = async (req, res) => {
             nickname: decodeURI(req.cookies.isLogin),
         },
     });
-    console.log(user);
+    console.log('유저', user);
     if (!user) {
         res.send({ result: false, errMessage: '로그인이 종료되었거나, 잘못된 접근입니다.' });
         return;
