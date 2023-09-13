@@ -7,12 +7,94 @@ exports.indexPage = async (req, res) => {
     res.render('index', { result });
 };
 exports.gearPage = async (req, res) => {
-    const result = await gear.findAll({
-        attribute: ['gearid', 'gearTitle', 'writer', 'category', 'thunmnail'],
-        order: [['gearid', 'desc']],
-    });
-    console.log(result);
-    res.render('gear', { data: result });
+    if (req.query.category == undefined || req.query.category == 0) {
+        const result = await gear.findAll({
+            attribute: ['gearid', 'gearTitle', 'writer', 'category', 'thunmnail'],
+            order: [['gearid', 'desc']],
+        });
+        console.log(result);
+        res.render('gear', { data: result });
+    } else if (req.query.category == 1) {
+        const result = await gear.findAll({
+            attribute: ['gearid', 'gearTitle', 'writer', 'category', 'thunmnail'],
+            order: [['gearid', 'desc']],
+            where: {
+                category: req.query.category,
+            },
+        });
+        console.log(result);
+        res.render('gear', { data: result });
+    } else if (req.query.category == 2) {
+        const result = await gear.findAll({
+            attribute: ['gearid', 'gearTitle', 'writer', 'category', 'thunmnail'],
+            order: [['gearid', 'desc']],
+            where: {
+                category: req.query.category,
+            },
+        });
+        console.log(result);
+        res.render('gear', { data: result });
+    } else if (req.query.category == 3) {
+        const result = await gear.findAll({
+            attribute: ['gearid', 'gearTitle', 'writer', 'category', 'thunmnail'],
+            order: [['gearid', 'desc']],
+            where: {
+                category: req.query.category,
+            },
+        });
+        console.log(result);
+        res.render('gear', { data: result });
+    } else if (req.query.category == 4) {
+        const result = await gear.findAll({
+            attribute: ['gearid', 'gearTitle', 'writer', 'category', 'thunmnail'],
+            order: [['gearid', 'desc']],
+            where: {
+                category: req.query.category,
+            },
+        });
+        console.log(result);
+        res.render('gear', { data: result });
+    } else if (req.query.category == 5) {
+        const result = await gear.findAll({
+            attribute: ['gearid', 'gearTitle', 'writer', 'category', 'thunmnail'],
+            order: [['gearid', 'desc']],
+            where: {
+                category: req.query.category,
+            },
+        });
+        console.log(result);
+        res.render('gear', { data: result });
+    } else if (req.query.category == 6) {
+        const result = await gear.findAll({
+            attribute: ['gearid', 'gearTitle', 'writer', 'category', 'thunmnail'],
+            order: [['gearid', 'desc']],
+            where: {
+                category: req.query.category,
+            },
+        });
+        console.log(result);
+        res.render('gear', { data: result });
+    } else if (req.query.category == 7) {
+        const result = await gear.findAll({
+            attribute: ['gearid', 'gearTitle', 'writer', 'category', 'thunmnail'],
+            order: [['gearid', 'desc']],
+            where: {
+                category: req.query.category,
+            },
+        });
+        console.log(result);
+        res.render('gear', { data: result });
+    } else if (req.query.category == 8) {
+        const result = await gear.findAll({
+            attribute: ['gearid', 'gearTitle', 'writer', 'category', 'thunmnail'],
+            order: [['gearid', 'desc']],
+            where: {
+                category: req.query.category,
+            },
+        });
+        console.log(result);
+        res.render('gear', { data: result });
+    }
 };
 
 exports.gearreviewPage = (req, res) => {
