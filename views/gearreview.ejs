@@ -175,11 +175,11 @@
                     method: 'delete',
                     data: { gid },
                 });
-                if (result.data.errcode == -1) {
-                    alert('삭제 권한이 없습니다.');
-                } else if (result.data.error == 'no error') {
+                if (result.data.error == 'no error') {
                     alert('삭제완료');
                     location.href = '/gear';
+                } else {
+                    alert('삭제 권한이 없습니다.');
                 }
             }
             function goBack() {
