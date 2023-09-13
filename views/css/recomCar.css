@@ -1,4 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+@font-face {
+    font-family: 'Dovemayo_gothic';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.1/Dovemayo_gothic.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
 
 * {
     margin: 0;
@@ -13,6 +18,17 @@ html {
 
 body {
     background: #f2f2f2;
+}
+
+section,
+div,
+p,
+h2,
+h3,
+h5,
+li,
+.carInfo ul a {
+    font-family: 'Dovemayo_gothic';
 }
 
 /* =================== main section =================== */
@@ -62,6 +78,7 @@ body {
     transition: 0.4s ease;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
     text-decoration: none;
+    font-family: 'Dovemayo_gothic';
 }
 
 #recomMain .content a:hover {
@@ -80,6 +97,7 @@ body {
 
 #about h2 {
     font-size: 2rem;
+    font-family: 'Dovemayo_gothic';
 }
 
 #about > p {
@@ -92,34 +110,49 @@ body {
 }
 
 #aboutH2 {
+    font-family: 'Dovemayo_gothic';
     text-align: center;
-}
-
-#carRecomA {
-    display: flex;
-    justify-content: center;
 }
 
 #about .carInfo {
     width: 100%;
     margin-top: 30px;
-    justify-content: space-between;
+    justify-content: space-around;
     box-sizing: border-box;
     padding: 0 100px;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 #about .carInfo .category {
     width: auto;
     position: relative;
-    left: 10px;
+    justify-content: start;
+    /* left: 10px; */
 }
 
 #about .carInfo ul {
     width: auto;
     position: relative;
-    justify-content: end;
+    /* justify-content: end; */
     /* justify-items: center; */
-    align-items: center;
+    /* align-items: center; */
+    list-style-type: none;
+    font-family: 'Dovemayo_gothic';
+}
+
+/* .carInfo {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.category,
+ul {
+    width: 100%;
+} */
+
+#cateli {
+    color: #43604d;
 }
 
 #aboutA {
@@ -158,11 +191,20 @@ body {
     height: auto;
 }
 
+.about .row {
+    padding: 0 10px;
+}
+
 /* =================== section - category =================== */
+
+#carRecomA {
+    display: flex;
+    justify-content: center;
+}
 
 #carRecom1,
 #carRecom3 {
-    background-color: #f2f2f2;
+    background-color: #a8bbaf;
 }
 
 .carRecom .cards {
@@ -225,6 +267,7 @@ body {
     transition: 0.4s ease;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
     text-decoration: none;
+    font-family: 'Dovemayo_gothic';
 }
 
 #categoryDiv1 {
@@ -242,23 +285,22 @@ body {
     background: rgba(255, 255, 255, 0.3);
 }
 
-.about .row {
-    padding: 0 10px;
-}
-
-@media screen and (max-width: 1050px) {
-    .category {
+/* @media screen and (max-width: 1050px) {
+    .carInfo {
         display: flex;
+        flex-wrap: wrap;
         justify-content: center;
+    }
+    .category,
+    ul {
+        width: 100%;
+    }
+} */
+@media screen and (max-width: 965px) {
+    .carInfo {
+        display: flex;
+        flex-direction: column;
         align-items: center;
-    }
-    .about .carInfo {
-        margin-top: 30px;
-        justify-content: center;
-    }
-
-    .about .carInfo ul {
-        justify-items: center;
     }
 }
 
