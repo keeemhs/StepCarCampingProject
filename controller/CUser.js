@@ -304,16 +304,28 @@ exports.deleteUser = (req, res) => {
 //회원탈퇴 delete
 exports.deleteUserPost = async (req, res) => {
     if (req.cookies.isLoginKakao === undefined) {
+        const { nickname, id } = req.body
+        gallery.destroy({
+            where: { userid: id }
+        })
+
+        gear.destroy({
+            where: { writer: nickname }
+        })
+
         User.destroy({
             where: {
-                nickname: req.body.nickname,
+                id: id,
             },
         }).then(() => {
             res.clearCookie('isLogin');
             res.json({
                 result: true,
             });
-        });
+
+        })
+
+
     } else {
         const result = await axios({
             method: 'POST',
@@ -324,10 +336,19 @@ exports.deleteUserPost = async (req, res) => {
             },
         });
         if (result !== null) {
+            const { nickname, id } = req.body
+            gallery.destroy({
+                where: { userid: id }
+            })
+
+            gear.destroy({
+                where: { writer: nickname }
+            })
+
             User.destroy({
                 where: {
-                    nickname: req.body.nickname,
-                },
+                    id: id,
+                }
             }).then(() => {
                 res.clearCookie('isLoginKakao');
                 res.json({
@@ -354,13 +375,25 @@ exports.mypage = async (req, res) => {
             where: { writer: result.nickname },
         });
 
-        res.render('mypage', { user: result, galleryList: galleryList, gearList: gearList });
+
+        res.render('mypage', { user: result, galleryList: galleryList, gearList: gearList })
 
     } else {
-        res.render('mypage', {
-            user: false,
-            nickname: decodeURI(req.cookies.isLoginKakao)
-        });
+        const usercookie = req.cookies.isLoginKakao
+
+        const result = await User.findOne({
+            where: { nickname: decodeURI(usercookie) }
+        })
+
+        const galleryList = await gallery.findAll({
+            where: { userid: result.id }
+        })
+
+        const gearList = await gear.findAll({
+            where: { writer: result.nickname }
+        })
+        res.render('mypage', { user: result, galleryList: galleryList, gearList: gearList });
+
     }
 };
 
