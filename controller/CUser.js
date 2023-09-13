@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-
-=======
->>>>>>> develop
 const { gallery, gallery_img, gallery_comment, userLocation, User, gear } = require('../models');
 const bcrypt = require('bcrypt');
 const axios = require('axios');
