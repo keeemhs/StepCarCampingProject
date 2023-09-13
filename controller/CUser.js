@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const crypto = require('crypto')
 const axios = require('axios');
 
-const REDIRECT_URI = 'http://54.206.192.249/user/oauth/kakao'; //본인의 리다이렉트 url입력 후 라우트에서도 설정하세요
+const REDIRECT_URI = 'http://localhost:8000/user/oauth/kakao'; //본인의 리다이렉트 url입력 후 라우트에서도 설정하세요
 const REST_API_KEY = 'd09187c9ea730ee149f8d9292abffcf9'; //본인 rest api키 입력하시면 됩니다.
 const salt = crypto.randomBytes(16) // salt 생성
 const salt2 = crypto.randomBytes(32)
@@ -363,7 +363,7 @@ exports.mypage = async (req, res) => {
         const gearList = await gear.findAll({
             where: { writer: result.nickname },
         });
-        res.render('mypage', { user: result, galleryList: galleryList, gearList: gearList });
+        res.render('mypage', { user: result, galleryList: galleryList, galleryListLength: galleryList.length, gearList: gearList, gearListLength: gearList.length });
     } else {
         const usercookie = req.cookies.isLoginKakao;
         const result = await User.findOne({
