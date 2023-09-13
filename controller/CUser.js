@@ -66,7 +66,6 @@ exports.auth_kakao = async (req, res) => {
     }
 };
 
-exports.getToken = async (req, res) => { };
 
 //로그인
 exports.login = (req, res) => {
@@ -460,24 +459,7 @@ const comparePassword = (password, dbPassword) => {
     return bcrypt.compareSync(password, dbPassword);
 };
 
-// exports.mypage = async (req, res) => {
-//     if (req.cookies.isLoginKakao === undefined) {
-//         usercookie = req.cookies.isLogin
-//         const result = await User.findOne({
-//             where: {
-//                 nickname: decodeURI(usercookie)
-//             }
-//         })
-//         res.render('mypage', {
-//             user: result
-//         })
-//     } else {
-//         res.render('mypage', {
-//             user: false,
-//             nickname: decodeURI(req.cookies.isLoginKakao)
-//         })
-//     }
-// }
+
 //마이페이지 수정(닉네임 -> 카카오 로그인일때는 수정불가)
 exports.mypagePatch = async (req, res) => {
     const { patchnickname, id } = req.body;
