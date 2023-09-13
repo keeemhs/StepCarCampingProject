@@ -236,8 +236,10 @@
                     <div>
                         <div>
                             <div class="dropdown-container">
-                                <%= comments[i].main.nickName %> : <%= comments[i].main.commentText %>
+                                <%= comments[i].main.nickName %> : <%= comments[i].main.commentText %> <% if(comments[i].main.commentText!="삭제되었습니다."){ %>
                                 <button class="dropdown-btn" onclick="toggleDropdown(event)">···</button>
+                                <% } %>
+
                                 <div class="dropdown-content">
                                     <button type="button" class="del-button" onclick="showSubComment('<%= i %>')">답글</button>
                                     <button type="button" class="del-button" onclick="deleteComment('<%=comments[i].main.commentid %>',-1,'<%= data.galleryid %>')">댓글 삭제</button>
@@ -297,7 +299,7 @@
             //지도 초기 기준점 위치 설정
             const mapOptions = {
                 center: new naver.maps.LatLng(locations[datas.region]),
-                zoom: 9,
+                zoom: 10,
             };
 
             var map = new naver.maps.Map('map', mapOptions);
