@@ -109,19 +109,40 @@ exports.spotPage = (req, res) => {
 };
 
 exports.galleryPage = async (req, res) => {
-    if (req.query.sort_method == undefined || req.query.sort_method == 0) {
+    console.log('지역', req.query.sort_method, req.query.regions);
+    if ((req.query.sort_method == undefined || req.query.sort_method == 0) && (req.query.regions == 0 || req.query.regions == undefined)) {
+        console.log(1);
         const result = await gallery.findAll({
             attribute: ['galleryid', 'title', 'thunmnail', 'createdAt'],
             order: [['galleryid', 'desc']],
         });
-        console.log(result);
         res.render('gallery', { data: result });
-    } else if (req.query.sort_method == 1) {
+    } else if ((req.query.sort_method == undefined || req.query.sort_method == 0) && req.query.regions > 0) {
+        console.log(2);
+        const result = await gallery.findAll({
+            attribute: ['galleryid', 'title', 'thunmnail', 'createdAt'],
+            order: [['galleryid', 'desc']],
+            where: {
+                region: req.query.regions,
+            },
+        });
+        res.render('gallery', { data: result });
+    } else if (req.query.sort_method == 1 && (req.query.regions == 0 || req.query.regions == undefined)) {
+        console.log(3);
         const result = await gallery.findAll({
             attribute: ['galleryid', 'title', 'views', 'thunmnail', 'createdAt'],
             order: [['views', 'DESC']],
         });
-        console.log(result);
+        res.render('gallery', { data: result });
+    } else {
+        console.log(4);
+        const result = await gallery.findAll({
+            attribute: ['galleryid', 'title', 'views', 'thunmnail', 'createdAt'],
+            order: [['views', 'DESC']],
+            where: {
+                region: req.query.regions,
+            },
+        });
         res.render('gallery', { data: result });
     }
 };
