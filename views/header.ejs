@@ -37,7 +37,7 @@
                                 <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
                                     <a class="nav-my dropdown-toggle" data-toggle="dropdown" href="" role="button" aria-haspopup="true" aria-expanded="false">My</a>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="/user/mypage">My Page</a>
+                                        <a id="mypage" class="dropdown-item" href="/user/mypage">My Page</a>
                                         <a id="Login" class="dropdown-item" href="/user/login">Login</a>
                                         <a id="su" class="dropdown-item" href="/user/signup">Sign up</a>
                                         <a id="SignOut" class="dropdown-item" href="/user/logout">Sign Out</a>
@@ -63,6 +63,7 @@
         $('#Login').addClass('hider');
         $('#su').addClass('hider');
     } else {
+        $('#mypage').addClass('hider');
         $('#SignOut').addClass('hider');
     }
 </script>

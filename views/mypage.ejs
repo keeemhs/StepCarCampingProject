@@ -70,11 +70,6 @@
                 width: 90%;
             }
 
-            .card-img-top {
-                width: 100%;
-                height: auto;
-            }
-
             .button-container {
                 width: 300px;
                 margin-top: 15px;
@@ -94,16 +89,6 @@
             justify-content: center;
         }
 
-            .card-body {
-                position: relative;
-                height: 200px;
-            }
-
-            .button-style1 {
-                position: absolute;
-                bottom: 10px;
-                right: 10px;
-            }
             .button-style:hover {
                 background-color: #223127;
                 color: white;
@@ -137,8 +122,7 @@
     
 
     <body>
-        <div class="header"><%-include('header.ejs')%></div>
-        <div style="margin-top: 100px">
+        <div>
             <img src="../static/bulguk.jpeg" alt="" class="image" />
         </div>
 
@@ -175,6 +159,13 @@
             <button type="button" onclick="logoutUser()" class="btn button-style">로그아웃</button>
             <button type="button" onclick="deleteUser()" class="btn button-style">회원탈퇴</button>
         </div>
+
+        <div id="statusChange" class="button-container" style="display: none">
+            <button type="button" onclick="passwordChange()" class="btn button-style">비밀번호 수정</button>
+            <button type="button" onclick="userInfoChange()" class="btn button-style">개인정보 수정</button>
+            <input type="text" id="forChecker" value="" style="display: none" />
+            <input type="text" id="foremail" value="<%= user.useremail %>" style="display: none" />
+        </div>
         <hr />
 
     <div class="spot-text">나의 캠핑스팟</div>
@@ -194,7 +185,6 @@
                     class="btn button-style">글쓰러가기</button>
             </div>
         </div>
-
         <%}else{%>
 
             <div class="spot-list-container">
@@ -260,9 +250,43 @@
                         <script>
 
 
-                            async function updateUser() {
 
-                            }
+            function updateUser() {
+                const btns = document.getElementById('statusChange');
+                console.log(btns.style.display);
+                if (btns.style.display == 'none') {
+                    btns.style.display = '';
+                } else {
+                    btns.style.display = 'none';
+                }
+            }
+            async function userInfoChange() {
+                const popup = window.open('/user/mypage/check?mode=1', '_blank', 'width=500, height=500');
+
+                popup.addEventListener('beforeunload', function () {
+                    console.log('popup닫힘');
+                    console.log(document.getElementById('forChecker').value);
+                    if (document.getElementById('forChecker').value == 'true') {
+                        //회원가입 침범, 일단 정지
+                    } else {
+                        alert('비밀번호가 틀렸습니다!');
+                    }
+                });
+            }
+            async function passwordChange() {
+                const popup = window.open('/user/mypage/check?mode=2', '_blank', 'width=500, height=500');
+
+                popup.addEventListener('beforeunload', function () {
+                    console.log('popup닫힘');
+                    console.log(document.getElementById('forChecker').value);
+                    if (document.getElementById('forChecker').value == 'true') {
+                        //회원가입 침범, 일단 정지
+                    } else {
+                        alert('비밀번호가 틀렸습니다!');
+                    }
+                });
+            }
+
 
                             async function logoutUser() {
                                 location.href = '/user/logout/middle'

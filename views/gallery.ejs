@@ -61,6 +61,15 @@
                 for (let i = 0; i < files.length; i++) {
                     formDatas.append(`array_files`, files[i]);
                 }
+                const result = await axios({
+                    url: '/gallery/multiAxios',
+                    method: 'POST',
+                    data: formDatas,
+                    Headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
+                console.log(result.data);
             }
         </script>
 </body>

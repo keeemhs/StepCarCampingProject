@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <title>Document</title>
+    </head>
+    <body>
+        <div id="forpw">
+            <h3 id="head3">비밀번호 확인</h3>
+            <form id="checker" name="checker">
+                <input name="pw" type="password" placeholder="비밀번호를 입력해주세요" />
+                <button type="button" onclick="checkpw()">입력</button>
+            </form>
+        </div>
+
+        <div id="forvalid">
+            <h3 id="head2">인증번호 확인</h3>
+            <form name="sendEmail" method="post">
+                <input type="text" id="userEmail" name="userEmail" value="" style="display: none" required />
+                <button id="sendButton">인증번호 전송</button>
+            </form>
+            <form id="checker2" name="checker2">
+                <input name="number" type="text" placeholder="인증번호를 입력해주세요" />
+                <button type="button" onclick="checkvalid()">입력</button>
+            </form>
+            <div id="pwChange" style="display: none">
+                <div class="input-text-style">비밀번호</div>
+                <input type="password" name="pw" id="new-pw" placeholder="비밀번호를 입력해주세요" style="width: 100%; height: 35px; padding: 0px; font-size: 11px; border: 2px solid #ccc; border-radius: 5px; padding-left: 10px; margin-bottom: -13px" />
+                <br />
+                <div class="input-text-style">비밀번호 확인</div>
+                <input type="password" name="pwc" id="new-pwc" placeholder="비밀번호를 한번 더 입력해주세요" style="width: 100%; height: 35px; padding: 0px; font-size: 11px; border: 2px solid #ccc; border-radius: 5px; padding-left: 10px; margin-bottom: -13px" />
+                <button type="button" onclick="changePw()">수정</button>
+            </div>
+        </div>
+    </body>
+    <script>
+        //비밀번호 정규식(영문,숫자 조합 8자리 이상)
+        var passwordPattern = RegExp(/^(?=.*[a-zA-Z])(?=.*[0-9]).{8,25}$/);
+        const urlSearch = new URLSearchParams(location.search);
+        const mode = urlSearch.get('mode') ? urlSearch.get('mode') : 1;
+        var validNum = 0;
+        if (mode == 2) {
+            document.getElementById('forpw').style.display = 'none';
+            document.getElementById('userEmail').value = opener.document.getElementById('foremail').value;
+        } else {
+            document.getElementById('forvalid').style.display = 'none';
+        }
+        async function checkpw() {
+            console.log(document.forms['checker'].pw.value);
+            const result = await axios({
+                method: 'POST',
+                url: '/user/mypage/check',
+                data: {
+                    pw: document.forms['checker'].pw.value,
+                },
+            });
+            if (result == true) {
+                opener.document.getElementById('forChecker').value = 'true';
+            } else {
+                opener.document.getElementById('forChecker').value = 'false';
+            }
+            window.close();
+        }
+
+        function checkvalid() {
+            console.log(document.forms['checker2'].number.value);
+            if (document.forms['checker2'].number.value == validNum) {
+                //비밀번호 업데이트
+                opener.document.getElementById('forChecker').value = 'true';
+                alert('인증번호가 맞았습니다.');
+                document.getElementById('pwChange').style.display = 'block';
+            } else {
+                opener.document.getElementById('forChecker').value = 'false';
+                alert('인증번호가 틀렸습니다.');
+                window.close();
+            }
+        }
+
+        async function changePw() {
+            const password = document.getElementById('new-pw').value;
+            const result = await axios({
+                method: 'patch',
+                data: {
+                    password,
+                },
+                url: '/user/mypage/check',
+            });
+            alert('비밀번호 변경완료!');
+            window.close();
+        }
+
+        document.querySelector('#sendButton').addEventListener('click', (e) => {
+            e.preventDefault();
+            validNum = generateRandomCode(6);
+            const formData2 = {
+                email: document.getElementById('userEmail').value,
+                message: `인증번호는 : ${validNum} 입니다. 발신 전용 이메일입니다.`,
+            };
+            //console.log(form.to.value, form.subject.value);
+            try {
+                const response = axios.post('/email/sendEmail2', formData2);
+                console.log('이메일 전송 성공:', response.data);
+                alert('인증번호가 발송되었습니다.');
+            } catch (error) {
+                console.error('이메일 전송 오류:', error);
+            }
+        });
+        //비밀번호 유효성 검사
+        $('#pw').change(function () {
+            var pw = $('#pw').val();
+            if (!passwordPattern.test(pw)) {
+                $('#pw').addClass('input-style');
+                alert('비밀번호는 숫자+영문 조합으로 최소 8자리 이상 입력해주세요');
+            } else {
+                $('#pw').removeClass('input-style');
+            }
+        });
+
+        //비밀번호 일치 검사
+        $('#pwc').change(function () {
+            var pw1 = $('#pw').val();
+            var pw2 = $('#pwc').val();
+            if (pw1 !== pw2) {
+                alert('비밀번호가 일치하지 않습니다');
+            }
+        });
+        function generateRandomCode(n) {
+            let str = '';
+            for (let i = 0; i < n; i++) {
+                str += Math.floor(Math.random() * 10);
+            }
+            return str;
+        }
+    </script>
+</html>

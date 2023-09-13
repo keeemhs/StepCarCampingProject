@@ -1,6 +1,4 @@
-
 const { gallery, gallery_img, gallery_comment, userLocation, User, gear } = require('../models');
-
 const bcrypt = require('bcrypt');
 const axios = require('axios');
 
@@ -130,9 +128,7 @@ exports.postToken = async (req, res) => {
 
 //이메일 중복검사
 exports.duplication = async (req, res) => {
-    const {
-        useremail
-    } = req.body;
+    const { useremail } = req.body;
 
     const result = await User.findOne({
         where: {
@@ -153,9 +149,7 @@ exports.duplication = async (req, res) => {
 
 //닉네임 중복검사
 exports.duplicationNickname = async (req, res) => {
-    const {
-        nickname
-    } = req.body;
+    const { nickname } = req.body;
 
     const result = await User.findOne({
         where: {
@@ -180,15 +174,7 @@ exports.signup = (req, res) => {
 //회원가입
 exports.signupPost = async (req, res) => {
     console.log(req.body);
-    const {
-        useremail,
-        pw,
-        birth,
-        username,
-        nickname,
-        levelc,
-        ownc
-    } = req.body;
+    const { useremail, pw, birth, username, nickname, levelc, ownc } = req.body;
     const hash = await bcryptPassword(pw);
     User.create({
         useremail,
@@ -207,10 +193,7 @@ exports.signupPost = async (req, res) => {
 
 //로그인 동작
 exports.signin = async (req, res) => {
-    const {
-        useremail,
-        pw
-    } = req.body;
+    const { useremail, pw } = req.body;
     console.log(useremail, pw);
     const result = await User.findOne({
         where: {
@@ -220,7 +203,7 @@ exports.signin = async (req, res) => {
 
     if (result === null) {
         return res.json({
-            result: false
+            result: false,
         });
     }
 
@@ -304,14 +287,14 @@ exports.deleteUser = (req, res) => {
 //회원탈퇴 delete
 exports.deleteUserPost = async (req, res) => {
     if (req.cookies.isLoginKakao === undefined) {
-        const { nickname, id } = req.body
+        const { nickname, id } = req.body;
         gallery.destroy({
-            where: { userid: id }
-        })
+            where: { userid: id },
+        });
 
         gear.destroy({
-            where: { writer: nickname }
-        })
+            where: { writer: nickname },
+        });
 
         User.destroy({
             where: {
@@ -322,10 +305,7 @@ exports.deleteUserPost = async (req, res) => {
             res.json({
                 result: true,
             });
-
-        })
-
-
+        });
     } else {
         const result = await axios({
             method: 'POST',
@@ -336,19 +316,19 @@ exports.deleteUserPost = async (req, res) => {
             },
         });
         if (result !== null) {
-            const { nickname, id } = req.body
+            const { nickname, id } = req.body;
             gallery.destroy({
-                where: { userid: id }
-            })
+                where: { userid: id },
+            });
 
             gear.destroy({
-                where: { writer: nickname }
-            })
+                where: { writer: nickname },
+            });
 
             User.destroy({
                 where: {
                     id: id,
-                }
+                },
             }).then(() => {
                 res.clearCookie('isLoginKakao');
                 res.json({
@@ -362,69 +342,99 @@ exports.deleteUserPost = async (req, res) => {
 exports.mypage = async (req, res) => {
     if (req.cookies.isLoginKakao === undefined) {
         const usercookie = req.cookies.isLogin;
-
         const result = await User.findOne({
             where: { nickname: decodeURI(usercookie) },
         });
-
         const galleryList = await gallery.findAll({
             where: { userid: result.id },
         });
-
         const gearList = await gear.findAll({
             where: { writer: result.nickname },
         });
-
-
-        res.render('mypage', { user: result, galleryList: galleryList, gearList: gearList })
-
-    } else {
-        const usercookie = req.cookies.isLoginKakao
-
-        const result = await User.findOne({
-            where: { nickname: decodeURI(usercookie) }
-        })
-
-        const galleryList = await gallery.findAll({
-            where: { userid: result.id }
-        })
-
-        const gearList = await gear.findAll({
-            where: { writer: result.nickname }
-        })
         res.render('mypage', { user: result, galleryList: galleryList, gearList: gearList });
+    } else {
+        const usercookie = req.cookies.isLoginKakao;
+        const result = await User.findOne({
+            where: { nickname: decodeURI(usercookie) },
+        });
+        const galleryList = await gallery.findAll({
+            where: { userid: result.id },
+        });
+        const gearList = await gear.findAll({
+            where: { writer: result.nickname },
+        });
+        res.render('mypage', { user: result, galleryList: galleryList, gearList: gearList });
+    }
+};
+//유저 체크하는 새창
 
+exports.checkpw = async (req, res) => {
+    res.render('checker');
+};
+exports.checkpwvalid = async (req, res) => {
+    console.log('valid');
+    const result = await User.findOne({
+        where: {
+            nickname: decodeURI(req.cookies.isLogin),
+        },
+    });
+
+    if (result === null) {
+        return res.json({ result: false });
+    }
+    console.log(result.pw);
+    const compare = comparePassword(req.body.pw, result.pw);
+    console.log('compare', compare);
+    if (compare) {
+        res.send({ result: true });
+        return;
+    } else {
+        res.json({ result: false });
+        return;
+    }
+    //회원가입을 심각하게 침범해서 일단 정지
+};
+exports.changePassword = async (req, res) => {
+    const password = bcryptPassword(req.body.password);
+
+    await User.update(
+        {
+            pw: password,
+        },
+        {
+            where: {
+                nickname: decodeURI(req.cookies.isLogin),
+            },
+        }
+    );
+    res.send({ data: 'true' });
+};
+exports.mypagePatch = async (req, res) => {
+    if (req.cookies.isLoginKakao === undefined) {
+        usercookie = req.cookies.isLogin;
+        const result = await User.findOne({
+            where: { nickname: decodeURI(usercookie) },
+        });
+        res.render('userPatch', { user: result });
+    } else {
+        res.render('userPatch', { user: false, nickname: decodeURI(req.cookies.isLoginKakao) });
     }
 };
 
-// exports.mypagePatch = async (req, res) => {
-//     if (req.cookies.isLoginKakao === undefined) {
-//         usercookie = req.cookies.isLogin
-//         const result = await User.findOne({
-//             where: { nickname: decodeURI(usercookie) }
-//         })
-//         res.render('userPatch', { user: result })
-//     } else {
-//         res.render('userPatch', { user: false, nickname: decodeURI(req.cookies.isLoginKakao) })
-//     }
-// }
-
 //마이페이지 수정(닉네임 -> 카카오 로그인일때는 수정불가)
 exports.mypagePatchPost = async (req, res) => {
-
     const { patchnickname, id } = req.body;
     const result = await User.update({ nickname: patchnickname }, { where: { id: id } });
-
     if (result) {
         res.clearCookie('isLogin');
         res.cookie('isLogin', patchnickname, cookieConfig);
         res.json({
-            result: true
+            result: true,
         });
     } else {
         res.json({
             result: false,
-            message: '수정을 실패했습니다'
+            message: '수정을 실패했습니다',
         });
     }
 };
@@ -457,17 +467,17 @@ const comparePassword = (password, dbPassword) => {
 // }
 //마이페이지 수정(닉네임 -> 카카오 로그인일때는 수정불가)
 exports.mypagePatch = async (req, res) => {
-    const {
-        patchnickname,
-        id
-    } = req.body;
-    const result = await User.update({
-        nickname: patchnickname,
-    }, {
-        where: {
-            id: id,
+    const { patchnickname, id } = req.body;
+    const result = await User.update(
+        {
+            nickname: patchnickname,
         },
-    });
+        {
+            where: {
+                id: id,
+            },
+        }
+    );
     if (result) {
         res.clearCookie('isLogin');
         res.cookie('isLogin', patchnickname, cookieConfig);
