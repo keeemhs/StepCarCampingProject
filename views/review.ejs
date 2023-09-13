@@ -6,12 +6,16 @@
         <title>Document</title>
         <script src="https://kit.fontawesome.com/8786e78429.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ijdya8hea0"></script>
+        <script
+            type="text/javascript"
+            src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ijdya8hea0"
+        ></script>
 
         <style>
             @font-face {
                 font-family: 'Dovemayo_gothic';
-                src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.1/Dovemayo_gothic.woff2') format('woff2');
+                src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.1/Dovemayo_gothic.woff2')
+                    format('woff2');
                 font-weight: normal;
                 font-style: normal;
             }
@@ -196,11 +200,9 @@
     </head>
     <body>
         <%-include('header.ejs')%>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
+        <section>
+            <img src="../banner.jpg" alt="배너이미지" style="width: 100%" />
+        </section>
         <!-- user.name -->
         <div id="body_container">
             <h2 id="main-title"><%= userInfo.username %>님의 캠핑스팟</h2>
@@ -208,7 +210,13 @@
             <div class="img_container">
                 <div id="pictures">
                     <i class="fa-solid fa-arrow-left" onclick="left()"></i>
-                    <img id="img-box" class="img--box" src="<%= imgurl.urls[0] %>" alt="../static/ever2.jpeg" onerror="this.src= '../static/ever2.jpeg'" />
+                    <img
+                        id="img-box"
+                        class="img--box"
+                        src="<%= imgurl.urls[0] %>"
+                        alt="../static/ever2.jpeg"
+                        onerror="this.src= '../static/ever2.jpeg'"
+                    />
                     <i class="fa-solid fa-arrow-right" onclick="right()"></i>
                 </div>
                 <br />
@@ -241,16 +249,34 @@
                                 <% } %>
 
                                 <div class="dropdown-content">
-                                    <button type="button" class="del-button" onclick="showSubComment('<%= i %>')">답글</button>
-                                    <button type="button" class="del-button" onclick="deleteComment('<%=comments[i].main.commentid %>',-1,'<%= data.galleryid %>')">댓글 삭제</button>
+                                    <button type="button" class="del-button" onclick="showSubComment('<%= i %>')">
+                                        답글
+                                    </button>
+                                    <button
+                                        type="button"
+                                        class="del-button"
+                                        onclick="deleteComment('<%=comments[i].main.commentid %>',-1,'<%= data.galleryid %>')"
+                                    >
+                                        댓글 삭제
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                        <form style="display: none; margin-left: 30px" class="hideComment<%= i %>" name="maincomment<%= i %>">
+                        <form
+                            style="display: none; margin-left: 30px"
+                            class="hideComment<%= i %>"
+                            name="maincomment<%= i %>"
+                        >
                             <span style="font-size: 20px">⌙</span>
                             <span>답글</span>
                             <input name="mainCommentInput" type="text" placeholder="댓글" />
-                            <button type="button" class="del-button" onclick="addSubComment('<%=i %>','<%= data.galleryid %>','<%= comments[i].main.commentGroup %>','<%= comments[i].main.deepComment %>')">댓글입력</button>
+                            <button
+                                type="button"
+                                class="del-button"
+                                onclick="addSubComment('<%=i %>','<%= data.galleryid %>','<%= comments[i].main.commentGroup %>','<%= comments[i].main.deepComment %>')"
+                            >
+                                댓글입력
+                            </button>
                         </form>
                     </div>
                     <ul class="comment-comment">
@@ -258,10 +284,17 @@
                         <% for(let j=0; j < comments[i].sub.length; j++){ %>
                         <li class="comment-comment-li">
                             <div class="dropdown-container">
-                                <span style="font-size: 20px">⌙</span><%= comments[i].sub[j].nickName %> : <%= comments[i].sub[j].commentText %>
+                                <span style="font-size: 20px">⌙</span><%= comments[i].sub[j].nickName %> : <%=
+                                comments[i].sub[j].commentText %>
                                 <button class="dropdown-btn" onclick="toggleDropdown(event)">···</button>
                                 <div class="dropdown-content">
-                                    <button type="button" class="del-button" onclick="deleteComment('<%=comments[i].main.commentid %>','<%= comments[i].sub[j].commentid %>','<%= data.galleryid %>')">댓글 삭제</button>
+                                    <button
+                                        type="button"
+                                        class="del-button"
+                                        onclick="deleteComment('<%=comments[i].main.commentid %>','<%= comments[i].sub[j].commentid %>','<%= data.galleryid %>')"
+                                    >
+                                        댓글 삭제
+                                    </button>
                                 </div>
                             </div>
                         </li>
