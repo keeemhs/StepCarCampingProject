@@ -15,6 +15,7 @@ const slideImage = () => {
     windowsize = window.innerWidth;
 
     const divisor = windowsize > 800 ? 4 : windowsize > 600 ? 3 : 2;
+    ('');
     var length = Math.ceil(images.length / divisor);
 
     imageIndex = imageIndex < 0 ? 0 : imageIndex;
