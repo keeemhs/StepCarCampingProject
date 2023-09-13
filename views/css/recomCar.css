@@ -101,16 +101,25 @@ body {
 }
 
 #about .carInfo {
+    width: 100%;
     margin-top: 30px;
-    justify-content: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 0 100px;
 }
 
 #about .carInfo .category {
     width: auto;
+    position: relative;
+    left: 10px;
 }
 
 #about .carInfo ul {
-    justify-items: center;
+    width: auto;
+    position: relative;
+    justify-content: end;
+    /* justify-items: center; */
+    align-items: center;
 }
 
 #aboutA {
@@ -259,7 +268,7 @@ body {
     }
 
     section .cards .card {
-        width: calc(100% / 2 - 15px);
+        width: calc(100% / 2);
         margin-bottom: 30px;
     }
 
