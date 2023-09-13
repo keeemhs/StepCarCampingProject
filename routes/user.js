@@ -43,8 +43,6 @@ router.post('/duplicationNickname', controller.duplicationNickname);
 router.post('/signin', controller.signin);
 //로그인 중간단계 동작
 router.post('/signin/middle', controller.postToken);
-//로그아웃 동작
-router.post('/logout', controller.logoutPost);
 //로그아웃 중간단계 동작
 router.post('/logout/middle', controller.logoutMiddlePost);
 

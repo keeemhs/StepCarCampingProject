@@ -34,14 +34,15 @@
     </div>
 
     <script>
-        const kakaotoken = localStorage.getItem('kakaoToken');
-
+        //const kakaotoken = localStorage.getItem('kakaoToken');
+        const cookie = document.cookie
+        console.log(cookie)
         function goSignup() {
             location.href = '/user/signup'
         }
         //카카오톡 로그인
         function authKaKao() {
-            if (kakaotoken !== null) {
+            if (cookie.includes('isTrash')) {
                 alert('이미 로그인된 사용자입니다');
                 location.href = '/';
             }
@@ -52,7 +53,7 @@
         const form = document.forms['signin'];
 
         async function signIn() {
-            if (kakaotoken !== null) {
+            if (cookie.includes('isTrash')) {
                 alert('이미 로그인된 사용자입니다');
                 location.href = '/';
             }

@@ -1,45 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
-        <style>
-            @font-face {
-                font-family: 'Dovemayo_gothic';
-                src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.1/Dovemayo_gothic.woff2') format('woff2');
-                font-weight: normal;
-                font-style: normal;
-            }
-            body,
-            html {
-                height: 100%;
-                font-family: 'Dovemayo_gothic';
-            }
 
-            body {
-                font-family: 'Dovemayo_gothic';
-                width: 100%;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
+    <style>
+        @font-face {
+            font-family: 'Dovemayo_gothic';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.1/Dovemayo_gothic.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+        }
 
-            .image {
-                width: 130px;
-                height: 130px;
-                border-radius: 65px;
-                margin: 20px 0px 10px 0px;
-            }
+        body,
+        html {
+            height: 100%;
+            font-family: 'Dovemayo_gothic';
+        }
 
-            .profile-container {
-                font-family: 'Dovemayo_gothic';
-                display: flex;
-                width: 200px;
-                align-items: center;
-                justify-content: space-around;
-            }
+        body {
+            font-family: 'Dovemayo_gothic';
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .image {
+            width: 130px;
+            height: 130px;
+            border-radius: 65px;
+            margin: 20px 0px 10px 0px;
+        }
+
+        .profile-container {
+            font-family: 'Dovemayo_gothic';
+            display: flex;
+            width: 200px;
+            align-items: center;
+            justify-content: space-around;
+        }
 
         .profile-container {
             display: flex;
@@ -51,32 +54,32 @@
             border-radius: 10px;
         }
 
-            .name-text {
-                font-size: 18px;
-                font-weight: bolder;
-            }
+        .name-text {
+            font-size: 18px;
+            font-weight: bolder;
+        }
 
-            .textline {
-                line-height: 200%;
-            }
+        .textline {
+            line-height: 200%;
+        }
 
-            .line {
-                border: 1px solid #ccc;
-                width: 0.1;
-                height: 100px;
-            }
+        .line {
+            border: 1px solid #ccc;
+            width: 0.1;
+            height: 100px;
+        }
 
-            hr {
-                width: 90%;
-            }
+        hr {
+            width: 90%;
+        }
 
-            .button-container {
-                width: 300px;
-                margin-top: 15px;
-                display: flex;
-                align-items: center;
-                justify-content: space-evenly;
-            }
+        .button-container {
+            width: 300px;
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+        }
 
         .button-style {
             height: 35px;
@@ -89,14 +92,14 @@
             justify-content: center;
         }
 
-            .button-style:hover {
-                background-color: #223127;
-                color: white;
-            }
+        .button-style:hover {
+            background-color: #223127;
+            color: white;
+        }
 
         .spot-list-container {
             display: flex;
-            margin-bottom: 20px;
+            align-items: center;
         }
 
         .non-spot-container {
@@ -115,42 +118,94 @@
         .non-spot-text {
             margin-bottom: 10px;
         }
+
+        .carousel-wrapper {
+            width: 1055px;
+            overflow: hidden;
+            display: flex;
+            margin: 10px;
+        }
+
+        .carousel-wrapper>.carousel {
+            display: flex;
+            transform: translate3d(0, 0, 0);
+            transition: transform 0.4s;
+        }
+
+        .carousel-button {
+            height: 34px;
+            width: 34px;
+            border-radius: 17px;
+            font-size: 11px;
+            background-color: #43604D;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel img {
+            height: 200px;
+            width: auto;
+            border-radius: 5px 5px 0px 0px;
+        }
+
+        .carousel-wrapper-2 {
+            width: 1055px;
+            overflow: hidden;
+            display: flex;
+            margin: 10px;
+            justify-content: center;
+        }
+
+        .carousel-wrapper-2>.carousel {
+            display: flex;
+            transform: translate3d(0, 0, 0);
+            transition: transform 0.4s;
+        }
     </style>
 </head>
 
 <body>
-    
+
 
     <body>
         <div>
             <img src="../static/bulguk.jpeg" alt="" class="image" />
         </div>
 
-        <div class="name-text"><%= user.username %>님</div>
+        <div class="name-text">
+            <%= user.username %>님
+        </div>
 
 
 
-    <div style='margin-top: 10px'>
-        <div class="profile-container">
-            <div class="textline">
-                <div>닉네임</div>
-                <div>생년월일</div>
-                <div>레벨</div>
-                <div>차량 보유</div>
+        <div style='margin-top: 10px'>
+            <div class="profile-container">
+                <div class="textline">
+                    <div>닉네임</div>
+                    <div>생년월일</div>
+                    <div>레벨</div>
+                    <div>차량 보유</div>
 
-            </div>
-            <div class="line"></div>
-            <div class="textline">
-                <div>
-                    <%= user.nickname %>
                 </div>
                 <div class="line"></div>
-                <div class="textline">
-                    <div><%= user.nickname %></div>
 
-                    <div><%= user.birth %></div>
-                    <div><%if( user.levelc===1){%> 입문 <%}else if(user.levelc===2){%> 중수 <%}else{%> 고수 <%}%></div>
-                    <div><%if( user.ownc===1){%> 없음 <%}else if(user.ownc===2){%> 있음 <%}else{%> 구매예정 <%}%></div>
+
+                <div class="textline">
+                    <div>
+                        <%= user.nickname %>
+                    </div>
+
+                    <div>
+                        <%= user.birth %>
+                    </div>
+                    <div>
+                        <%if( user.levelc===1){%> 입문 <%}else if(user.levelc===2){%> 중수 <%}else{%> 고수 <%}%>
+                    </div>
+                    <div>
+                        <%if( user.ownc===1){%> 없음 <%}else if(user.ownc===2){%> 있음 <%}else{%> 구매예정 <%}%>
+                    </div>
                 </div>
             </div>
         </div>
@@ -168,124 +223,168 @@
         </div>
         <hr />
 
-    <div class="spot-text">나의 캠핑스팟</div>
-    <%if(galleryList.length===0){%>
-        <div class="non-spot-container">
-            <div class="non-spot">
-                <div style="display: flex;">
-                    <p>&#128558</p>
-                    <div class="non-spot-text">
-                        아직 올리신 캠핑스팟 글이 없으시군요!
+        <div class="spot-text">나의 캠핑스팟</div>
+        <%if(galleryList.length===0){%>
+            <div class="non-spot-container">
+                <div class="non-spot">
+                    <div style="display: flex;">
+                        <p>&#128558</p>
+                        <div class="non-spot-text">
+                            아직 올리신 캠핑스팟 글이 없으시군요!
+                        </div>
+                        <p>&#128558</p>
                     </div>
-                    <p>&#128558</p>
+                </div>
+                <div>
+                    <button type="button" onclick="location.href='/gallery/reviewEdit'"
+                        class="btn button-style">글쓰러가기</button>
                 </div>
             </div>
-            <div>
-                <button type="button" onclick="location.href='/gallery/reviewEdit'"
-                    class="btn button-style">글쓰러가기</button>
-            </div>
-        </div>
-        <%}else{%>
+            <%}else{%>
+                <div class="spot-list-container">
+                    <%if(galleryList.length> 4){%>
+                        <button class="prev btn carousel-button" type="button">◀</button>
 
-            <div class="spot-list-container">
-                <%for(let i=0; i< galleryList.length; i++){%>
-                    <div class="card" style="width: 16rem; margin-right: 10px;">
-                        <img src="https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/<%= galleryList[i].thunmnail %>"
-                            class="card-img-top">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <%= galleryList[i].title %>
-                            </h5>
-                            <p class="card-text">
-                                <%= galleryList[i].title %>
-                            </p>
-                            <a href="/gallery/review?galleryId=<%= galleryList[i].galleryid %>"
-                                class="btn button-style">이동하기</a>
-                        </div>
-                    </div>
-                    <%}%>
                         <%}%>
-            </div>
+                            <div class="carousel-wrapper">
+                                <div class="carousel">
+                                    <%for(let i=0; i< galleryList.length; i++){%>
+                                        <div class="card" style="width: 16rem; margin-right: 10px;">
+                                            <img src="https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/<%= galleryList[i].thunmnail %>"
+                                                class="card-img-top">
+                                            <div class="card-body">
+                                                <h5 class="card-title">
+                                                    <%= galleryList[i].title %>
+                                                </h5>
+                                                <p class="card-text">
+                                                    <%= galleryList[i].title %>
+                                                </p>
+                                                <a href="/gallery/review?galleryId=<%= galleryList[i].galleryid %>"
+                                                    class="btn button-style">이동하기</a>
+                                            </div>
+                                        </div>
+                                        <%}%>
+                                            <%}%>
+                                </div>
 
-            <hr>
-
-            <div class="spot-text">나의 장비추천글</div>
-            <%if(gearList.length===0){%>
-                <div class="non-spot-container">
-                    <div class="non-spot">
-                        <div style="display: flex;">
-                            <p>&#128558</p>
-                            <div class="non-spot-text">
-                                아직 올리신 장비추천 글이 없으시군요!
                             </div>
-                            <p>&#128558</p>
+                            <%if(galleryList.length> 4){%>
+
+                                <button class="next btn carousel-button" type="button">▶</button>
+                                <%}%>
+                </div>
+
+
+                <hr>
+
+                <div class="spot-text">나의 장비추천글</div>
+                <%if(gearList.length===0){%>
+                    <div class="non-spot-container">
+                        <div class="non-spot">
+                            <div style="display: flex;">
+                                <p>&#128558</p>
+                                <div class="non-spot-text">
+                                    아직 올리신 장비추천 글이 없으시군요!
+                                </div>
+                                <p>&#128558</p>
+                            </div>
+                        </div>
+                        <div>
+                            <button type="button" onclick="location.href='/gear/gearreviewEdit'"
+                                class=" btn button-style">글쓰러가기</button>
                         </div>
                     </div>
-                    <div>
-                        <button type="button" onclick="location.href='/gear/gearreviewEdit'"" class=" btn
-                            button-style">글쓰러가기</button>
-                    </div>
-                </div>
-                <%}else{%>
-                    <div class="spot-list-container">
-                        <%for(let i=0; i< gearList.length; i++){%>
-                            <div class="card" style="width: 16rem; margin-right: 10px;">
-                                <img src="https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/<%= gearList[i].thunmnail %>"
-                                    class="card-img-top">
-                                <div class="card-body">
-                                    <h5 class="card-title">
-                                        <%= gearList[i].gearTitle %>
-                                    </h5>
-                                    <p class="card-text">
-                                        <%= gearList[i].gearExplain %>
-                                    </p>
-                                    <a href="/gallery/review?galleryId=<%= gearList[i].gearid %>"
-                                        class="btn button-style">이동하기</a>
-                                </div>
-                            </div>
-                            <%}%>
-                    </div>
-                    <%}%>
+                    <%}else{%>
+                        <div class="spot-list-container">
+                            <%if(gearList.length> 4){%>
+                                <button class="prev btn carousel-button" type="button">◀</button>
+
+                                <%}%>
+                                    <div class="carousel-wrapper-2">
+                                        <div class="carousel">
+                                            <%for(let i=0; i< gearList.length; i++){%>
+                                                <div class="card" style="width: 16rem; margin-right: 10px;">
+                                                    <img src="https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/<%= gearList[i].thunmnail %>"
+                                                        class="card-img-top">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">
+                                                            <%= gearList[i].gearTitle %>
+                                                        </h5>
+                                                        <p class="card-text">
+                                                            <%= gearList[i].gearExplain %>
+                                                        </p>
+                                                        <a href="/gear/gearreview?gearId=<%= gearList[i].gearid %>"
+                                                            class="btn button-style">이동하기</a>
+                                                    </div>
+                                                </div>
+                                                <%}%>
+                                                    <%}%>
+                                        </div>
+
+                                    </div>
+                                    <%if(gearList.length> 4){%>
+
+                                        <button class="next btn carousel-button" type="button">▶</button>
+                                        <%}%>
+                        </div>
+
+
                         </div>
                         <script>
+                            const prevButton = document.querySelector('.prev')
+                            const nextButton = document.querySelector('.next')
+                            const carousel = document.querySelector('.carousel')
+                            const galleryList = '<%= galleryList%>'
 
+                            let index = 0
+                            //캐러셀 이전버튼
+                            prevButton.addEventListener('click', () => {
+                                if (index === 0) return
+                                index -= 1
+                                carousel.style.transform = `translate(-${80 * index}%)`
+                            })
+                            //캐러셀 다음버튼
+                            nextButton.addEventListener('click', () => {
+                                if (index === (galleryList.length / 4) - 1) return
+                                index += 1
+                                carousel.style.transform = `translate(-${80 * index}%)`
+                            })
 
+                            function updateUser() {
+                                const btns = document.getElementById('statusChange');
+                                console.log(btns.style.display);
+                                if (btns.style.display == 'none') {
+                                    btns.style.display = '';
+                                } else {
+                                    btns.style.display = 'none';
+                                }
+                            }
+                            async function userInfoChange() {
+                                const popup = window.open('/user/mypage/check?mode=1', '_blank', 'width=500, height=500');
 
-            function updateUser() {
-                const btns = document.getElementById('statusChange');
-                console.log(btns.style.display);
-                if (btns.style.display == 'none') {
-                    btns.style.display = '';
-                } else {
-                    btns.style.display = 'none';
-                }
-            }
-            async function userInfoChange() {
-                const popup = window.open('/user/mypage/check?mode=1', '_blank', 'width=500, height=500');
+                                popup.addEventListener('beforeunload', function () {
+                                    console.log('popup닫힘');
+                                    console.log(document.getElementById('forChecker').value);
+                                    if (document.getElementById('forChecker').value == 'true') {
+                                        //회원가입 침범, 일단 정지
+                                    } else {
+                                        alert('비밀번호가 틀렸습니다!');
+                                    }
+                                });
+                            }
+                            async function passwordChange() {
+                                const popup = window.open('/user/mypage/check?mode=2', '_blank', 'width=500, height=500');
 
-                popup.addEventListener('beforeunload', function () {
-                    console.log('popup닫힘');
-                    console.log(document.getElementById('forChecker').value);
-                    if (document.getElementById('forChecker').value == 'true') {
-                        //회원가입 침범, 일단 정지
-                    } else {
-                        alert('비밀번호가 틀렸습니다!');
-                    }
-                });
-            }
-            async function passwordChange() {
-                const popup = window.open('/user/mypage/check?mode=2', '_blank', 'width=500, height=500');
-
-                popup.addEventListener('beforeunload', function () {
-                    console.log('popup닫힘');
-                    console.log(document.getElementById('forChecker').value);
-                    if (document.getElementById('forChecker').value == 'true') {
-                        //회원가입 침범, 일단 정지
-                    } else {
-                        alert('비밀번호가 틀렸습니다!');
-                    }
-                });
-            }
+                                popup.addEventListener('beforeunload', function () {
+                                    console.log('popup닫힘');
+                                    console.log(document.getElementById('forChecker').value);
+                                    if (document.getElementById('forChecker').value == 'true') {
+                                        //회원가입 침범, 일단 정지
+                                    } else {
+                                        alert('비밀번호가 틀렸습니다!');
+                                    }
+                                });
+                            }
 
 
                             async function logoutUser() {
@@ -329,6 +428,6 @@
 
                             }
                         </script>
-</body>
+    </body>
 
 </html>
