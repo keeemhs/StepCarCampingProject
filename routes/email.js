@@ -9,7 +9,7 @@ router.get('/', Cemail.showEmailForm);
 router.post('/sendEmail', Cemail.sendEmail);
 
 // 인증번호 전송 코드
-// router.post('/sendEmail2', Cemail.sendEmail2);
+router.post('/sendEmail2', Cemail.sendEmail2);
 // router.post('/verify', Cemail.verifyCode);
 
 module.exports = router;

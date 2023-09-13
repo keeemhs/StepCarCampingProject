@@ -22,6 +22,10 @@ const Model = (sequelize) => {
                 type: DataTypes.STRING(45),
                 allowNull: false,
             },
+            category: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+            },
             thunmnail: {
                 type: DataTypes.STRING('255'),
             },

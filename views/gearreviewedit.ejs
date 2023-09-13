@@ -76,6 +76,14 @@
             button:hover {
                 background-color: #555;
             }
+
+            .radio-tag {
+                white-space: nowrap;
+            }
+            .second-label {
+                margin: 0;
+                width: auto;
+            }
         </style>
     </head>
     <body>
@@ -99,6 +107,25 @@
                     <label for="writer">작성자:</label>
                     <input type="text" name="writer" id="writer" value="<%= nickname %>" readonly />
                 </div>
+                <div class="radio-tag">
+                    <label>카테고리: </label>
+                    <input type="radio" name="category" value="1" />
+                    <label class="second-label" for="1">텐트</label>
+                    <input type="radio" name="category" value="2" />
+                    <label class="second-label" for="2">테이블</label>
+                    <input type="radio" name="category" value="3" />
+                    <label class="second-label" for="3">의자</label>
+                    <input type="radio" name="category" value="4" />
+                    <label class="second-label" for="4">잠자리</label>
+                    <input type="radio" name="category" value="5" />
+                    <label class="second-label" for="5">렌턴</label>
+                    <input type="radio" name="category" value="6" />
+                    <label class="second-label" for="6">조리기구</label>
+                    <input type="radio" name="category" value="7" />
+                    <label class="second-label" for="7">쿨러</label>
+                    <input type="radio" name="category" value="8" />
+                    <label class="second-label" for="8">화로대</label>
+                </div>
                 <div>
                     <input type="file" name="dynamic_files" multiple />
                 </div>
@@ -119,6 +146,7 @@
             const gearTitle = form.gearTitle.value;
             const gearExplain = form.gearExplain.value;
             const writer = form.writer.value;
+            const category = form.category.value;
 
             const files = form.dynamic_files.files;
             console.log(files);
@@ -129,6 +157,7 @@
                 formData2.append(`gearTitle`, gearTitle);
                 formData2.append(`gearExplain`, gearExplain);
                 formData2.append(`writer`, writer);
+                formData2.append(`category`, category);
                 formData2.append(`array_file`, files[i]);
             }
 

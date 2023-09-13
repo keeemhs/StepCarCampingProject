@@ -33,7 +33,7 @@
 
             .grid-container {
                 display: grid;
-                margin-top: 100px;
+                margin-top: 10px;
                 padding: 10px;
                 gap: 10px 20px;
                 grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -113,6 +113,10 @@
                 text-align: right;
                 margin: 20px;
             }
+            .category-tap {
+                margin-top: 100px;
+                text-align: center;
+            }
         </style>
         <title>Document</title>
     </head>
@@ -121,6 +125,16 @@
         <div class="header"><%-include('header.ejs')%></div>
         <hr />
         <main class="mainsection" style="position: relative">
+            <div class="category-tap">
+                <button onclick="categoryChoice()" class="new-button">테이블</button>
+                <button onclick="categoryChoice()" class="new-button">텐트</button>
+                <button onclick="categoryChoice()" class="new-button">의자</button>
+                <button onclick="categoryChoice()" class="new-button">잠자리</button>
+                <button onclick="categoryChoice()" class="new-button">렌턴</button>
+                <button onclick="categoryChoice()" class="new-button">조리기구</button>
+                <button onclick="categoryChoice()" class="new-button">쿨러</button>
+                <button onclick="categoryChoice()" class="new-button">화로대</button>
+            </div>
             <div class="grid-container">
                 <% for (let i =0; i < data.length ;i++){ %>
                 <a href="/gear/gearreview?gearId=<%= data[i].gearid %>">
@@ -158,8 +172,8 @@
                         'Content-Type': 'multipart/form-data',
                     },
                 });
-                console.log(result.data);
             }
+            function categoryChoice() {}
         </script>
     </body>
 </html>

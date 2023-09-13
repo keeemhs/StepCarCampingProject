@@ -341,17 +341,60 @@ exports.mypage = async (req, res) => {
     }
 };
 
-// exports.mypagePatch = async (req, res) => {
-//     if (req.cookies.isLoginKakao === undefined) {
-//         usercookie = req.cookies.isLogin
-//         const result = await User.findOne({
-//             where: { nickname: decodeURI(usercookie) }
-//         })
-//         res.render('userPatch', { user: result })
-//     } else {
-//         res.render('userPatch', { user: false, nickname: decodeURI(req.cookies.isLoginKakao) })
-//     }
-// }
+//유저 체크하는 새창
+
+exports.checkpw = async (req, res) => {
+    res.render('checker');
+};
+exports.checkpwvalid = async (req, res) => {
+    console.log('valid');
+    const result = await User.findOne({
+        where: {
+            nickname: decodeURI(req.cookies.isLogin),
+        },
+    });
+
+    if (result === null) {
+        return res.json({ result: false });
+    }
+    console.log(result.pw);
+    const compare = comparePassword(req.body.pw, result.pw);
+    console.log('compare', compare);
+    if (compare) {
+        res.send({ result: true });
+        return;
+    } else {
+        res.json({ result: false });
+        return;
+    }
+    //회원가입을 심각하게 침범해서 일단 정지
+};
+exports.changePassword = async (req, res) => {
+    const password = bcryptPassword(req.body.password);
+
+    await User.update(
+        {
+            pw: password,
+        },
+        {
+            where: {
+                nickname: decodeURI(req.cookies.isLogin),
+            },
+        }
+    );
+    res.send({ data: 'true' });
+};
+exports.mypagePatch = async (req, res) => {
+    if (req.cookies.isLoginKakao === undefined) {
+        usercookie = req.cookies.isLogin;
+        const result = await User.findOne({
+            where: { nickname: decodeURI(usercookie) },
+        });
+        res.render('userPatch', { user: result });
+    } else {
+        res.render('userPatch', { user: false, nickname: decodeURI(req.cookies.isLoginKakao) });
+    }
+};
 
 //마이페이지 수정(닉네임 -> 카카오 로그인일때는 수정불가)
 exports.mypagePatchPost = async (req, res) => {
