@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const crypto = require('crypto')
 const axios = require('axios');
 
-const REDIRECT_URI = 'http://localhost:8000/user/oauth/kakao'; //본인의 리다이렉트 url입력 후 라우트에서도 설정하세요
+const REDIRECT_URI = 'http://54.206.192.249/user/oauth/kakao'; //본인의 리다이렉트 url입력 후 라우트에서도 설정하세요
 const REST_API_KEY = 'd09187c9ea730ee149f8d9292abffcf9'; //본인 rest api키 입력하시면 됩니다.
 const salt = crypto.randomBytes(16) // salt 생성
 const salt2 = crypto.randomBytes(32)
@@ -66,7 +66,6 @@ exports.auth_kakao = async (req, res) => {
     }
 };
 
-exports.getToken = async (req, res) => { };
 
 //로그인
 exports.login = (req, res) => {
@@ -460,24 +459,7 @@ const comparePassword = (password, dbPassword) => {
     return bcrypt.compareSync(password, dbPassword);
 };
 
-// exports.mypage = async (req, res) => {
-//     if (req.cookies.isLoginKakao === undefined) {
-//         usercookie = req.cookies.isLogin
-//         const result = await User.findOne({
-//             where: {
-//                 nickname: decodeURI(usercookie)
-//             }
-//         })
-//         res.render('mypage', {
-//             user: result
-//         })
-//     } else {
-//         res.render('mypage', {
-//             user: false,
-//             nickname: decodeURI(req.cookies.isLoginKakao)
-//         })
-//     }
-// }
+
 //마이페이지 수정(닉네임 -> 카카오 로그인일때는 수정불가)
 exports.mypagePatch = async (req, res) => {
     const { patchnickname, id } = req.body;

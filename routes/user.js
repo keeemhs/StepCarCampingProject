@@ -12,15 +12,13 @@ router.get('/signin', controller.signin);
 router.get('/signin/kakao', controller.signin_kakao);
 //카카오톡 리다이렉트 주소
 router.get('/oauth/kakao', controller.auth_kakao);
-//카카오톡 로그인 페이지 중간단계
-router.get('/signin/middle', controller.getToken);
 //회원가입 페이지
 router.get('/signup', controller.signup);
 //로그아웃 페이지
 router.get('/logout', controller.logout);
 //카카오 로그아웃 페이지 중간단계
 router.get('/logout/middle', controller.logoutMiddle);
-//회원탈퇴 페이지
+//회원탈퇴 페이지-> 안함
 router.get('/deleteUser', controller.deleteUser);
 //마이페이지
 router.get('/mypage', controller.mypage);
