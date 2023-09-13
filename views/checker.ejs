@@ -100,7 +100,9 @@
                     pw: document.forms['checker'].pw.value,
                 },
             });
-            if (result == true) {
+            console.log(result);
+            if (result.data.result == true) {
+                console.log('result');
                 opener.document.getElementById('forChecker').value = 'true';
             } else {
                 opener.document.getElementById('forChecker').value = 'false';
