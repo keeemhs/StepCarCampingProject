@@ -352,6 +352,8 @@
                                     console.log('popup닫힘');
                                     console.log(document.getElementById('forChecker').value);
                                     if (document.getElementById('forChecker').value == 'true') {
+                                        console.log("changeerr")
+                                        const popup2 = window.open('/user/mypage/changeUserInfo', '_blank', 'width=500, height=500');
                                         //회원가입 침범, 일단 정지
                                     } else {
                                         alert('비밀번호가 틀렸습니다!');
@@ -365,7 +367,8 @@
                                     console.log('popup닫힘');
                                     console.log(document.getElementById('forChecker').value);
                                     if (document.getElementById('forChecker').value == 'true') {
-                                        //회원가입 침범, 일단 정지
+                                        
+
                                     } else {
                                         alert('비밀번호가 틀렸습니다!');
                                     }

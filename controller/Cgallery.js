@@ -147,7 +147,7 @@ exports.uploadWithoutMulter = async (req, res) => {
             nickname: decodeURI(req.cookies.isLogin),
         },
     });
-    console.log(user);
+    console.log('유저', user);
     if (!user) {
         res.send({ result: false, errMessage: '로그인이 종료되었거나, 잘못된 접근입니다.' });
         return;
@@ -157,6 +157,16 @@ exports.uploadWithoutMulter = async (req, res) => {
     //uploadWithoutMulter몰라
     if (mode == 1) {
         console.log('mode1, multer X');
+        try {
+            await userLocation.destroy({
+                where: {
+                    galleryid: req.body.galleryid,
+                },
+            });
+        } catch {
+            console.log(req.body.galleryid);
+        }
+
         const galleryUpdate = await gallery.update(
             {
                 userid: userid,
