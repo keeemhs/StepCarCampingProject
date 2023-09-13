@@ -127,15 +127,15 @@
         <hr />
         <main class="mainsection" style="position: relative">
             <div class="category-tap">
-                <button onclick="showAll()" class="new-button">모두 보기</button>
-                <button onclick="categoryChoice()" class="new-button">테이블</button>
-                <button onclick="categoryChoice()" class="new-button">텐트</button>
-                <button onclick="categoryChoice()" class="new-button">의자</button>
-                <button onclick="categoryChoice()" class="new-button">잠자리</button>
-                <button onclick="categoryChoice()" class="new-button">렌턴</button>
-                <button onclick="categoryChoice()" class="new-button">조리기구</button>
-                <button onclick="categoryChoice()" class="new-button">쿨러</button>
-                <button onclick="categoryChoice()" class="new-button">화로대</button>
+                <button onclick="categoryChoice(0)" class="new-button">모두 보기</button>
+                <button onclick="categoryChoice(1)" class="new-button">테이블</button>
+                <button onclick="categoryChoice(2)" class="new-button">텐트</button>
+                <button onclick="categoryChoice(3)" class="new-button">의자</button>
+                <button onclick="categoryChoice(4)" class="new-button">잠자리</button>
+                <button onclick="categoryChoice(5)" class="new-button">렌턴</button>
+                <button onclick="categoryChoice(6)" class="new-button">조리기구</button>
+                <button onclick="categoryChoice(7)" class="new-button">쿨러</button>
+                <button onclick="categoryChoice(8)" class="new-button">화로대</button>
             </div>
             <div class="grid-container">
                 <% for (let i =0; i < data.length ;i++){ %>
@@ -174,6 +174,9 @@
                         'Content-Type': 'multipart/form-data',
                     },
                 });
+            }
+            function categoryChoice(categorynNum) {
+                location.href = `/gear?category=${categorynNum}`;
             }
         </script>
     </body>
