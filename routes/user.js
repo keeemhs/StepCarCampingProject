@@ -31,6 +31,9 @@ router.get('/mypage/patch', controller.mypagePatch);
 router.get('/mypage/check', controller.checkpw);
 router.post('/mypage/check', controller.checkpwvalid);
 router.patch('/mypage/check', controller.changePassword);
+
+router.get('/mypage/changeUserInfo', controller.changeUserInfo);
+router.patch('/mypage/changeUserInfo', controller.changeUserInfo2);
 ////////////////////////////////////POST////////////////////////////////////
 
 //회원가입 동작
