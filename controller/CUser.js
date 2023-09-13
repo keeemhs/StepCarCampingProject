@@ -487,11 +487,25 @@ exports.mypagePatch = async (req, res) => {
     }
 };
 
-exports.changeUserInfo = async (req, res) => {
+exports.changeUserInfo = (req, res) => {
     res.render('changeuserinfo');
 };
 
 exports.changeUserInfo2 = async (req, res) => {
     console.log(req.body);
+    await User.update(
+        {
+            nickname: req.body.nickname,
+            levelc: req.body.level,
+            ownc: req.body.own,
+        },
+        {
+            where: {
+                nickname: req.cookies.isLogin,
+            },
+        }
+    );
+    res.clearCookie('isLogin');
+    res.cookie('isLogin', encodeURI(req.body.nickname), cookieConfig);
     res.json({ data: 'true' });
 };

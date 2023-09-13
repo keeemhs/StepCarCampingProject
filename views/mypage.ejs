@@ -354,7 +354,9 @@
                                     if (document.getElementById('forChecker').value == 'true') {
                                         console.log("changeerr")
                                         const popup2 = window.open('/user/mypage/changeUserInfo', '_blank', 'width=500, height=500');
-                                        //회원가입 침범, 일단 정지
+                                        popup2.addEventListener('beforeunload', function () {
+                                            location.reload()
+                                        })
                                     } else {
                                         alert('비밀번호가 틀렸습니다!');
                                     }
