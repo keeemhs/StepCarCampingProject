@@ -202,7 +202,9 @@ exports.signin = async (req, res) => {
     });
 
     if (result === null) {
-        return res.json({ result: false });
+        return res.json({
+            result: false,
+        });
     }
 
     const compare = comparePassword(pw, result.pw);
@@ -337,7 +339,10 @@ exports.mypage = async (req, res) => {
 
         res.render('mypage', { user: result, galleryList: galleryList, gearList: gearList });
     } else {
-        res.render('mypage', { user: false, nickname: decodeURI(req.cookies.isLoginKakao) });
+        res.render('mypage', {
+            user: false,
+            nickname: decodeURI(req.cookies.isLoginKakao),
+        });
     }
 };
 
@@ -403,9 +408,14 @@ exports.mypagePatchPost = async (req, res) => {
     if (result) {
         res.clearCookie('isLogin');
         res.cookie('isLogin', patchnickname, cookieConfig);
-        res.json({ result: true });
+        res.json({
+            result: true,
+        });
     } else {
-        res.json({ result: false, message: '수정을 실패했습니다' });
+        res.json({
+            result: false,
+            message: '수정을 실패했습니다',
+        });
     }
 };
 
