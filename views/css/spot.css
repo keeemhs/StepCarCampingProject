@@ -156,16 +156,72 @@ i#next {
     justify-content: space-between;
 } */
 
+/* 채팅방 리스트 */
+#chatlist {
+    text-align: center;
+    justify-content: center;
+}
+
+#into {
+    font-family: 'Dovemayo_gothic';
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 1px solid #43604d;
+    transition: background-color 0.3s, color 0.3s;
+    background-color: white;
+    color: #43604d;
+    border-color: #43604d;
+}
+
+#into:hover {
+    background-color: #43604d;
+    color: #fff;
+}
+
+#roomList,
+#roomListNum,
+#userName {
+    width: 200px;
+    border: 1px solid #c4c4c4;
+    box-sizing: border-box;
+    border-radius: 10px;
+    padding: 12px 13px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    justify-content: space-between;
+}
+
+#roomList,
+#roomListNum,
+#userName:focus {
+    border: 1px solid #f1f1f1;
+    box-sizing: border-box;
+    border-radius: 10px;
+    outline: 1.5px solid #43604d;
+    border-radius: 10px;
+}
+
 /* -------------채팅방----------- css */
 #chatroom {
     width: 400px;
     height: 700px;
     position: absolute;
-    background: #a0a0a0;
+    background: #eeeeee;
     right: 20px;
     bottom: 20px;
-    z-index: 100;
+    z-index: 1001;
     overflow: auto;
+    border-radius: 10px;
+    border-color: #43604d;
 }
 #chat {
     position: absolute;
@@ -175,7 +231,13 @@ i#next {
     width: 100%;
 }
 #chat input {
-    width: 80%;
+    width: 70%;
+    padding: 5px;
+    padding-left: 10px;
+    width: 100%;
+    border: 0.1px solid #43604d;
+    border-radius: 10px;
+    margin: 5px 3px;
 }
 #exit {
     position: relative;
@@ -189,7 +251,7 @@ i#next {
 .my-chat p {
     margin: 0;
     padding: 10px;
-    background: rgb(255, 255, 194);
+    background: #a8bbaf;
     border-radius: 10px;
     margin-right: 10px;
 }
@@ -209,7 +271,7 @@ i#next {
     display: flex;
     flex-direction: column;
     text-align: center;
-    color: rgb(99, 24, 24);
+    color: rgb(0, 0, 0);
 }
 .notice p {
     margin: 0;
@@ -217,3 +279,68 @@ i#next {
 .secret-chat p {
     background: rgb(255, 201, 210);
 }
+
+#userList {
+    width: 200px;
+    border: 1px solid #c4c4c4;
+    box-sizing: border-box;
+    border-radius: 10px;
+    padding: 12px 13px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    justify-content: space-between;
+}
+
+#userList,
+#message:focus {
+    border: 1px solid #f1f1f1;
+    box-sizing: border-box;
+    border-radius: 10px;
+    outline: 1.5px solid #43604d;
+    border-radius: 10px;
+    margin: 5px;
+}
+
+#exitButton {
+    font-family: 'Dovemayo_gothic';
+    display: inline-block;
+    padding: 10px 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 2px solid #43604d;
+    transition: background-color 0.3s, color 0.3s;
+    background-color: #43604d;
+    color: #ffffff;
+    border: none;
+}
+#exitButton:hover {
+    background-color: #e6e6e6;
+    color: #000000;
+}
+#chatButton {
+    font-family: 'Dovemayo_gothic';
+    text-align: center;
+    cursor: pointer;
+    border: 2px solid #ffffff;
+    transition: background-color 0.3s, color 0.3s;
+    background-color: #43604d;
+    color: #ffffff;
+    border: none;
+
+    width: 70px;
+    /* height: 30px; */
+    border-radius: 20%;
+    margin-right: 5px;
+    margin: 5px;
+}
+/* #chatButton:hover {
+    background-color: #43604d;
+    color: #ffffff;
+} */

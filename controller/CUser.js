@@ -1,4 +1,6 @@
+
 const { gallery, gallery_img, gallery_comment, userLocation, User, gear } = require('../models');
+
 const bcrypt = require('bcrypt');
 const axios = require('axios');
 
@@ -128,7 +130,9 @@ exports.postToken = async (req, res) => {
 
 //이메일 중복검사
 exports.duplication = async (req, res) => {
-    const { useremail } = req.body;
+    const {
+        useremail
+    } = req.body;
 
     const result = await User.findOne({
         where: {
@@ -149,7 +153,9 @@ exports.duplication = async (req, res) => {
 
 //닉네임 중복검사
 exports.duplicationNickname = async (req, res) => {
-    const { nickname } = req.body;
+    const {
+        nickname
+    } = req.body;
 
     const result = await User.findOne({
         where: {
@@ -174,7 +180,15 @@ exports.signup = (req, res) => {
 //회원가입
 exports.signupPost = async (req, res) => {
     console.log(req.body);
-    const { useremail, pw, birth, username, nickname, levelc, ownc } = req.body;
+    const {
+        useremail,
+        pw,
+        birth,
+        username,
+        nickname,
+        levelc,
+        ownc
+    } = req.body;
     const hash = await bcryptPassword(pw);
     User.create({
         useremail,
@@ -193,7 +207,10 @@ exports.signupPost = async (req, res) => {
 
 //로그인 동작
 exports.signin = async (req, res) => {
-    const { useremail, pw } = req.body;
+    const {
+        useremail,
+        pw
+    } = req.body;
     console.log(useremail, pw);
     const result = await User.findOne({
         where: {
@@ -202,7 +219,9 @@ exports.signin = async (req, res) => {
     });
 
     if (result === null) {
-        return res.json({ result: false });
+        return res.json({
+            result: false
+        });
     }
 
     const compare = comparePassword(pw, result.pw);
@@ -336,8 +355,12 @@ exports.mypage = async (req, res) => {
         });
 
         res.render('mypage', { user: result, galleryList: galleryList, gearList: gearList });
+
     } else {
-        res.render('mypage', { user: false, nickname: decodeURI(req.cookies.isLoginKakao) });
+        res.render('mypage', {
+            user: false,
+            nickname: decodeURI(req.cookies.isLoginKakao)
+        });
     }
 };
 
@@ -355,14 +378,21 @@ exports.mypage = async (req, res) => {
 
 //마이페이지 수정(닉네임 -> 카카오 로그인일때는 수정불가)
 exports.mypagePatchPost = async (req, res) => {
+
     const { patchnickname, id } = req.body;
     const result = await User.update({ nickname: patchnickname }, { where: { id: id } });
+
     if (result) {
         res.clearCookie('isLogin');
         res.cookie('isLogin', patchnickname, cookieConfig);
-        res.json({ result: true });
+        res.json({
+            result: true
+        });
     } else {
-        res.json({ result: false, message: '수정을 실패했습니다' });
+        res.json({
+            result: false,
+            message: '수정을 실패했습니다'
+        });
     }
 };
 
@@ -394,17 +424,17 @@ const comparePassword = (password, dbPassword) => {
 // }
 //마이페이지 수정(닉네임 -> 카카오 로그인일때는 수정불가)
 exports.mypagePatch = async (req, res) => {
-    const { patchnickname, id } = req.body;
-    const result = await User.update(
-        {
-            nickname: patchnickname,
+    const {
+        patchnickname,
+        id
+    } = req.body;
+    const result = await User.update({
+        nickname: patchnickname,
+    }, {
+        where: {
+            id: id,
         },
-        {
-            where: {
-                id: id,
-            },
-        }
-    );
+    });
     if (result) {
         res.clearCookie('isLogin');
         res.cookie('isLogin', patchnickname, cookieConfig);
