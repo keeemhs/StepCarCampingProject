@@ -143,7 +143,7 @@
             const mode = urlSearch.get('mode') ? urlSearch.get('mode') : 0;
 
             var map = new naver.maps.Map('map', mapOptions);
-            const polyList = [];
+
             const markers = [];
 
             var polyline = new naver.maps.Polyline({
@@ -157,7 +157,6 @@
                 var point = e.coord;
                 var path = polyline.getPath();
                 path.push(point);
-                polyList.push(path);
                 markers.push(
                     new naver.maps.Marker({
                         map: map,
@@ -180,7 +179,14 @@
                     console.log(markers[i].getPosition().lat());
                     markers[i].setMap(null);
                 }
+                markers.length = 0;
                 polyline.setMap(null);
+                polyline = new naver.maps.Polyline({
+                    map: map,
+                    path: [],
+                    strokeColor: '#5347AA',
+                    strokeWeight: 2,
+                });
             }
 
             async function fileupload(event) {
