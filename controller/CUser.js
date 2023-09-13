@@ -1,10 +1,13 @@
 const { gallery, gallery_img, gallery_comment, userLocation, User, gear } = require('../models');
 const bcrypt = require('bcrypt');
+const crypto = require('crypto')
 const axios = require('axios');
 
 const REDIRECT_URI = 'http://localhost:8000/user/oauth/kakao'; //본인의 리다이렉트 url입력 후 라우트에서도 설정하세요
 const REST_API_KEY = 'd09187c9ea730ee149f8d9292abffcf9'; //본인 rest api키 입력하시면 됩니다.
-const logout_REDIRECT_URI = 'http://localhost:8000/user/logout/redirect';
+const salt = crypto.randomBytes(16) // salt 생성
+const salt2 = crypto.randomBytes(32)
+const algo = 'aes-256-cbc'
 // //cookie옵션개체
 const cookieConfig = {
     //httpOnly 웹서버를 통해서만 쿠키에 접근 가능 (document.cookie 불가)
@@ -52,7 +55,9 @@ exports.auth_kakao = async (req, res) => {
                 code: req.query.code,
             },
         });
-        const token = result.data.access_token;
+        const CIPHER = crypto.createCipheriv(algo, salt2, salt)
+        let token = CIPHER.update(result.data.access_token, "utf8", 'base64')
+        token += CIPHER.final("base64")
         console.log(token);
         res.render('signinMiddle', {
             result: true,
@@ -61,7 +66,7 @@ exports.auth_kakao = async (req, res) => {
     }
 };
 
-exports.getToken = async (req, res) => {};
+exports.getToken = async (req, res) => { };
 
 //로그인
 exports.login = (req, res) => {
@@ -89,12 +94,16 @@ exports.login = (req, res) => {
 //카카오 로그인
 exports.postToken = async (req, res) => {
     console.log(req.body.token);
+
+    const DECIPHER = crypto.createDecipheriv(algo, salt2, salt)
+    let resultToken = DECIPHER.update(req.body.token, "base64", "utf8")
+    resultToken += DECIPHER.final("utf8")
     const kakaoUser = await axios({
         method: 'GET',
         url: `https://kapi.kakao.com/v2/user/me`,
         data: '',
         headers: {
-            Authorization: `Bearer ${req.body.token}`,
+            Authorization: `Bearer ${resultToken}`,
             'Content-type': 'application/x-www-form-urlencoded;charset=utf-8',
         },
     });
@@ -114,7 +123,7 @@ exports.postToken = async (req, res) => {
         res.cookie('isLogin', encodeURI(nickname), cookieConfig);
         res.cookie('isTrash', 'adfasdfsdfsdfdsfdsfadfasdfs', trashCookie);
         res.json({
-            result: true,
+            result: true
         });
     } else {
         //사용자 추가정보 입력요구(회원가입 페이지)
@@ -238,17 +247,20 @@ exports.logoutMiddlePost = async (req, res) => {
     //일반 로그아웃
     if (req.body.token === null) {
         res.clearCookie('isLogin');
-
+        res.clearCookie('isTrash');
         res.json({
             result: true,
         });
     } else {
         //카카오 로그아웃
+        const DECIPHER = crypto.createDecipheriv(algo, salt2, salt)
+        let resultToken = DECIPHER.update(req.body.token, "base64", "utf8")
+        resultToken += DECIPHER.final("utf8")
         const result = await axios({
             method: 'POST',
             url: url,
             headers: {
-                Authorization: `Bearer ${req.body.token}`,
+                Authorization: `Bearer ${resultToken}`,
                 'Content-type': 'application/x-www-form-urlencoded;charset=utf-8',
             },
         });
@@ -267,8 +279,6 @@ exports.logoutMiddlePost = async (req, res) => {
     }
 };
 
-//로그아웃 post
-exports.logoutPost = async (req, res) => {};
 
 //회원탈퇴 get
 exports.deleteUser = (req, res) => {
@@ -307,11 +317,14 @@ exports.deleteUserPost = async (req, res) => {
             });
         });
     } else {
+        const DECIPHER = crypto.createDecipheriv(algo, salt2, salt)
+        let resultToken = DECIPHER.update(req.body.token, "base64", "utf8")
+        resultToken += DECIPHER.final("utf8")
         const result = await axios({
             method: 'POST',
             url: 'https://kapi.kakao.com/v1/user/unlink',
             headers: {
-                Authorization: `Bearer ${req.body.token}`,
+                Authorization: `Bearer ${resultToken}`,
                 'Content-type': 'application/x-www-form-urlencoded;charset=utf-8',
             },
         });
