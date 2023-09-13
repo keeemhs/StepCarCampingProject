@@ -13,7 +13,7 @@ aws.config.update({
 
 const s3 = new aws.S3();
 const limits = {
-    fileSize: 5 * 1024 * 1024, //5mb
+    fileSize: 10 * 1024 * 1024, //5mb
 };
 var userid = 0;
 var gearid = 0;

@@ -1,3 +1,9 @@
+#spotH2 {
+    font-size: 2rem;
+    font-family: 'Dovemayo_gothic';
+    text-align: center;
+}
+
 .location-container {
     display: flex;
     flex-direction: column;
