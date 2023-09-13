@@ -41,10 +41,15 @@
                 justify-content: space-around;
             }
 
-            div {
-                font-family: 'Dovemayo_gothic';
-                font-size: 13px;
-            }
+        .profile-container {
+            display: flex;
+            height: 150px;
+            width: 400px;
+            align-items: center;
+            justify-content: space-evenly;
+            border: 2px solid #CCC;
+            border-radius: 10px;
+        }
 
             .name-text {
                 font-size: 18px;
@@ -78,15 +83,16 @@
                 justify-content: space-evenly;
             }
 
-            .button-style {
-                height: 35px;
-                width: auto;
-                font-size: 11px;
-                background-color: #43604d;
-                color: white;
-                display: flex;
-                align-items: center;
-            }
+        .button-style {
+            height: 35px;
+            width: 70px;
+            font-size: 11px;
+            background-color: #43604D;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
             .card-body {
                 position: relative;
@@ -103,18 +109,32 @@
                 color: white;
             }
 
-            .spot-text {
-                margin-bottom: 15px;
-                font-size: 18px;
-                font-weight: bolder;
-            }
+        .spot-list-container {
+            display: flex;
+            margin-bottom: 20px;
+        }
 
-            .spot-list-container {
-                display: flex;
-                margin-bottom: 20px;
-            }
-        </style>
-    </head>
+        .non-spot-container {
+            display: flex;
+            margin-bottom: 20px;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .non-spot {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .non-spot-text {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    
 
     <body>
         <div class="header"><%-include('header.ejs')%></div>
@@ -124,13 +144,21 @@
 
         <div class="name-text"><%= user.username %>님</div>
 
-        <div style="margin-top: 10px">
-            <div class="profile-container">
-                <div class="textline">
-                    <div>닉네임</div>
-                    <div>생년월일</div>
-                    <div>레벨</div>
-                    <div>차량 보유</div>
+
+
+    <div style='margin-top: 10px'>
+        <div class="profile-container">
+            <div class="textline">
+                <div>닉네임</div>
+                <div>생년월일</div>
+                <div>레벨</div>
+                <div>차량 보유</div>
+
+            </div>
+            <div class="line"></div>
+            <div class="textline">
+                <div>
+                    <%= user.nickname %>
                 </div>
                 <div class="line"></div>
                 <div class="textline">
@@ -149,74 +177,134 @@
         </div>
         <hr />
 
-        <div class="spot-text">나의 캠핑스팟</div>
-        <div class="spot-list-container">
-            <%for(let i=0; i< galleryList.length; i++){%>
-            <div class="card" style="width: 16rem; margin-right: 10px">
-                <img src="https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/<%= galleryList[i].thunmnail %>" class="card-img-top" />
-                <div class="card-body">
-                    <h5 class="card-title"><%= galleryList[i].title %></h5>
-                    <p class="card-text"><%= galleryList[i].title %></p>
-                    <a href="/gallery/review?galleryId=<%= galleryList[i].galleryid %>" class="btn button-style button-style1">이동하기</a>
+    <div class="spot-text">나의 캠핑스팟</div>
+    <%if(galleryList.length===0){%>
+        <div class="non-spot-container">
+            <div class="non-spot">
+                <div style="display: flex;">
+                    <p>&#128558</p>
+                    <div class="non-spot-text">
+                        아직 올리신 캠핑스팟 글이 없으시군요!
+                    </div>
+                    <p>&#128558</p>
                 </div>
             </div>
-            <%}%>
-        </div>
-
-        <hr />
-
-        <div class="spot-text">나의 장비추천글</div>
-        <div class="spot-list-container">
-            <%for(let i=0; i< gearList.length; i++){%>
-            <div class="card" style="width: 16rem; margin-right: 10px">
-                <img src="https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/<%= gearList[i].thunmnail %>" class="card-img-top" />
-                <div class="card-body">
-                    <h5 class="card-title"><%= gearList[i].gearTitle %></h5>
-                    <p class="card-text"><%= gearList[i].gearExplain %></p>
-                    <a href="/gallery/review?galleryId=<%= gearList[i].gearid %>" class="btn button-style button-style1">이동하기</a>
-                </div>
+            <div>
+                <button type="button" onclick="location.href='/gallery/reviewEdit'"
+                    class="btn button-style">글쓰러가기</button>
             </div>
-            <%}%>
         </div>
-        <%-include('footer.ejs')%>
-        <script>
-            async function updateUser() {}
 
-            async function logoutUser() {
-                location.href = '/user/logout/middle';
-            }
+        <%}else{%>
 
-            async function deleteUser() {
-                alert('정말 회원탈퇴 하시겠습니까?');
-                var nickname = '<%= user.nickname %>';
-                var id = '<%= user.id%>';
-                async function deleteUser() {
-                    if (localStorage.getItem('kakaoToken') === null) {
-                        const res = await axios({
-                            method: 'DELETE',
-                            url: '/user/deleteUser',
-                            data: {
-                                nickname: nickname,
-                                id: id,
-                            },
-                        });
-                    } else {
-                        const res = await axios({
-                            method: 'DELETE',
-                            url: '/user/deleteUser',
-                            data: {
-                                nickname: nickname,
-                                token: localStorage.getItem('kakaoToken'),
-                            },
-                        });
-                        if (res.data.result === true) {
-                            localStorage.clear();
-                            alert('회원탈퇴가 완료되었습니다');
-                            location.href = '/';
-                        }
-                    }
-                }
-            }
-        </script>
-    </body>
+            <div class="spot-list-container">
+                <%for(let i=0; i< galleryList.length; i++){%>
+                    <div class="card" style="width: 16rem; margin-right: 10px;">
+                        <img src="https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/<%= galleryList[i].thunmnail %>"
+                            class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <%= galleryList[i].title %>
+                            </h5>
+                            <p class="card-text">
+                                <%= galleryList[i].title %>
+                            </p>
+                            <a href="/gallery/review?galleryId=<%= galleryList[i].galleryid %>"
+                                class="btn button-style">이동하기</a>
+                        </div>
+                    </div>
+                    <%}%>
+                        <%}%>
+            </div>
+
+            <hr>
+
+            <div class="spot-text">나의 장비추천글</div>
+            <%if(gearList.length===0){%>
+                <div class="non-spot-container">
+                    <div class="non-spot">
+                        <div style="display: flex;">
+                            <p>&#128558</p>
+                            <div class="non-spot-text">
+                                아직 올리신 장비추천 글이 없으시군요!
+                            </div>
+                            <p>&#128558</p>
+                        </div>
+                    </div>
+                    <div>
+                        <button type="button" onclick="location.href='/gear/gearreviewEdit'"" class=" btn
+                            button-style">글쓰러가기</button>
+                    </div>
+                </div>
+                <%}else{%>
+                    <div class="spot-list-container">
+                        <%for(let i=0; i< gearList.length; i++){%>
+                            <div class="card" style="width: 16rem; margin-right: 10px;">
+                                <img src="https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/<%= gearList[i].thunmnail %>"
+                                    class="card-img-top">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <%= gearList[i].gearTitle %>
+                                    </h5>
+                                    <p class="card-text">
+                                        <%= gearList[i].gearExplain %>
+                                    </p>
+                                    <a href="/gallery/review?galleryId=<%= gearList[i].gearid %>"
+                                        class="btn button-style">이동하기</a>
+                                </div>
+                            </div>
+                            <%}%>
+                    </div>
+                    <%}%>
+                        </div>
+                        <script>
+
+
+                            async function updateUser() {
+
+                            }
+
+                            async function logoutUser() {
+                                location.href = '/user/logout/middle'
+                            }
+
+                            async function deleteUser() {
+                                alert('정말 회원탈퇴 하시겠습니까?')
+                                var nickname = '<%= user.nickname %>'
+                                var id = '<%= user.id%>'
+                                if (localStorage.getItem('kakaoToken') === null) {
+                                    const res = await axios({
+                                        method: 'DELETE',
+                                        url: '/user/deleteUser',
+                                        data: {
+                                            nickname: nickname,
+                                            id: id
+                                        }
+                                    })
+                                    if (res.data.result === true) {
+                                        localStorage.clear()
+                                        alert('회원탈퇴가 완료되었습니다')
+                                        location.href = '/'
+                                    }
+                                } else {
+                                    const res = await axios({
+                                        method: 'DELETE',
+                                        url: '/user/deleteUser',
+                                        data: {
+                                            nickname: nickname,
+                                            token: localStorage.getItem('kakaoToken'),
+                                            id: id
+                                        }
+                                    })
+                                    if (res.data.result === true) {
+                                        localStorage.clear()
+                                        alert('회원탈퇴가 완료되었습니다')
+                                        location.href = '/'
+                                    }
+                                }
+
+                            }
+                        </script>
+</body>
+
 </html>
