@@ -1,3 +1,10 @@
+@font-face {
+    font-family: 'Dovemayo_gothic';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.1/Dovemayo_gothic.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
 /* * {
     margin: 0;
     padding: 0;
@@ -8,6 +15,12 @@
     text-align: center;
     margin-top: 50px;
 } */
+
+#galleryH2 {
+    font-size: 2rem;
+    font-family: 'Dovemayo_gothic';
+    text-align: center;
+}
 
 #buttonBox {
     position: relative;

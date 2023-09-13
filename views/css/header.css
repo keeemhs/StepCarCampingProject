@@ -130,6 +130,10 @@
     transition: all 200ms linear;
 }
 
+#headerLogo {
+    color: #43604d;
+}
+
 /* #Primary style
 ================================================== */
 
