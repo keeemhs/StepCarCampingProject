@@ -33,13 +33,14 @@
 
             .grid-container {
                 display: grid;
-                margin-top: 100px;
+                margin-top: 10px;
                 padding: 10px;
                 gap: 10px 20px;
                 grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
                 justify-items: center; /* 가로 방향 정렬 설정 */
                 align-items: center; /* 세로 방향 정렬 설정 */
             }
+
             .card:hover {
                 box-shadow: 0 0 10px #43604d; /* 파스텔 느낌의 그림자 */
             }
@@ -113,6 +114,10 @@
                 text-align: right;
                 margin: 20px;
             }
+            .category-tap {
+                margin-top: 100px;
+                text-align: center;
+            }
         </style>
         <title>Document</title>
     </head>
@@ -121,10 +126,21 @@
         <div class="header"><%-include('header.ejs')%></div>
         <hr />
         <main class="mainsection" style="position: relative">
+            <div class="category-tap">
+                <button onclick="showAll()" class="new-button">모두 보기</button>
+                <button onclick="categoryChoice()" class="new-button">테이블</button>
+                <button onclick="categoryChoice()" class="new-button">텐트</button>
+                <button onclick="categoryChoice()" class="new-button">의자</button>
+                <button onclick="categoryChoice()" class="new-button">잠자리</button>
+                <button onclick="categoryChoice()" class="new-button">렌턴</button>
+                <button onclick="categoryChoice()" class="new-button">조리기구</button>
+                <button onclick="categoryChoice()" class="new-button">쿨러</button>
+                <button onclick="categoryChoice()" class="new-button">화로대</button>
+            </div>
             <div class="grid-container">
                 <% for (let i =0; i < data.length ;i++){ %>
                 <a href="/gear/gearreview?gearId=<%= data[i].gearid %>">
-                    <div class="card" style="width: 18rem">
+                    <div class="card" style="width: 18rem" data-category="<%= data[i].category %>">
                         <img src="https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/<%= data[i].thunmnail %>" class="card-img-top" alt="..." />
                         <div class="card-body">
                             <h5 class="card-title"><%= data[i].gearTitle %></h5>
@@ -158,7 +174,6 @@
                         'Content-Type': 'multipart/form-data',
                     },
                 });
-                console.log(result.data);
             }
         </script>
     </body>
