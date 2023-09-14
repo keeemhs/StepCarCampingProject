@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
+        <title>STEP</title>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script
             type="text/javascript"
@@ -97,6 +97,8 @@
                     <button id="exitButton">나가기</button>
                 </form>
                 <div id="msg"></div>
+            </div>
+            <div id="chatInputBox" hidden>
                 <form id="chat">
                     <select id="userList"></select>
                     <input type="text" id="message" placeholder="메세지 입력" />
@@ -123,9 +125,9 @@
             };
 
             var map = new naver.maps.Map('map', mapOptions);
-
+            var marker = [];
             var spotContainer = document.querySelector('.carousel');
-
+            var result;
             // 해당 지역버튼 클릭 시 지도 기준점 위치 이동
             var locationButton = document.querySelectorAll('.location-select > button');
             locationButton.forEach((button) => {
@@ -141,9 +143,9 @@
                     mapOptions.zoom = 7;
                     map = new naver.maps.Map('map', mapOptions);
                     document.getElementById('wrapper').style.display = 'flex';
-
+                    result = res;
                     //해당 지역의 차박 스팟 마커찍기 + 스팟리스트 출력
-                    var marker = [];
+
                     spotContainer.textContent = '';
                     for (let i = 0; i < res.data.spot.length; i++) {
                         marker[i] = new naver.maps.Marker({
@@ -151,7 +153,7 @@
                             position: new naver.maps.LatLng(res.data.spot[i].lat, res.data.spot[i].lon),
                         });
                         spotContainer.innerHTML += `
-                        <div class="spot">
+                        <div class="spot" onclick="spotClicked(${i})">
                             <div class="spot-name">${res.data.spot[i].spotName}</div>
                                 <div>
                                 <img src="${res.data.spot[i].image}" class="spot-image">
@@ -160,15 +162,20 @@
                             <div class="spot-information">${res.data.spot[i].information}</div>
                         </div>
                         `;
-
-                        //마커 클릭 이벤트
-                        // naver.maps.Event.addListener(marker[i], 'click', () => {
-
-                        // })
                     }
                 });
             });
-
+            function spotClicked(idx) {
+                for (let i = 0; i < marker.length; i++) {
+                    console.log(marker[i].getPosition().lat());
+                    marker[i].setMap(null);
+                }
+                marker.length = 0;
+                marker[0] = new naver.maps.Marker({
+                    map: map,
+                    position: new naver.maps.LatLng(result.data.spot[idx].lat, result.data.spot[idx].lon),
+                });
+            }
             const socket = io();
             const roomForm2 = document.querySelector('#roomli');
             const chatForm = document.querySelector('#chat');
@@ -238,7 +245,9 @@
                 }
                 socket.emit('create', roomIndex, userName.value, () => {
                     const chatroom = document.querySelector('#chatroom');
+                    const chatInputBox = document.querySelector('#chatInputBox');
                     chatroom.hidden = false;
+                    chatInputBox.hidden = false;
                     //전역변수에 입력한 닉네임을 저장
                     myName = userName.value;
                 });
@@ -247,6 +256,11 @@
                 e.preventDefault();
                 const user = document.querySelector('#userList');
                 const message = document.querySelector('#message');
+                var chatroom = document.getElementById('chatroom');
+
+                function scrollToBottom() {
+                    chatroom.scrollTop = chatroom.scrollHeight;
+                }
                 console.log(user.value);
                 const msg = {
                     nick: myName,
@@ -255,6 +269,7 @@
                 };
                 socket.emit('sendMessage', msg);
                 message.value = '';
+                scrollToBottom();
             });
         </script>
         <script src="../spot.js"></script>

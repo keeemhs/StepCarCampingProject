@@ -25,6 +25,7 @@
 #buttonBox {
     position: relative;
     display: inline;
+    margin: auto;
 }
 
 .sortButton {

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <title>Document</title>
+        <style>
+            @font-face {
+                font-family: 'Dovemayo_gothic';
+                src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.1/Dovemayo_gothic.woff2') format('woff2');
+                font-weight: normal;
+                font-style: normal;
+            }
+            body {
+                font-family: 'Dovemayo_gothic';
+            }
+            h2 {
+                margin-top: 175px;
+                text-align: center;
+            }
+            button {
+                font-family: 'Dovemayo_gothic';
+                display: inline-block;
+                margin-top: 10px;
+                padding: 0px 5px;
+                font-size: 1rem;
+                font-weight: bold;
+                text-align: center;
+                text-decoration: none;
+                cursor: pointer;
+                border-radius: 5px;
+                transition: background-color 0.3s, color 0.3s;
+                background-color: white;
+                color: black;
+                border: solid;
+            }
+            form {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+        </style>
+        <title>STEP</title>
+    </head>
+    <body>
+        <h2>개인정보수정</h2>
+        <form name="userinfo">
+            <div><span>닉네임 </span><input name="nickname" type="text" value="" placeholder="닉네임" required /> <br /></div>
+            <div>
+                <span>레벨 </span>
+                <input type="radio" name="level" id="beginner" value="1" class="input-radio-margin" /><label for="beginner">입문</label> <input type="radio" name="level" id="intermediate" value="2" class="input-radio-margin" /><label for="beginner">중수</label>
+                <input type="radio" name="level" id="master" value="3" class="input-radio-margin" /><label for="beginner">고수</label>
+            </div>
+            <div>
+                <span>차량 보유 </span>
+                <input type="radio" name="own" id="no" value="1" class="input-radio-margin" /> <label for="no">없음</label> <input type="radio" name="own" id="yes" value="2" class="input-radio-margin" /> <label for="yes">있음</label>
+                <input type="radio" name="own" id="expected" value="3" class="input-radio-margin" /><label for="expected">구매예정</label><br />
+            </div>
+
+            <button type="button" onclick="giveForm()">제출</button>
+        </form>
+        <script>
+            async function giveForm() {
+                const formdata = document.forms['userinfo'];
+                const result = await axios({
+                    method: 'patch',
+                    data: {
+                        nickname: formdata.nickname.value,
+                        level: formdata.level.value,
+                        own: formdata.own.value,
+                    },
+                    url: '/user/mypage/changeUserInfo',
+                });
+                console.log(result);
+                console.log('nickname:', formdata.nickname.value);
+                window.close();
+            }
+        </script>
+    </body>
+</html>

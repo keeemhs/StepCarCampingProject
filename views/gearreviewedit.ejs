@@ -4,8 +4,11 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-        <title>Main Page</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+        />
+        <title>STEP</title>
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -94,21 +97,9 @@
             <!-- 로고 이미지 -->
             <img src="로고이미지주소" alt="로고" class="logo" />
             <h2>제품 등록하기</h2>
+            <br />
             <form onsubmit="fileupload(event)" name="gearEdit">
-                <div>
-                    <label for="gearTitle">제목:</label>
-                    <input name="gearTitle" type="text" id="gearTitle" placeholder="제품명" />
-                </div>
-                <div>
-                    <label for="gearExplain">설명:</label>
-                    <input name="gearExplain" type="text" id="gearExplain" placeholder="제품설명" />
-                </div>
-                <div>
-                    <label for="writer">작성자:</label>
-                    <input type="text" name="writer" id="writer" value="<%= nickname %>" readonly />
-                </div>
                 <div class="radio-tag">
-                    <label>카테고리: </label>
                     <input type="radio" name="category" value="1" />
                     <label class="second-label" for="1">테이블</label>
                     <input type="radio" name="category" value="2" />
@@ -125,6 +116,19 @@
                     <label class="second-label" for="7">쿨러</label>
                     <input type="radio" name="category" value="8" />
                     <label class="second-label" for="8">화로대</label>
+                </div>
+                <br />
+                <div>
+                    <label for="gearTitle">제목:</label>
+                    <input name="gearTitle" type="text" id="gearTitle" placeholder="제품명" />
+                </div>
+                <div>
+                    <label for="gearExplain">설명:</label>
+                    <input name="gearExplain" type="text" id="gearExplain" placeholder="제품설명" />
+                </div>
+                <div>
+                    <label for="writer">작성자:</label>
+                    <input type="text" name="writer" id="writer" value="<%= nickname %>" readonly />
                 </div>
                 <div>
                     <input type="file" name="dynamic_files" multiple />
@@ -152,6 +156,11 @@
             console.log(files);
             //이미지들 url 만들기
             const formData2 = new FormData();
+
+            if (!gearTitle || !gearExplain || !writer || !category || !files || files.length === 0) {
+                alert('모든 필드를 채워주세요.');
+                return;
+            }
 
             for (let i = 0; i < files.length; i++) {
                 formData2.append(`gearTitle`, gearTitle);

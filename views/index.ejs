@@ -13,7 +13,7 @@
             integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
             crossorigin="anonymous"
         />
-        <title>Main Page</title>
+        <title>STEP - Main</title>
     </head>
     <style>
         @font-face {
@@ -86,14 +86,20 @@
         }
 
         .theme_items_wrap .theme_items li a img {
-            width: 300px;
-            height: 225px;
+            width: 100%;
+            height: 75%;
+        }
+        .theme_items_wrap {
+            display: flex;
+            margin: auto;
+            justify-content: center;
         }
         .theme_items {
             display: grid;
-            grid-template-rows: repeat(2, 1fr);
-            grid-template-columns: repeat(3, 1fr);
-            grid-column-gap: 20px;
+            margin-bottom: 30px;
+            grid-template-rows: repeat(2, 300px);
+            grid-template-columns: repeat(3, 300px);
+            grid-column-gap: 60px;
             grid-row-gap: 20px;
         }
         .theme_tabs > li:hover {
@@ -101,9 +107,13 @@
             background-color: #43604d;
             color: white;
         }
-        .carousel-item {
-            height: 500px;
+        .carousel-item > img {
+            max-height: 500px;
+            object-fit: contain;
         }
+        /* .carousel-item {
+            height: 500px;
+        } */
         #body_container {
             font-family: Dovemayo_gothic;
             /*margin-left: 5%;
@@ -114,6 +124,34 @@
             font-weight: bold;
             text-align: center;
             color: black;
+        }
+        @media screen and (max-width: 1080px) {
+            .items_list {
+                display: grid;
+                place-items: center;
+                grid-template-rows: repeat(2, 200px);
+                grid-template-columns: repeat(2, 200px);
+                grid-column-gap: 20px;
+                grid-row-gap: 20px;
+            }
+            .img_area > img {
+                margin: auto;
+                margin-left: 20px;
+                width: 90%;
+                height: 90%;
+            }
+        }
+        @media screen and (max-width: 860px) {
+            .more {
+                color: white;
+            }
+            .theme_items {
+                display: grid;
+                grid-template-rows: repeat(3, 200px);
+                grid-template-columns: repeat(2, 200px);
+                grid-column-gap: 20px;
+                grid-row-gap: 60px;
+            }
         }
 
         /* 이미지 스타일 조정 */
@@ -127,6 +165,8 @@
         <%-include('header.ejs')%>
         <p>메인페이지 입니다</p>
         <!-- 나중에  br 지울것!-->
+        <br />
+        <br />
         <br />
         <br />
         <div id="body_container">
@@ -156,25 +196,13 @@
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                         <!--  -->
-                        <img
-                            src="https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/0.jpg"
-                            class="d-block w-100"
-                            alt="..."
-                        />
+                        <img src="../static/bannerMain1.png" class="d-block w-100" alt="..." />
                     </div>
                     <div class="carousel-item">
-                        <img
-                            src="https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/11.jpg"
-                            class="d-block w-100"
-                            alt="..."
-                        />
+                        <img src="../static/bannerMain2.png" class="d-block w-100" alt="..." />
                     </div>
                     <div class="carousel-item">
-                        <img
-                            src="https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/2.jpg"
-                            class="d-block w-100"
-                            alt="..."
-                        />
+                        <img src="../static/bannerMain3.png" class="d-block w-100" alt="..." />
                     </div>
                 </div>
                 <button
@@ -196,9 +224,6 @@
                     <span class="visually-hidden">Next</span>
                 </button>
             </div>
-            <br />
-            <br />
-            <br />
 
             <hr />
             <br />
@@ -210,9 +235,9 @@
                     <a href="https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/0.jpg" target="_self">
                         <span class="img_area"
                             ><img src="https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/0.jpg" alt="#" />
-                            <p style="font-size: 12px">경기도 노지 여행 적기</p>
+                            <p style="font-size: 16px">경기도 노지 여행 적기</p>
                             <br />
-                            <p style="font-size: 12px">찾아보기</p></span
+                            <p class="more" style="font-size: 12px">찾아보기</p></span
                         >
                     </a>
                 </li>
@@ -221,22 +246,9 @@
                     <a href="https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/0.jpg" target="_self">
                         <span class="img_area"
                             ><img src="https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/0.jpg" alt="#" />
-                            <p style="font-size: 12px">경기도 노지 여행</p>
-                            <p></p>
+                            <p style="font-size: 16px">경기도 노지 여행</p>
                             <br />
-                            <p style="font-size: 12px">경기도 노지 여행</p></span
-                        >
-                    </a>
-                </li>
-
-                <li>
-                    <a href="https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/0.jpg" target="_self">
-                        <span class="img_area"
-                            ><img src="https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/0.jpg" alt="#" />
-                            <p style="font-size: 12px">경기도 노지 여행</p>
-                            <p></p>
-                            <br />
-                            <p style="font-size: 12px">경기도 노지 여행</p></span
+                            <p class="more" style="font-size: 12px">경기도 노지 여행</p></span
                         >
                     </a>
                 </li>
@@ -245,10 +257,9 @@
                     <a href="/recomCar#carRecom1" target="_self">
                         <span class="img_area"
                             ><img src="../1cate1.jpg" alt="#" />
-                            <p style="font-size: 14px">차박 초심자를 위한 차는?</p>
-                            <p></p>
+                            <p style="font-size: 16px">차박 초심자를 위한 차는?</p>
                             <br />
-                            <p style="font-size: 12px">차량보기</p></span
+                            <p class="more" style="font-size: 12px">차량보기</p></span
                         >
                     </a>
                 </li>
@@ -257,10 +268,9 @@
                     <a href="/recomCar#carRecom2" target="_self">
                         <span class="img_area"
                             ><img src="../2cate2.jpg" alt="#" />
-                            <p style="font-size: 14px">차박에 익숙해졌다면 무슨 차를?</p>
-                            <p></p>
+                            <p style="font-size: 16px">차박에 익숙해졌다면 무슨 차를?</p>
                             <br />
-                            <p style="font-size: 12px">차량 보기</p></span
+                            <p class="more" style="font-size: 12px">차량 보기</p></span
                         >
                     </a>
                 </li>
@@ -358,6 +368,8 @@
             <!-- <div style="height: 1000px; background-color: blue"></div> -->
             <!-- Footer -->
         </div>
+        <br />
+        <br />
         <%-include('footer.ejs')%>
         <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
@@ -376,7 +388,7 @@
                 for (let i = 0; i < 6; i++) {
                     const id = Number(num - 1) * 10 + i;
                     theme_items.innerHTML += ` 
-                         <li>
+                        <li>
                             <a href="/spot">
                                 <span><img src=${datas[id].image} /></span>
                                 <div class="desc">

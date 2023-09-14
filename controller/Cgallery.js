@@ -147,7 +147,7 @@ exports.uploadWithoutMulter = async (req, res) => {
             nickname: decodeURI(req.cookies.isLogin),
         },
     });
-    console.log(user);
+    console.log('유저', user);
     if (!user) {
         res.send({ result: false, errMessage: '로그인이 종료되었거나, 잘못된 접근입니다.' });
         return;
@@ -157,6 +157,16 @@ exports.uploadWithoutMulter = async (req, res) => {
     //uploadWithoutMulter몰라
     if (mode == 1) {
         console.log('mode1, multer X');
+        try {
+            await userLocation.destroy({
+                where: {
+                    galleryid: req.body.galleryid,
+                },
+            });
+        } catch {
+            console.log(req.body.galleryid);
+        }
+
         const galleryUpdate = await gallery.update(
             {
                 userid: userid,
@@ -338,6 +348,11 @@ exports.reviewDel = async (req, res) => {
 
 exports.reviewChangeCheck = async (req, res) => {
     console.log('change', req.body);
+    if (!req.cookies.isLogin) {
+        console.log('삭제실패, 로그인 하지 않음');
+        res.send({ errcode: -1, error: '삭제 권한이 없습니다.' });
+        return;
+    }
     const loginuser = await User.findOne({
         where: {
             nickname: decodeURI(req.cookies.isLogin),

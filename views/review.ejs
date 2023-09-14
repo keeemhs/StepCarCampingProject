@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
+        <title>STEP</title>
         <script src="https://kit.fontawesome.com/8786e78429.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script
@@ -244,8 +244,11 @@
                     <div>
                         <div>
                             <div class="dropdown-container">
-                                <%= comments[i].main.nickName %> : <%= comments[i].main.commentText %>
+                                <%= comments[i].main.nickName %> : <%= comments[i].main.commentText %> <%
+                                if(comments[i].main.commentText!="삭제되었습니다."){ %>
                                 <button class="dropdown-btn" onclick="toggleDropdown(event)">···</button>
+                                <% } %>
+
                                 <div class="dropdown-content">
                                     <button type="button" class="del-button" onclick="showSubComment('<%= i %>')">
                                         답글
@@ -265,7 +268,7 @@
                             class="hideComment<%= i %>"
                             name="maincomment<%= i %>"
                         >
-                            <span style="font-size: 20px">⌙</span>
+                            <span style="font-size: 20px">↳</span>
                             <span>답글</span>
                             <input name="mainCommentInput" type="text" placeholder="댓글" />
                             <button
@@ -282,7 +285,7 @@
                         <% for(let j=0; j < comments[i].sub.length; j++){ %>
                         <li class="comment-comment-li">
                             <div class="dropdown-container">
-                                <span style="font-size: 20px">⌙</span><%= comments[i].sub[j].nickName %> : <%=
+                                <span style="font-size: 20px">↳</span><%= comments[i].sub[j].nickName %> : <%=
                                 comments[i].sub[j].commentText %>
                                 <button class="dropdown-btn" onclick="toggleDropdown(event)">···</button>
                                 <div class="dropdown-content">
@@ -330,7 +333,7 @@
             //지도 초기 기준점 위치 설정
             const mapOptions = {
                 center: new naver.maps.LatLng(locations[datas.region]),
-                zoom: 9,
+                zoom: 8,
             };
 
             var map = new naver.maps.Map('map', mapOptions);
@@ -387,7 +390,7 @@
                     alert('삭제권한이 없습니다.');
                 } else if (result.data.error == 'no error') {
                     alert('삭제완료');
-                    location.href = '/';
+                    location.href = '/gallery';
                 }
             }
             //수정을 눌렀을 떄

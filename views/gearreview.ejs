@@ -3,13 +3,14 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
+        <title>STEP</title>
         <script src="https://kit.fontawesome.com/8786e78429.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <style>
             @font-face {
                 font-family: 'Dovemayo_gothic';
-                src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.1/Dovemayo_gothic.woff2') format('woff2');
+                src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.1/Dovemayo_gothic.woff2')
+                    format('woff2');
                 font-weight: normal;
                 font-style: normal;
             }
@@ -37,7 +38,7 @@
                 font-family: 'Dovemayo_gothic';
                 text-align: center;
                 margin: 50px auto;
-                margin-top: 100px;
+                margin-top: 40px;
                 max-width: 800px;
                 padding: 20px;
                 background-color: #fff;
@@ -47,11 +48,11 @@
 
             .product-image {
                 position: relative;
-                width: 300px; /* 원하는 가로 크기 */
-                height: 200px; /* 원하는 세로 크기 */
+                width: 300px;
+                height: 200px;
                 background-image: url('이미지 URL');
-                background-size: cover; /* 이미지가 영역을 완전히 채우도록 설정 */
-                background-position: center center; /* 이미지 중앙 정렬 */
+                background-size: cover;
+                background-position: center center;
             }
 
             .arrow-icon {
@@ -80,7 +81,7 @@
             .product-description {
                 margin-top: 20px;
                 color: #333;
-                word-wrap: break-word; /* 긴 단어들을 줄바꿈하여 표시 */
+                word-wrap: break-word;
             }
 
             .author-info {
@@ -114,6 +115,9 @@
     </head>
     <body>
         <%-include('header.ejs')%>
+        <section>
+            <img src="../banner.jpg" alt="배너이미지" style="width: 100%" />
+        </section>
 
         <div class="product-container">
             <h2>제품명 : <%= gearTitle %></h2>
@@ -138,8 +142,6 @@
         <%-include('footer.ejs')%>
 
         <script>
-            // imgurl를 stringfy해준뒤에, 다시 parse해서 jsonobject를 만든다.
-            // 나중에는 그냥 서버단에서 하는게 나을것같다.
             var imgurl = JSON.parse('<%- JSON.stringify(imgurl) %>').urls;
             console.log(typeof imgurl);
             console.log(imgurl);
@@ -175,11 +177,11 @@
                     method: 'delete',
                     data: { gid },
                 });
-                if (result.data.errcode == -1) {
-                    alert('삭제 권한이 없습니다.');
-                } else if (result.data.error == 'no error') {
+                if (result.data.error == 'no error') {
                     alert('삭제완료');
                     location.href = '/gear';
+                } else {
+                    alert('삭제 권한이 없습니다.');
                 }
             }
             function goBack() {

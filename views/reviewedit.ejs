@@ -3,9 +3,12 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>리뷰 에딧</title>
+        <title>STEP - 수정</title>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ijdya8hea0"></script>
+        <script
+            type="text/javascript"
+            src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ijdya8hea0"
+        ></script>
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -101,19 +104,23 @@
             <form onsubmit="fileupload(event)" name="reviewEdit">
                 <div>
                     <label for="title">제목:</label>
-                    <input name="title" type="text" placeholder="제목" />
+                    <input name="title" type="text" placeholder="제목" required />
                 </div>
                 <div>
                     <label for="mainText">본문:</label>
-                    <input name="mainText" type="text" placeholder="본문" />
+                    <input name="mainText" type="text" placeholder="본문" required />
                 </div>
                 <div>
-                    <input type="radio" name="region" value="1" />경기/서울 <input type="radio" name="region" value="2" />강원 <input type="radio" name="region" value="3" />충청 <input type="radio" name="region" value="4" />경상 <input type="radio" name="region" value="5" />전라
+                    <input type="radio" name="region" value="1" checked />경기/서울
+                    <input type="radio" name="region" value="2" />강원
+                    <input type="radio" name="region" value="3" />충청
+                    <input type="radio" name="region" value="4" />경상
+                    <input type="radio" name="region" value="5" />전라
                     <input type="radio" name="region" value="6" />제주
                 </div>
                 <div>
                     <label for="spotInfo">스팟정보:</label>
-                    <input name="spotInfo" type="text" placeholder="스팟정보" />
+                    <input name="spotInfo" type="text" placeholder="스팟정보" required />
                 </div>
                 <div><input type="file" name="dynamic_files" multiple /></div>
                 <!-- 지도 -->
@@ -213,6 +220,7 @@
                 //이미지들 url 만들기
                 //업데이트시 파일은 수정안함
                 if (files.length == 0 && mode == 1) {
+                    console.log(galleryInfos.galleryid);
                     result1 = await axios({
                         url: '/gallery/uploadWithoutMulter',
                         method: 'POST',
@@ -269,7 +277,12 @@
 
                 const markerObject = [];
                 for (let i = 0; i < markers.length; i++) {
-                    markerObject.push({ lat: markers[i].getPosition().lat(), lon: markers[i].getPosition().lng(), order: i, galleryid: result1.data.galleryid });
+                    markerObject.push({
+                        lat: markers[i].getPosition().lat(),
+                        lon: markers[i].getPosition().lng(),
+                        order: i,
+                        galleryid: result1.data.galleryid,
+                    });
                 }
                 const result2 = await axios({
                     url: '/gallery/sendMapData',
