@@ -47,27 +47,6 @@
     text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
 }
 
-#recomMain .content a {
-    color: #000;
-    display: block;
-    text-transform: uppercase;
-    font-size: 18px;
-    margin: 0 10px;
-    padding: 10px 30px;
-    border-radius: 5px;
-    background: #fff;
-    border: 2px solid #fff;
-    transition: 0.4s ease;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-    text-decoration: none;
-    font-family: 'Dovemayo_gothic';
-}
-
-#recomMain .content a:hover {
-    color: #fff;
-    background: rgba(255, 255, 255, 0.3);
-}
-
 /* 섹션1 */
 section {
     padding-top: 40px;
@@ -116,30 +95,31 @@ section .topic {
     text-align: justify;
     color: #43604d;
 }
-section .button {
-    margin: 16px 0;
+
+#aboutA {
+    font-size: 17px;
+    padding: 9px 20px;
+    color: #000;
+    text-transform: uppercase;
+    font-size: 18px;
+    margin: 0 10px;
+    padding: 10px 30px;
+    border-radius: 5px;
+    background: #fff;
+    border: 2px solid #fff;
+    transition: 0.4s ease;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    text-decoration: none;
 }
-section .button button {
-    outline: none;
-    padding: 8px 16px;
-    border-radius: 4px;
-    font-size: 25px;
-    font-weight: 400;
-    background: #43604d;
-    color: #fff;
-    border: 2px solid transparent;
-    cursor: pointer;
-    transition: all 0.4s ease;
-}
-section .button button:hover {
-    border-color: #43604d;
-    background-color: #fff;
+
+#aboutA:hover {
     color: #43604d;
+    background: rgba(255, 255, 255, 0.3);
 }
 
 /* 섹션2 가이드 */
 .guide {
-    background: #c8dace;
+    background: #ecf3ee;
 }
 .guide .content {
     padding: 40px 0;
@@ -207,10 +187,10 @@ section .button button:hover {
     cursor: default;
     transition: all 0.4s ease;
 }
-.services .boxes .box:hover {
+/* .services .boxes .box:hover {
     background: #43604d;
     color: #fff;
-}
+} */
 .services .boxes .box .icon {
     height: 50px;
     width: 50px;
@@ -223,11 +203,25 @@ section .button button:hover {
     margin: 0 auto 10px auto;
     transition: all 0.4s ease;
 }
-.boxes .box:hover .icon {
+/* .boxes .box:hover .icon {
     background-color: #fff;
     color: #43604d;
+} */
+
+/* .box1 {
+    background-image: url('../intro1.jpg');
 }
-.services .boxes .box:hover .topic,
+.box2 {
+    background: url('../intro2.jpg');
+}
+.box3 {
+    background: url('../intro3.jpg');
+}
+.box4 {
+    background: url('../intro4.jpg');
+} */
+
+/* .services .boxes .box:hover .topic,
 .services .boxes .box:hover p {
     color: #43604d;
     transition: all 0.4s ease;
@@ -235,10 +229,10 @@ section .button button:hover {
 .services .boxes .box:hover .topic,
 .services .boxes .box:hover p {
     color: #fff;
-}
+} */
 /* 섹션4 문의 */
 .contact {
-    background: #c8dace;
+    background: #ecf3ee;
 }
 .contact .content {
     margin: 0 auto;
@@ -251,6 +245,13 @@ section .button button:hover {
 }
 
 /* 반응 */
+@media (max-width: 5000px) {
+    .services .boxes .box {
+        margin: 20px 0;
+        width: calc(100% / 2 - 20px);
+    }
+}
+
 @media (max-width: 1190px) {
     section .content {
         width: 85%;
