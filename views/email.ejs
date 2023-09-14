@@ -149,8 +149,16 @@
                 //console.log(form.to.value, form.subject.value);
                 try {
                     const response = axios.post('/email/sendEmail', formData);
+                    const subject = document.getElementById('subject');
+                    const userEmail = document.getElementById('userEmail');
+                    const message = document.getElementById('message');
                     console.log('이메일 전송 성공:', response.data);
-                    alert('이메일 전송이 완료되었습니다.');
+                    if (subject.value === '' || userEmail.value === '' || message.value === '') {
+                        alert('작성 내역을 다시 확인하세요.');
+                    } else {
+                        alert('이메일 전송이 완료되었습니다.');
+                        location.reload();
+                    }
                 } catch (error) {
                     console.error('이메일 전송 오류:', error);
                 }

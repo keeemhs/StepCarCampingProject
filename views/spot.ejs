@@ -97,6 +97,8 @@
                     <button id="exitButton">나가기</button>
                 </form>
                 <div id="msg"></div>
+            </div>
+            <div id="chatInputBox" hidden>
                 <form id="chat">
                     <select id="userList"></select>
                     <input type="text" id="message" placeholder="메세지 입력" />
@@ -238,7 +240,9 @@
                 }
                 socket.emit('create', roomIndex, userName.value, () => {
                     const chatroom = document.querySelector('#chatroom');
+                    const chatInputBox = document.querySelector('#chatInputBox');
                     chatroom.hidden = false;
+                    chatInputBox.hidden = false;
                     //전역변수에 입력한 닉네임을 저장
                     myName = userName.value;
                 });
@@ -247,6 +251,11 @@
                 e.preventDefault();
                 const user = document.querySelector('#userList');
                 const message = document.querySelector('#message');
+                var chatroom = document.getElementById('chatroom');
+
+                function scrollToBottom() {
+                    chatroom.scrollTop = chatroom.scrollHeight;
+                }
                 console.log(user.value);
                 const msg = {
                     nick: myName,
@@ -255,6 +264,7 @@
                 };
                 socket.emit('sendMessage', msg);
                 message.value = '';
+                scrollToBottom();
             });
         </script>
         <script src="../spot.js"></script>
