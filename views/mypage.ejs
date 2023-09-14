@@ -149,20 +149,6 @@
             width: auto;
             border-radius: 5px 5px 0px 0px;
         }
-
-        .carousel-wrapper-2 {
-            width: 1055px;
-            overflow: hidden;
-            display: flex;
-            margin: 10px;
-            justify-content: center;
-        }
-
-        .carousel-wrapper-2>.carousel {
-            display: flex;
-            transform: translate3d(0, 0, 0);
-            transition: transform 0.4s;
-        }
     </style>
 </head>
 
@@ -300,7 +286,7 @@
                                 <button class="prev btn carousel-button" type="button">◀</button>
 
                                 <%}%>
-                                    <div class="carousel-wrapper-2">
+                                    <div class="carousel-wrapper">
                                         <div class="carousel">
                                             <%for(let i=0; i< gearList.length; i++){%>
                                                 <div class="card" style="width: 16rem; margin-right: 10px;">
@@ -366,7 +352,11 @@
                                     console.log('popup닫힘');
                                     console.log(document.getElementById('forChecker').value);
                                     if (document.getElementById('forChecker').value == 'true') {
-                                        //회원가입 침범, 일단 정지
+                                        console.log("changeerr")
+                                        const popup2 = window.open('/user/mypage/changeUserInfo', '_blank', 'width=500, height=500');
+                                        popup2.addEventListener('beforeunload', function () {
+                                            location.reload()
+                                        })
                                     } else {
                                         alert('비밀번호가 틀렸습니다!');
                                     }
@@ -379,7 +369,8 @@
                                     console.log('popup닫힘');
                                     console.log(document.getElementById('forChecker').value);
                                     if (document.getElementById('forChecker').value == 'true') {
-                                        //회원가입 침범, 일단 정지
+                                        
+
                                     } else {
                                         alert('비밀번호가 틀렸습니다!');
                                     }

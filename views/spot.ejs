@@ -5,18 +5,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        <script
-            type="text/javascript"
-            src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ijdya8hea0"
-        ></script>
+        <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ijdya8hea0"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
         <script src="/socket.io/socket.io.js"></script>
         <link rel="stylesheet" href="spot.css" />
         <style>
             @font-face {
                 font-family: 'Dovemayo_gothic';
-                src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.1/Dovemayo_gothic.woff2')
-                    format('woff2');
+                src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.1/Dovemayo_gothic.woff2') format('woff2');
                 font-weight: normal;
                 font-style: normal;
             }
@@ -125,9 +121,9 @@
             };
 
             var map = new naver.maps.Map('map', mapOptions);
-
+            var marker = [];
             var spotContainer = document.querySelector('.carousel');
-
+            var result;
             // 해당 지역버튼 클릭 시 지도 기준점 위치 이동
             var locationButton = document.querySelectorAll('.location-select > button');
             locationButton.forEach((button) => {
@@ -143,9 +139,9 @@
                     mapOptions.zoom = 7;
                     map = new naver.maps.Map('map', mapOptions);
                     document.getElementById('wrapper').style.display = 'flex';
-
+                    result = res;
                     //해당 지역의 차박 스팟 마커찍기 + 스팟리스트 출력
-                    var marker = [];
+
                     spotContainer.textContent = '';
                     for (let i = 0; i < res.data.spot.length; i++) {
                         marker[i] = new naver.maps.Marker({
@@ -153,7 +149,7 @@
                             position: new naver.maps.LatLng(res.data.spot[i].lat, res.data.spot[i].lon),
                         });
                         spotContainer.innerHTML += `
-                        <div class="spot">
+                        <div class="spot" onclick="spotClicked(${i})">
                             <div class="spot-name">${res.data.spot[i].spotName}</div>
                                 <div>
                                 <img src="${res.data.spot[i].image}" class="spot-image">
@@ -162,15 +158,20 @@
                             <div class="spot-information">${res.data.spot[i].information}</div>
                         </div>
                         `;
-
-                        //마커 클릭 이벤트
-                        // naver.maps.Event.addListener(marker[i], 'click', () => {
-
-                        // })
                     }
                 });
             });
-
+            function spotClicked(idx) {
+                for (let i = 0; i < marker.length; i++) {
+                    console.log(marker[i].getPosition().lat());
+                    marker[i].setMap(null);
+                }
+                marker.length = 0;
+                marker[0] = new naver.maps.Marker({
+                    map: map,
+                    position: new naver.maps.LatLng(result.data.spot[idx].lat, result.data.spot[idx].lon),
+                });
+            }
             const socket = io();
             const roomForm2 = document.querySelector('#roomli');
             const chatForm = document.querySelector('#chat');
@@ -229,9 +230,7 @@
                 let roomIndex = {};
                 const roomIndex1 = document.getElementById('roomList');
                 const roomIndex2 = document.getElementById('roomListNum');
-                roomIndex =
-                    roomIndex1.options[roomIndex1.selectedIndex].value +
-                    roomIndex2.options[roomIndex2.selectedIndex].value;
+                roomIndex = roomIndex1.options[roomIndex1.selectedIndex].value + roomIndex2.options[roomIndex2.selectedIndex].value;
                 console.log(roomIndex);
                 const userName = roomForm2.querySelector('#userName');
                 if (userName.value === '' || roomIndex.includes('null')) {
