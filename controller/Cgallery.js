@@ -348,6 +348,11 @@ exports.reviewDel = async (req, res) => {
 
 exports.reviewChangeCheck = async (req, res) => {
     console.log('change', req.body);
+    if (!req.cookies.isLogin) {
+        console.log('삭제실패, 로그인 하지 않음');
+        res.send({ errcode: -1, error: '삭제 권한이 없습니다.' });
+        return;
+    }
     const loginuser = await User.findOne({
         where: {
             nickname: decodeURI(req.cookies.isLogin),
