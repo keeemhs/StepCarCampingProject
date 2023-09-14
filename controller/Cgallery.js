@@ -100,7 +100,7 @@ const uploadSingle = multer({
         },
     }),
     limits: {
-        fileSize: 5 * 1024 * 1024, //5mb
+        fileSize: 10 * 1024 * 1024, //5mb
     },
 });
 
