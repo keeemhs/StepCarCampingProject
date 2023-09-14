@@ -3,9 +3,12 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>리뷰 에딧</title>
+        <title>STEP - 수정</title>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ijdya8hea0"></script>
+        <script
+            type="text/javascript"
+            src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ijdya8hea0"
+        ></script>
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -108,7 +111,11 @@
                     <input name="mainText" type="text" placeholder="본문" required />
                 </div>
                 <div>
-                    <input type="radio" name="region" value="1" checked />경기/서울 <input type="radio" name="region" value="2" />강원 <input type="radio" name="region" value="3" />충청 <input type="radio" name="region" value="4" />경상 <input type="radio" name="region" value="5" />전라
+                    <input type="radio" name="region" value="1" checked />경기/서울
+                    <input type="radio" name="region" value="2" />강원
+                    <input type="radio" name="region" value="3" />충청
+                    <input type="radio" name="region" value="4" />경상
+                    <input type="radio" name="region" value="5" />전라
                     <input type="radio" name="region" value="6" />제주
                 </div>
                 <div>
@@ -270,7 +277,12 @@
 
                 const markerObject = [];
                 for (let i = 0; i < markers.length; i++) {
-                    markerObject.push({ lat: markers[i].getPosition().lat(), lon: markers[i].getPosition().lng(), order: i, galleryid: result1.data.galleryid });
+                    markerObject.push({
+                        lat: markers[i].getPosition().lat(),
+                        lon: markers[i].getPosition().lng(),
+                        order: i,
+                        galleryid: result1.data.galleryid,
+                    });
                 }
                 const result2 = await axios({
                     url: '/gallery/sendMapData',

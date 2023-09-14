@@ -1,0 +1,335 @@
+@font-face {
+    font-family: 'Dovemayo_gothic';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.1/Dovemayo_gothic.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    scroll-behavior: smooth;
+}
+
+/* =================== main section =================== */
+
+#recomMain {
+    height: 100vh;
+    width: 100%;
+    position: relative;
+    background: url('../introMain.jpg');
+    background-position: center 65%;
+    background-size: cover;
+}
+
+#recomMain .content {
+    display: flex;
+    height: 85%;
+    z-index: 3;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#recomMain .content h1 {
+    font-size: 60px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+#recomMain .content .text {
+    margin-bottom: 50px;
+    color: #fff;
+    font-size: 20px;
+    text-align: center;
+    text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+
+#recomMain .content a {
+    color: #000;
+    display: block;
+    text-transform: uppercase;
+    font-size: 18px;
+    margin: 0 10px;
+    padding: 10px 30px;
+    border-radius: 5px;
+    background: #fff;
+    border: 2px solid #fff;
+    transition: 0.4s ease;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    text-decoration: none;
+    font-family: 'Dovemayo_gothic';
+}
+
+#recomMain .content a:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* 섹션1 */
+section {
+    padding-top: 40px;
+    font-family: 'Dovemayo_gothic';
+}
+section .content {
+    width: 80%;
+    margin: 40px auto;
+}
+.about .about-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+section .title {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+section .title span {
+    color: #43604d;
+    font-size: 30px;
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 8px;
+}
+.about .about-details .left {
+    width: 45%;
+}
+.about .left img {
+    height: 400px;
+    width: 400px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+.about-details .right {
+    width: 55%;
+}
+section .topic {
+    color: #43604d;
+    font-size: 25px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+.about-details .right p {
+    text-align: justify;
+    color: #43604d;
+}
+section .button {
+    margin: 16px 0;
+}
+section .button button {
+    outline: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 25px;
+    font-weight: 400;
+    background: #43604d;
+    color: #fff;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.4s ease;
+}
+section .button button:hover {
+    border-color: #43604d;
+    background-color: #fff;
+    color: #43604d;
+}
+
+/* 섹션2 가이드 */
+.guide {
+    background: #c8dace;
+}
+.guide .content {
+    padding: 40px 0;
+}
+.guide .guideMore {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.guideMore .text {
+    width: 50%;
+}
+.guideMore p {
+    color: #43604d;
+    text-align: justify;
+}
+.guide .guideMore .experience {
+    display: flex;
+    align-items: center;
+    margin: 0 10px;
+}
+.guideMore .experience .num {
+    color: #43604d;
+    font-size: 80px;
+}
+.guideMore .experience .exp {
+    color: #43604d;
+    margin-left: 20px;
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0 6px;
+}
+.guideMore .boxes {
+    width: 45%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.guideMore .box {
+    width: calc(100% / 2 - 20px);
+    margin: 20px 0;
+}
+.guideMore .boxes .topic {
+    font-size: 20px;
+    color: #43604d;
+}
+.guideMore .boxes .per {
+    font-size: 60px;
+    color: #43604d;
+}
+
+/* 섹션3 서비스 */
+.services .boxes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.services .boxes .box {
+    margin: 20px 0;
+    width: calc(100% / 3 - 20px);
+    text-align: center;
+    border-radius: 12px;
+    padding: 30px 10px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.12);
+    cursor: default;
+    transition: all 0.4s ease;
+}
+.services .boxes .box:hover {
+    background: #43604d;
+    color: #fff;
+}
+.services .boxes .box .icon {
+    height: 50px;
+    width: 50px;
+    background: #43604d;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 50px;
+    font-size: 18px;
+    color: #fff;
+    margin: 0 auto 10px auto;
+    transition: all 0.4s ease;
+}
+.boxes .box:hover .icon {
+    background-color: #fff;
+    color: #43604d;
+}
+.services .boxes .box:hover .topic,
+.services .boxes .box:hover p {
+    color: #43604d;
+    transition: all 0.4s ease;
+}
+.services .boxes .box:hover .topic,
+.services .boxes .box:hover p {
+    color: #fff;
+}
+/* 섹션4 문의 */
+.contact {
+    background: #c8dace;
+}
+.contact .content {
+    margin: 0 auto;
+    padding: 30px 0;
+}
+.contact .text {
+    width: 80%;
+    text-align: center;
+    margin: auto;
+}
+
+/* 반응 */
+@media (max-width: 1190px) {
+    section .content {
+        width: 85%;
+    }
+}
+@media (max-width: 1000px) {
+    .about .about-details {
+        justify-content: center;
+        flex-direction: column;
+    }
+    .about .about-details .left {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+    .about-details .right {
+        width: 90%;
+        margin: 40px 0;
+    }
+    .services .boxes .box {
+        margin: 20px 0;
+        width: calc(100% / 2 - 20px);
+    }
+}
+@media (max-width: 900px) {
+    .about .left img {
+        height: 350px;
+        width: 350px;
+    }
+}
+
+@media screen and (max-width: 860px) {
+    /* section > p {
+        text-align: center;
+    } */
+
+    #recomMain .content h1 {
+        font-size: 40px;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    #recomMain .content .text {
+        font-size: 17px;
+    }
+
+    .content a {
+        font-size: 17px;
+        padding: 9px 20px;
+    }
+}
+
+@media (max-width: 750px) {
+    .guide .guideMore {
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+    .guideMore .text {
+        width: 100%;
+        margin-bottom: 50px;
+    }
+    .guideMore .boxes {
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+    .services .boxes .box {
+        margin: 20px 0;
+        width: 100%;
+    }
+    .contact .text {
+        width: 100%;
+    }
+}
+
+@media (max-width: 500px) {
+    .guideMore .boxes .per {
+        font-size: 50px;
+        color: #43604d;
+    }
+}

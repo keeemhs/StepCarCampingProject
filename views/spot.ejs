@@ -3,16 +3,20 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
+        <title>STEP</title>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ijdya8hea0"></script>
+        <script
+            type="text/javascript"
+            src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ijdya8hea0"
+        ></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
         <script src="/socket.io/socket.io.js"></script>
         <link rel="stylesheet" href="spot.css" />
         <style>
             @font-face {
                 font-family: 'Dovemayo_gothic';
-                src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.1/Dovemayo_gothic.woff2') format('woff2');
+                src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.1/Dovemayo_gothic.woff2')
+                    format('woff2');
                 font-weight: normal;
                 font-style: normal;
             }
@@ -230,7 +234,9 @@
                 let roomIndex = {};
                 const roomIndex1 = document.getElementById('roomList');
                 const roomIndex2 = document.getElementById('roomListNum');
-                roomIndex = roomIndex1.options[roomIndex1.selectedIndex].value + roomIndex2.options[roomIndex2.selectedIndex].value;
+                roomIndex =
+                    roomIndex1.options[roomIndex1.selectedIndex].value +
+                    roomIndex2.options[roomIndex2.selectedIndex].value;
                 console.log(roomIndex);
                 const userName = roomForm2.querySelector('#userName');
                 if (userName.value === '' || roomIndex.includes('null')) {
