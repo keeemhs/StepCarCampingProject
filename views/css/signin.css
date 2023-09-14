@@ -22,6 +22,10 @@ hr {
     width: 125px;
 }
 
+img:hover {
+    cursor: pointer;
+}
+
 .login-container {
     display: flex;
     flex-direction: column;

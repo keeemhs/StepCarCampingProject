@@ -15,7 +15,7 @@
 
 <body>
     <div class="signup-container">
-        <img src="../headerLogo.png" style="height: 50px; margin-bottom: 20px;" alt="로고이미지" />
+        <img src="../headerLogo.png" style="height: 50px; margin-bottom: 20px;" alt="로고이미지" onclick="main()" />
         <div class="form-container">
             <form name="signup" id="signup" class="signup-form-container">
                 <div class="input-text-style">이메일</div>
@@ -144,6 +144,9 @@
         const url = new URLSearchParams(location.search)
         const mode = url.get('mode')
 
+        function main() {
+            location.href = '/'
+        }
         if (mode == 1) {
             form.email.value = localStorage.getItem('email');
             form.nickname.value = localStorage.getItem('nickname');

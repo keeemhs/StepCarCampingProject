@@ -13,7 +13,7 @@
 
 <body>
     <div class="login-container">
-        <img src="../headerLogo.png" style="height: 50px; margin-bottom: 20px;" alt="로고이미지" />
+        <img src="../headerLogo.png" style="height: 50px; margin-bottom: 20px;" alt="로고이미지" onclick="main()" />
         <form name="signin" class="login-form-container">
             <input type="text" name="useremail" placeholder="이메일을 입력해주세요" /><br />
             <input type="password" name="pw" placeholder="비밀번호를 입력해주세요" /><br />
@@ -35,6 +35,9 @@
 
     <script>
         //const kakaotoken = localStorage.getItem('kakaoToken');
+        function main() {
+            location.href = '/'
+        }
         const cookie = document.cookie
         console.log(cookie)
         function goSignup() {
@@ -44,7 +47,7 @@
         function authKaKao() {
             if (cookie.includes('isTrash')) {
                 alert('이미 로그인된 사용자입니다');
-                location.href = 'http://54.206.192.249/';
+                location.href = '/';
             }
             document.location.href = '/user/signin/kakao';
         }
@@ -55,7 +58,7 @@
         async function signIn() {
             if (cookie.includes('isTrash')) {
                 alert('이미 로그인된 사용자입니다');
-                location.href = 'http://54.206.192.249/';
+                location.href = '/';
             }
             const res = await axios({
                 method: 'POST',
@@ -69,7 +72,7 @@
                 alert('로그인에 성공했습니다');
                 location.href = '/';
             } else {
-                alert('로그인에 실패했습니다');
+                alert(res.data.message);
             }
         }
     </script>
