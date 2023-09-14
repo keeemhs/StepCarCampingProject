@@ -5,7 +5,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>STEP - 수정</title>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ijdya8hea0"></script>
+        <script
+            type="text/javascript"
+            src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ijdya8hea0"
+        ></script>
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -96,7 +99,7 @@
         <br />
         <section class="main">
             <!-- 로고 이미지 -->
-            <img src="../headerLogo.png" alt="로고" class="logo" />
+            <img src="../headerLogo.png" style="height: 65px" alt="로고" class="logo" />
             <h2>지역 등록하기</h2>
             <form onsubmit="fileupload(event)" name="reviewEdit">
                 <div>
@@ -108,7 +111,11 @@
                     <input name="mainText" type="text" placeholder="본문" required />
                 </div>
                 <div>
-                    <input type="radio" name="region" value="1" checked />경기/서울 <input type="radio" name="region" value="2" />강원 <input type="radio" name="region" value="3" />충청 <input type="radio" name="region" value="4" />경상 <input type="radio" name="region" value="5" />전라
+                    <input type="radio" name="region" value="1" checked />경기/서울
+                    <input type="radio" name="region" value="2" />강원
+                    <input type="radio" name="region" value="3" />충청
+                    <input type="radio" name="region" value="4" />경상
+                    <input type="radio" name="region" value="5" />전라
                     <input type="radio" name="region" value="6" />제주
                 </div>
                 <div>
