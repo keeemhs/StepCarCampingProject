@@ -7,10 +7,12 @@ const {
   gear,
 } = require("../models");
 const bcrypt = require("bcrypt");
+
 const axios = require("axios");
 
 const REDIRECT_URI = "http://localhost:8000/user/oauth/kakao"; //본인의 리다이렉트 url입력 후 라우트에서도 설정하세요
 const REST_API_KEY = "d09187c9ea730ee149f8d9292abffcf9"; //본인 rest api키 입력하시면 됩니다.
+
 // //cookie옵션개체
 const cookieConfig = {
   //httpOnly 웹서버를 통해서만 쿠키에 접근 가능 (document.cookie 불가)
@@ -65,8 +67,6 @@ exports.auth_kakao = async (req, res) => {
     });
   }
 };
-
-exports.getToken = async (req, res) => {};
 
 //로그인
 exports.login = (req, res) => {
@@ -404,10 +404,9 @@ exports.checkpwvalid = async (req, res) => {
   }
   console.log(result.pw);
   const compare = comparePassword(req.body.pw, result.pw);
-
+  console.log("compare", compare);
   if (compare) {
-    console.log("comparetrue", compare);
-    res.json({ result: true });
+    res.send({ result: true });
     return;
   } else {
     res.json({ result: false });
@@ -466,6 +465,29 @@ exports.mypagePatchPost = async (req, res) => {
   }
 };
 
+exports.changeUserInfo = (req, res) => {
+  res.render("changeuserinfo");
+};
+
+exports.changeUserInfo2 = async (req, res) => {
+  console.log(req.body);
+  await User.update(
+    {
+      nickname: req.body.nickname,
+      levelc: req.body.level,
+      ownc: req.body.own,
+    },
+    {
+      where: {
+        nickname: req.cookies.isLogin,
+      },
+    }
+  );
+  res.clearCookie("isLogin");
+  res.cookie("isLogin", encodeURI(req.body.nickname), cookieConfig);
+  res.json({ data: "true" });
+};
+
 /////비밀번호 암호화
 const bcryptPassword = (password) => {
   return bcrypt.hashSync(password, 10);
@@ -499,27 +521,4 @@ exports.mypagePatch = async (req, res) => {
       message: "수정을 실패했습니다",
     });
   }
-};
-
-exports.changeUserInfo = (req, res) => {
-  res.render("changeuserinfo");
-};
-
-exports.changeUserInfo2 = async (req, res) => {
-  console.log(req.body);
-  await User.update(
-    {
-      nickname: req.body.nickname,
-      levelc: req.body.level,
-      ownc: req.body.own,
-    },
-    {
-      where: {
-        nickname: req.cookies.isLogin,
-      },
-    }
-  );
-  res.clearCookie("isLogin");
-  res.cookie("isLogin", encodeURI(req.body.nickname), cookieConfig);
-  res.json({ data: "true" });
 };
