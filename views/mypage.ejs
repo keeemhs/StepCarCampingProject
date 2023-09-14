@@ -14,7 +14,11 @@
 </head>
 
 <body>
-
+    <div class="back-main">
+        <div class="back-button" onclick="main()">
+            ←
+        </div>
+    </div>
 
     <div>
         <img src="../static/bulguk.jpeg" alt="" class="image" />
@@ -69,6 +73,7 @@
     </div>
     <hr />
 
+    
     <div class="spot-text">나의 캠핑스팟</div>
     <%if(galleryList.length===0){%>
         <div class="non-spot-container">
@@ -89,7 +94,7 @@
         <%}else{%>
             <div class="list-container">
                 <%if(galleryList.length> 4){%>
-                    <button class="prev-gallery btn carousel-button" type="button">◀</button>
+                    <button class="prev-gallery btn carousel-button" type="button" onclick="prevgallery()">◀</button>
 
                     <%}%>
                         <div class="carousel-wrapper">
@@ -99,14 +104,20 @@
                                         <img src="https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/<%= galleryList[i].thunmnail %>"
                                             class="card-img-top">
                                         <div class="card-body">
+                                            <div>
                                             <h5 class="card-title">
                                                 <%= galleryList[i].title %>
                                             </h5>
-                                            <p class="card-text">
-                                                <%= galleryList[i].title %>
+                                            <div>
+                                            <p class="card-text text-fixed">
+                                                <%= galleryList[i].mainText %>
                                             </p>
+                                        </div>
+                                        </div>
+                                            <div>
                                             <a href="/gallery/review?galleryId=<%= galleryList[i].galleryid %>"
-                                                class="btn button-style">이동하기</a>
+                                                class="btn button-style-move">이동하기</a>
+                                            </div>
                                         </div>
                                     </div>
                                     <%}%>
@@ -116,7 +127,7 @@
                         </div>
                         <%if(galleryList.length> 4){%>
 
-                            <button class="next-gallery btn carousel-button" type="button">▶</button>
+                            <button class="next-gallery btn carousel-button" type="button" onclick="nextgallery()">▶</button>
                             <%}%>
             </div>
 
@@ -143,7 +154,7 @@
                 <%}else{%>
                     <div class="list-container">
                         <%if(gearList.length> 4){%>
-                            <button class="prev-gear btn carousel-button" type="button">◀</button>
+                            <button class="prev-gear btn carousel-button" type="button" onclick="prevgear()">◀</button>
 
                             <%}%>
                                 <div class="carousel-wrapper">
@@ -156,7 +167,7 @@
                                                     <h5 class="card-title">
                                                         <%= gearList[i].gearTitle %>
                                                     </h5>
-                                                    <p class="card-text">
+                                                    <p class="card-text text-fixed">
                                                         <%= gearList[i].gearExplain %>
                                                     </p>
                                                     <a href="/gear/gearreview?gearId=<%= gearList[i].gearid %>"
@@ -170,52 +181,51 @@
                                 </div>
                                 <%if(gearList.length> 4){%>
 
-                                    <button class="next-gear btn carousel-button" type="button">▶</button>
+                                    <button class="next-gear btn carousel-button" type="button" onclick="nextgear()">▶</button>
                                     <%}%>
+                                    
                     </div>
 
 
                     </div>
 
                     <script>
-                        const prevGalleryButton = document.querySelector('.prev-gallery')
-                        const prevGeartButton = document.querySelector('.prev-gear')
-                        const nextGallerytButton = document.querySelector('.next-gallery')
-                        const nextGeartButton = document.querySelector('.next-gear')
                         const carouselGallery = document.querySelector('.carousel-gallery')
                         const carouselGear = document.querySelector('.carousel-gear')
+                        const backButton = document.querySelector('.back-button')
                         const galleryListLength = '<%= galleryListLength %>'
                         const gearListLength = '<%= gearListLength%>'
 
                         let galleryindex = 0
                         let gearindex = 0
 
-                        //캐러셀 이전버튼(갤러리)
-                        prevGalleryButton.addEventListener('click', () => {
+                        function prevgallery() {
                             if (galleryindex === 0) return
                             galleryindex -= 1
-                            carouselGallery.style.transform = `translate(-${80 * galleryindex}%)`
-                        })
-                        //캐러셀 다음버튼(갤러리)
-                        nextGallerytButton.addEventListener('click', () => {
-                            if (galleryindex === (Math.floor((galleryListLength) / 4))) return
-                            galleryindex += 1
-                            carouselGallery.style.transform = `translate(-${80 * galleryindex}%)`
-                        })
+                            carouselGallery.style.transform = `translate(-${35 * galleryindex}%)`
+                        }
 
-                        //캐러셀 이전버튼(장비)
-                        prevGeartButton.addEventListener('click', () => {
+                        function nextgallery() {
+                            if (galleryindex === (Math.floor((galleryListLength) / 2))) return
+                            galleryindex += 1
+                            carouselGallery.style.transform = `translate(-${35 * galleryindex}%)`
+                        }
+
+                        function prevgear() {
                             if (gearindex === 0) return
                             gearindex -= 1
-                            carouselGear.style.transform = `translate(-${80 * gearindex}%)`
+                            carouselGear.style.transform = `translate(-${35 * gearindex}%)`
+                        }
 
-                        })
-                        //캐러셀 다음버튼(장비)
-                        nextGeartButton.addEventListener('click', () => {
-                            if (gearindex === (Math.floor((gearListLength) / 4))) return
+                        function nextgear() {
+                            if (gearindex === (Math.floor((gearListLength) / 2))) return
                             gearindex += 1
-                            carouselGear.style.transform = `translate(-${80 * gearindex}%)`
-                        })
+                            carouselGear.style.transform = `translate(-${35 * gearindex}%)`
+                        }
+
+                        function main() {
+                            location.href = '/'
+                        }
 
 
                         function updateUser() {
