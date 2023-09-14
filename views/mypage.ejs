@@ -104,14 +104,20 @@
                                         <img src="https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/<%= galleryList[i].thunmnail %>"
                                             class="card-img-top">
                                         <div class="card-body">
+                                            <div>
                                             <h5 class="card-title">
                                                 <%= galleryList[i].title %>
                                             </h5>
-                                            <p class="card-text">
-                                                <%= galleryList[i].title %>
+                                            <div>
+                                            <p class="card-text text-fixed">
+                                                <%= galleryList[i].mainText %>
                                             </p>
+                                        </div>
+                                        </div>
+                                            <div>
                                             <a href="/gallery/review?galleryId=<%= galleryList[i].galleryid %>"
-                                                class="btn button-style">이동하기</a>
+                                                class="btn button-style-move">이동하기</a>
+                                            </div>
                                         </div>
                                     </div>
                                     <%}%>
@@ -161,7 +167,7 @@
                                                     <h5 class="card-title">
                                                         <%= gearList[i].gearTitle %>
                                                     </h5>
-                                                    <p class="card-text">
+                                                    <p class="card-text text-fixed">
                                                         <%= gearList[i].gearExplain %>
                                                     </p>
                                                     <a href="/gear/gearreview?gearId=<%= gearList[i].gearid %>"

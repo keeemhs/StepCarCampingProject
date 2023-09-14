@@ -26,6 +26,21 @@ body {
   width: 100%;
 }
 
+.card-body-re {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.text-fixed {
+  height: 50px;
+  width: 222px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin: 0px;
+}
+
 .back-button {
   margin: 20px 20px 0px 20px;
   color: #43604d;
@@ -81,6 +96,17 @@ hr {
 }
 
 .button-style {
+  height: 35px;
+  width: 70px;
+  font-size: 11px;
+  background-color: #43604d;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-style-move {
   height: 35px;
   width: 70px;
   font-size: 11px;
