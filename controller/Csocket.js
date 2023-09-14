@@ -13,8 +13,9 @@ exports.connection = (io, socket) => {
         //socket은 객체이며 원하는 값을 할당할 수 있음
         socket.room = roomName;
         socket.user = userName;
+        console.log(userName);
 
-        socket.to(roomName).emit('notice', `${socket.id}님이 입장하셨습니다`);
+        // socket.to(roomName).emit('notice', `${socket.user}님이 입장하셨습니다`);
 
         //채팅방 목록 갱신
         if (!roomList.includes(roomName)) {
@@ -57,7 +58,7 @@ exports.connection = (io, socket) => {
                 //key: 소켓아이디, name:이름
                 const info = {
                     name: userSocket.user,
-                    key: socketId
+                    key: socketId,
                 };
                 users.push(info);
             });
