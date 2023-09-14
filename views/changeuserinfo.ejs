@@ -4,19 +4,31 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        <title>Document</title>
+        <title>STEP</title>
     </head>
     <body>
         <h2>개인정보수정</h2>
         <form name="userinfo">
             <span>닉네임 </span><input name="nickname" type="text" value="" placeholder="닉네임" required /> <br />
             <span>레벨 </span>
-            <input type="radio" name="level" id="beginner" value="1" class="input-radio-margin" /><label for="beginner">입문</label> <input type="radio" name="level" id="intermediate" value="2" class="input-radio-margin" /><label for="beginner">중수</label>
-            <input type="radio" name="level" id="master" value="3" class="input-radio-margin" /><label for="beginner">고수</label>
+            <input type="radio" name="level" id="beginner" value="1" class="input-radio-margin" /><label for="beginner"
+                >입문</label
+            >
+            <input type="radio" name="level" id="intermediate" value="2" class="input-radio-margin" /><label
+                for="beginner"
+                >중수</label
+            >
+            <input type="radio" name="level" id="master" value="3" class="input-radio-margin" /><label for="beginner"
+                >고수</label
+            >
             <br />
             <span>차량 보유 </span>
-            <input type="radio" name="own" id="no" value="1" class="input-radio-margin" /> <label for="no">없음</label> <input type="radio" name="own" id="yes" value="2" class="input-radio-margin" /> <label for="yes">있음</label>
-            <input type="radio" name="own" id="expected" value="3" class="input-radio-margin" /><label for="expected">구매예정</label>
+            <input type="radio" name="own" id="no" value="1" class="input-radio-margin" /> <label for="no">없음</label>
+            <input type="radio" name="own" id="yes" value="2" class="input-radio-margin" />
+            <label for="yes">있음</label>
+            <input type="radio" name="own" id="expected" value="3" class="input-radio-margin" /><label for="expected"
+                >구매예정</label
+            >
             <button type="button" onclick="giveForm()">제출</button>
         </form>
         <script>
