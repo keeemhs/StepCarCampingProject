@@ -1,0 +1,210 @@
+@font-face {
+    font-family: 'Dovemayo_gothic';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.1/Dovemayo_gothic.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+html {
+    font-family: 'Dovemayo_gothic';
+}
+body {
+    font-family: 'Dovemayo_gothic';
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+#pictures {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 525px;
+    height: 525px;
+    padding: 5px;
+    margin: 5px 20px;
+    border-radius: 10px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.04);
+    border: 1px solid #d6d6d6; /* 테두리 속성 추가 */
+}
+
+.img--box {
+    width: 300px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.map {
+    position: relative;
+    width: 500px;
+    height: 500px;
+}
+
+.map-container {
+    width: 525px;
+    height: 525px;
+    padding: 5px;
+    margin: 5px 20px;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.04);
+    border: 1px solid #d6d6d6; /* 테두리 속성 추가 */
+}
+#main-title {
+    text-align: center;
+}
+.img_container {
+    display: flex;
+    justify-content: center;
+}
+
+#body_container {
+    font-family: 'Dovemayo_gothic';
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.inputComment {
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.inputComment span {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.inputComment input[type='text'] {
+    width: calc(100% - 120px);
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.inputComment button {
+    width: 60px;
+    padding: 5px;
+    background-color: #43604d;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.inputComment button:hover {
+    background-color: #43604d;
+}
+.new-button-container {
+    text-align: right;
+}
+.new-button {
+    font-family: 'Dovemayo_gothic';
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 2px solid black;
+    transition: background-color 0.3s, color 0.3s;
+    background-color: white;
+    color: black;
+    border: none;
+}
+
+.new-button:hover {
+    background-color: #43604d;
+    color: #fff;
+}
+.del-button {
+    font-family: 'Dovemayo_gothic';
+    display: inline-block;
+    padding: 5px 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 2px solid black;
+    transition: background-color 0.3s, color 0.3s;
+    background-color: white;
+    color: black;
+    border: none;
+}
+
+.del-button:hover {
+    background-color: #43604d;
+    color: #fff;
+}
+.comment-comment {
+    padding-left: 30px;
+    padding-top: 0;
+    list-style-type: none;
+}
+.comment-comment-li {
+    margin-top: 0;
+}
+
+.dropdown-btn {
+    font-family: 'Dovemayo_gothic';
+    display: inline-block;
+    padding: 0;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 10px;
+    border: 2px solid black;
+    transition: background-color 0.3s, color 0.3s;
+    background-color: white;
+    color: black;
+    border: none;
+}
+.dropdown-btn:hover {
+    background-color: #43604d;
+    color: #fff;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content button {
+    display: block;
+    width: 100%;
+    padding: 8px 16px;
+    text-align: left;
+    background-color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown-content button:hover {
+    background-color: #f1f1f1;
+}
+
+.show {
+    display: block;
+}
+
+@media screen and (max-width: 1180px) {
+    .img_container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+}

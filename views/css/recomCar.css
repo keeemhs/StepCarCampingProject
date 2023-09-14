@@ -140,6 +140,10 @@ li,
     font-family: 'Dovemayo_gothic';
 }
 
+#about .carInfo a {
+    display: inline-block;
+}
+
 /* .carInfo {
     display: flex;
     flex-wrap: wrap;
@@ -168,6 +172,7 @@ ul {
     transition: 0.4s ease;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
     text-decoration: none;
+    display: inline-block;
 }
 
 #aboutA:hover {
