@@ -10,6 +10,7 @@ const bcrypt = require("bcrypt");
 
 const axios = require("axios");
 
+
 const REDIRECT_URI = "http://54.206.192.249/user/oauth/kakao"; //본인의 리다이렉트 url입력 후 라우트에서도 설정하세요
 const REST_API_KEY = "d09187c9ea730ee149f8d9292abffcf9"; //본인 rest api키 입력하시면 됩니다.
 

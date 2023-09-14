@@ -154,3 +154,7 @@ exports.reviewPage = (req, res) => {
 exports.recomCarPage = (req, res) => {
     res.render('recomCar');
 };
+
+exports.introCC = (req, res) => {
+    res.render('introCC');
+};
