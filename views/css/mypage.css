@@ -1,0 +1,157 @@
+@font-face {
+    font-family: 'Dovemayo_gothic';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.1/Dovemayo_gothic.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body,
+html {
+    height: 100%;
+    font-family: 'Dovemayo_gothic';
+}
+
+body {
+    font-family: 'Dovemayo_gothic';
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.image {
+    width: 130px;
+    height: 130px;
+    border-radius: 65px;
+    margin: 20px 0px 10px 0px;
+}
+
+.profile-container {
+    font-family: 'Dovemayo_gothic';
+    display: flex;
+    height: 150px;
+    width: 400px;
+    align-items: center;
+    justify-content: space-evenly;
+    border: 2px solid #CCC;
+    border-radius: 10px;
+}
+
+.name-text {
+    font-size: 18px;
+    font-weight: bolder;
+}
+
+.textline {
+    line-height: 200%;
+}
+
+.line {
+    border: 1px solid #ccc;
+    width: 0.1;
+    height: 100px;
+}
+
+hr {
+    width: 90%;
+}
+
+.button-container {
+    width: 300px;
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.button-style {
+    height: 35px;
+    width: 70px;
+    font-size: 11px;
+    background-color: #43604D;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button-style:hover {
+    background-color: #223127;
+    color: white;
+}
+
+.list-container {
+    display: flex;
+    align-items: center;
+}
+
+.non-spot-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.non-spot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.non-spot-text {
+    margin-bottom: 10px;
+}
+
+.carousel-wrapper {
+    width: 1055px;
+    overflow: hidden;
+    display: flex;
+    margin: 10px;
+}
+
+
+.carousel-wrapper>.carousel-gallery {
+    display: flex;
+    transform: translate(0, 0, 0);
+    transition: transform 0.4s;
+}
+
+.carousel-wrapper>.carousel-gear {
+    display: flex;
+    transform: translate(0, 0, 0);
+    transition: transform 0.4s;
+}
+
+.carousel-button {
+    height: 34px;
+    width: 34px;
+    border-radius: 17px;
+    font-size: 11px;
+    background-color: #43604D;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-button:hover {
+    background-color: #223127;
+    color: white;
+}
+
+.carousel-gallery img {
+    height: 200px;
+    width: auto;
+    border-radius: 5px 5px 0px 0px;
+}
+
+.carousel-gear img {
+    height: 200px;
+    width: auto;
+    border-radius: 5px 5px 0px 0px;
+}
+
+@media screen and (max-width: 420px) {
+    .profile-container {
+        width: 300px;
+    }
+}

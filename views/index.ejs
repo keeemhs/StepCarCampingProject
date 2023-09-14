@@ -3,23 +3,14 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-        />
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-            crossorigin="anonymous"
-        />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
         <title>STEP - Main</title>
     </head>
     <style>
         @font-face {
             font-family: 'Dovemayo_gothic';
-            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.1/Dovemayo_gothic.woff2')
-                format('woff2');
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.1/Dovemayo_gothic.woff2') format('woff2');
             font-weight: normal;
             font-style: normal;
         }
@@ -172,26 +163,9 @@
         <div id="body_container">
             <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-indicators">
-                    <button
-                        type="button"
-                        data-bs-target="#carouselExampleIndicators"
-                        data-bs-slide-to="0"
-                        class="active"
-                        aria-current="true"
-                        aria-label="Slide 1"
-                    ></button>
-                    <button
-                        type="button"
-                        data-bs-target="#carouselExampleIndicators"
-                        data-bs-slide-to="1"
-                        aria-label="Slide 2"
-                    ></button>
-                    <button
-                        type="button"
-                        data-bs-target="#carouselExampleIndicators"
-                        data-bs-slide-to="2"
-                        aria-label="Slide 3"
-                    ></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
                 </div>
                 <div class="carousel-inner">
                     <div class="carousel-item active">
@@ -205,21 +179,11 @@
                         <img src="../static/bannerMain3.png" class="d-block w-100" alt="..." />
                     </div>
                 </div>
-                <button
-                    class="carousel-control-prev"
-                    type="button"
-                    data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide="prev"
-                >
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Previous</span>
                 </button>
-                <button
-                    class="carousel-control-next"
-                    type="button"
-                    data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide="next"
-                >
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Next</span>
                 </button>
@@ -232,23 +196,23 @@
             <br />
             <ul class="items_list">
                 <li>
-                    <a href="https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/0.jpg" target="_self">
+                    <a href="/introCC#guide" target="_self">
                         <span class="img_area"
-                            ><img src="https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/0.jpg" alt="#" />
-                            <p style="font-size: 16px">경기도 노지 여행 적기</p>
+                            ><img src="about.jpg" alt="#" />
+                            <p style="font-size: 16px">차박이란?</p>
                             <br />
-                            <p class="more" style="font-size: 12px">찾아보기</p></span
+                            <p class="more" style="font-size: 12px">알아보기</p></span
                         >
                     </a>
                 </li>
 
                 <li>
-                    <a href="https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/0.jpg" target="_self">
+                    <a href="/introCC#about" target="_self">
                         <span class="img_area"
-                            ><img src="https://hwr-bucket.s3.ap-northeast-2.amazonaws.com/0.jpg" alt="#" />
-                            <p style="font-size: 16px">경기도 노지 여행</p>
+                            ><img src="cate1.jpg" alt="#" />
+                            <p style="font-size: 16px">코로나 이후의 차박에 대해서</p>
                             <br />
-                            <p class="more" style="font-size: 12px">경기도 노지 여행</p></span
+                            <p class="more" style="font-size: 12px">알아보기</p></span
                         >
                     </a>
                 </li>
@@ -371,11 +335,7 @@
         <br />
         <br />
         <%-include('footer.ejs')%>
-        <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-            crossorigin="anonymous"
-        ></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
         <script>
             var datas = JSON.parse('<%- JSON.stringify(result) %>');
