@@ -16,9 +16,10 @@ router.get('/spot', pageController.spotPage);
 router.get('/gallery', pageController.galleryPage);
 //갤러리 리뷰 페이지로
 router.get('/gallery/review', pageController.reviewPage);
-
-
-
+//recomCar 페이지로
+router.get('/recomCar', pageController.recomCarPage);
+//introCC 페이지로
+router.get('/introCC', pageController.introCC);
 
 /////////////////////////////////////////
 
