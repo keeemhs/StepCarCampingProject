@@ -10,10 +10,6 @@
     font-style: normal;
 }
 
-body {
-    font-family: 'Dovemayo_gothic';
-}
-
 section {
     font-family: 'Dovemayo_gothic';
     display: flex;
@@ -79,10 +75,6 @@ section {
 
 .qna {
     margin: 0;
-}
-
-html > body {
-    font-family: 'LotteMartDream', sans-serif;
 }
 
 .faq-box {
