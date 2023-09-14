@@ -219,8 +219,19 @@ i#next {
 /* -------------채팅방----------- css */
 #chatroom {
     width: 400px;
-    height: 700px;
-    position: absolute;
+    height: 630px;
+    position: fixed;
+    background: #eeeeee;
+    right: 20px;
+    bottom: 80px;
+    z-index: 1001;
+    overflow: auto;
+    border-radius: 10px;
+    border-color: #43604d;
+}
+#chatInputBox {
+    width: 400px;
+    position: fixed;
     background: #eeeeee;
     right: 20px;
     bottom: 20px;
@@ -229,12 +240,18 @@ i#next {
     border-radius: 10px;
     border-color: #43604d;
 }
+
 #chat {
-    position: absolute;
+    position: relative;
     bottom: 0px;
     display: flex;
     justify-content: space-between;
-    width: 100%;
+
+    /* width: 100%; */
+}
+#msg {
+    padding: 50px 0;
+    /* overflow: auto; */
 }
 #chat input {
     width: 70%;
@@ -246,7 +263,7 @@ i#next {
     margin: 5px 3px;
 }
 #exit {
-    position: relative;
+    position: fixed;
     justify-content: center;
 }
 .my-chat {

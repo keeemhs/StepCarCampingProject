@@ -3,16 +3,20 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
+        <title>STEP</title>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ijdya8hea0"></script>
+        <script
+            type="text/javascript"
+            src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ijdya8hea0"
+        ></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
         <script src="/socket.io/socket.io.js"></script>
         <link rel="stylesheet" href="spot.css" />
         <style>
             @font-face {
                 font-family: 'Dovemayo_gothic';
-                src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.1/Dovemayo_gothic.woff2') format('woff2');
+                src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.1/Dovemayo_gothic.woff2')
+                    format('woff2');
                 font-weight: normal;
                 font-style: normal;
             }
@@ -93,6 +97,8 @@
                     <button id="exitButton">나가기</button>
                 </form>
                 <div id="msg"></div>
+            </div>
+            <div id="chatInputBox" hidden>
                 <form id="chat">
                     <select id="userList"></select>
                     <input type="text" id="message" placeholder="메세지 입력" />
@@ -228,7 +234,9 @@
                 let roomIndex = {};
                 const roomIndex1 = document.getElementById('roomList');
                 const roomIndex2 = document.getElementById('roomListNum');
-                roomIndex = roomIndex1.options[roomIndex1.selectedIndex].value + roomIndex2.options[roomIndex2.selectedIndex].value;
+                roomIndex =
+                    roomIndex1.options[roomIndex1.selectedIndex].value +
+                    roomIndex2.options[roomIndex2.selectedIndex].value;
                 console.log(roomIndex);
                 const userName = roomForm2.querySelector('#userName');
                 if (userName.value === '' || roomIndex.includes('null')) {
@@ -237,7 +245,9 @@
                 }
                 socket.emit('create', roomIndex, userName.value, () => {
                     const chatroom = document.querySelector('#chatroom');
+                    const chatInputBox = document.querySelector('#chatInputBox');
                     chatroom.hidden = false;
+                    chatInputBox.hidden = false;
                     //전역변수에 입력한 닉네임을 저장
                     myName = userName.value;
                 });
@@ -246,6 +256,11 @@
                 e.preventDefault();
                 const user = document.querySelector('#userList');
                 const message = document.querySelector('#message');
+                var chatroom = document.getElementById('chatroom');
+
+                function scrollToBottom() {
+                    chatroom.scrollTop = chatroom.scrollHeight;
+                }
                 console.log(user.value);
                 const msg = {
                     nick: myName,
@@ -254,6 +269,7 @@
                 };
                 socket.emit('sendMessage', msg);
                 message.value = '';
+                scrollToBottom();
             });
         </script>
         <script src="../spot.js"></script>

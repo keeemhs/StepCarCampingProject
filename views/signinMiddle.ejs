@@ -1,42 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>STEP</title>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
-</head>
-
-<body>
-
-    <script>
-        (async function () {
-            if ('<%= result %>' === 'false') {
-                alert('이미 로그인된 사용자입니다')
-            } else {
-                const token = localStorage.setItem("kakaoToken", '<%= token %>')
-                const res = await axios({
-                    method: 'POST',
-                    url: '/user/signin/middle',
-                    data: {
-                        token: localStorage.getItem("kakaoToken")
-                    }
-                })
-                //로그인 성공
-                if (res.data.result == true) {
-                    location.href = "/"
+    <body>
+        <script>
+            (async function () {
+                if ('<%= result %>' === 'false') {
+                    alert('이미 로그인된 사용자입니다');
                 } else {
-                    //사용자 추가정보 입력
-                    alert('사용자 추가정보 입력이 필요합니다. 회원가입 페이지로 이동합니다.')
-                    localStorage.setItem('email', res.data.useremail)
-                    localStorage.setItem('nickname', res.data.nickname)
-                    location.href = '/user/signup?mode=1'
+                    const token = localStorage.setItem('kakaoToken', '<%= token %>');
+                    const res = await axios({
+                        method: 'POST',
+                        url: '/user/signin/middle',
+                        data: {
+                            token: localStorage.getItem('kakaoToken'),
+                        },
+                    });
+                    //로그인 성공
+                    if (res.data.result == true) {
+                        location.href = '/';
+                    } else {
+                        //사용자 추가정보 입력
+                        alert('사용자 추가정보 입력이 필요합니다. 회원가입 페이지로 이동합니다.');
+                        localStorage.setItem('email', res.data.useremail);
+                        localStorage.setItem('nickname', res.data.nickname);
+                        location.href = '/user/signup?mode=1';
+                    }
                 }
-            }
-        })()
-    </script>
-</body>
-
+            })();
+        </script>
+    </body>
 </html>

@@ -61,6 +61,10 @@ app.get('/recomCar', (req, res) => {
     res.render('recomCar');
 });
 
+app.get('/introCC', (req, res) => {
+    res.render('introCC');
+});
+
 // 404 error
 app.use('*', (req, res) => {
     res.render('404');
