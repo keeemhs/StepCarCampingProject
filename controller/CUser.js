@@ -127,7 +127,7 @@ exports.postToken = async (req, res) => {
     //사용자 추가정보 입력요구(회원가입 페이지)
     res.json({
       useremail: kakaoEmail,
-      nickname: nickname,
+      nickname: result.nickname,
       result: false,
     });
   }
