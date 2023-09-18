@@ -1,6 +1,7 @@
 # STEP
 
-![STEP](gif링크)
+![STEP](![p1](https://github.com/transfact/carCampingProject/assets/94975268/2b73d2e1-d81e-465b-b378-a8767de88a24)
+)
 
 ### 🎬 실행 방법 (택1)
 
@@ -140,14 +141,16 @@ STEP은 **"Steering Toward Euphoria and Paradise"** 라는 말의 약자로 **"�
 
 ### ERD
 
-![image](이미지src)
+![image](<img width="442" alt="KakaoTalk_20230918_203805475" src="https://github.com/transfact/carCampingProject/assets/94975268/cabe7d15-4258-404c-9e43-70ce77728fe8">
+)
 <br/>
 
 ## 5. 기능 소개 ✨
 
 ### 1️⃣ 드라이빙 루트, 사진 공유 갤러리
 
-![image](이미지)
+![image](![p2](https://github.com/transfact/carCampingProject/assets/94975268/07ac69ba-ea21-4886-99b0-ee7bccacb986)
+)
 --- | --- |
 
 지도에 핀을 연결하여 유저의 드라이빙 루트를 직접 공유해보세요!<br />
@@ -155,7 +158,8 @@ STEP은 **"Steering Toward Euphoria and Paradise"** 라는 말의 약자로 **"�
 
 ### 2️⃣ 지역별 차박 장소 추천 & 지역별 오픈 톡방
 
-![image](이미지)
+![image](![p3](https://github.com/transfact/carCampingProject/assets/94975268/41ee18d1-d02b-4187-9b96-6c29f52b12fe)
+)
 — | — |
 
 지역별 버튼을 통해 장소를 찾아볼 수 있습니다!<br />
@@ -163,7 +167,8 @@ STEP은 **"Steering Toward Euphoria and Paradise"** 라는 말의 약자로 **"�
 
 ### 3️⃣ 장비 추천 게시판
 
-![image](이미지)
+![image](![p4](https://github.com/transfact/carCampingProject/assets/94975268/5dbc8274-6050-46f8-b6d3-5ec1379b904c)
+)
 — | — |
 
 게시판을 통해 맘에 드는 장비를 직접 추천해보세요!
